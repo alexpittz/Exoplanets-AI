@@ -12,12 +12,312 @@
         :root{
             --bg:#060814; --panel:#0b0f25; --muted:#9db2ff; --text:#e8edff; --accent:#6aa5ff; --accent-2:#8f7aff; --ok:#66e8a6; --warn:#ffd36a;
             --ring: 0 0 0 2px rgba(132,169,255,.35), 0 0 40px rgba(120,155,255,.15);
+            --neon-blue: #00d4ff; --neon-purple: #b742ff; --neon-cyan: #00ffff; --neon-pink: #ff0080;
         }
         *{box-sizing:border-box}
         html{scroll-behavior:smooth}
-        body{margin:0;font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(1200px 800px at 80% -10%,#1a224a 0%, transparent 60%), radial-gradient(800px 500px at -10% 10%, #1b1037 0%, transparent 60%), var(--bg);}
+        body{margin:0;font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(1200px 800px at 80% -10%,#1a224a 0%, transparent 60%), radial-gradient(800px 500px at -10% 10%, #1b1037 0%, transparent 60%), var(--bg);overflow-x:hidden;position:relative;}
         a{color:inherit;text-decoration:none}
         img{max-width:100%;display:block}
+        
+        /* Advanced Neon Light Effects */
+        .neon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .neon-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: neonFloat 20s infinite ease-in-out;
+        }
+        
+        .neon-orb.blue {
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.6) 0%, rgba(0, 212, 255, 0.1) 40%, transparent 70%);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.4), inset 0 0 60px rgba(0, 212, 255, 0.2);
+        }
+        
+        .neon-orb.purple {
+            background: radial-gradient(circle, rgba(183, 66, 255, 0.6) 0%, rgba(183, 66, 255, 0.1) 40%, transparent 70%);
+            box-shadow: 0 0 60px rgba(183, 66, 255, 0.4), inset 0 0 60px rgba(183, 66, 255, 0.2);
+        }
+        
+        .neon-orb.cyan {
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.6) 0%, rgba(0, 255, 255, 0.1) 40%, transparent 70%);
+            box-shadow: 0 0 60px rgba(0, 255, 255, 0.4), inset 0 0 60px rgba(0, 255, 255, 0.2);
+        }
+        
+        .neon-orb.pink {
+            background: radial-gradient(circle, rgba(255, 0, 128, 0.6) 0%, rgba(255, 0, 128, 0.1) 40%, transparent 70%);
+            box-shadow: 0 0 60px rgba(255, 0, 128, 0.4), inset 0 0 60px rgba(255, 0, 128, 0.2);
+        }
+        
+        @keyframes neonFloat {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.7; }
+            25% { transform: translate(150px, -100px) scale(1.2) rotate(90deg); opacity: 0.9; }
+            50% { transform: translate(-100px, 150px) scale(0.8) rotate(180deg); opacity: 0.6; }
+            75% { transform: translate(200px, 50px) scale(1.1) rotate(270deg); opacity: 0.8; }
+        }
+        
+        /* Moving Bubbles */
+        .bubble {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), rgba(106, 165, 255, 0.05));
+            border: 1px solid rgba(106, 165, 255, 0.2);
+            animation: bubbleRise linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes bubbleRise {
+            0% {
+                transform: translateY(100vh) translateX(-20px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+        
+        /* Enhanced Grid with Neon */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(183, 66, 255, 0.08) 1px, transparent 1px);
+            background-size: 120px 120px;
+            animation: gridPulse 8s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; transform: translate(0, 0); }
+            50% { opacity: 0.6; transform: translate(60px, 60px); }
+        }
+        
+        /* Neon Text Effects */
+        .neon-text {
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue);
+            animation: neonGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue); }
+            to { text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan); }
+        }
+        
+        /* Advanced Card Effects */
+        .card {
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(157,178,255,.15);
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,.08) 0%, 
+                rgba(255,255,255,.02) 50%, 
+                rgba(106, 165, 255, 0.05) 100%);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(0, 212, 255, 0.3), 
+                transparent, 
+                rgba(183, 66, 255, 0.3), 
+                transparent);
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderNeonPulse 4s ease-in-out infinite;
+        }
+        
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, 
+                rgba(0, 255, 255, 0.1), 
+                rgba(255, 0, 128, 0.1), 
+                rgba(183, 66, 255, 0.1));
+            border-radius: 19px;
+            z-index: -2;
+            opacity: 0;
+            animation: borderNeonGlow 6s ease-in-out infinite;
+        }
+        
+        @keyframes borderNeonPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+        
+        @keyframes borderNeonGlow {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Enhanced Button Effects */
+        .btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn.primary {
+            box-shadow: 
+                0 0 20px rgba(106, 165, 255, 0.5),
+                0 0 40px rgba(143, 122, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            animation: buttonPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(106, 165, 255, 0.5), 0 0 40px rgba(143, 122, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(106, 165, 255, 0.8), 0 0 60px rgba(143, 122, 255, 0.5); }
+        }
+        
+        /* Floating Light Particles */
+        .light-particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 1), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: lightFloat 12s linear infinite;
+            z-index: 1;
+        }
+        
+        .light-particle.purple {
+            background: radial-gradient(circle, rgba(183, 66, 255, 1), transparent);
+        }
+        
+        .light-particle.cyan {
+            background: radial-gradient(circle, rgba(0, 255, 255, 1), transparent);
+        }
+        
+        .light-particle.pink {
+            background: radial-gradient(circle, rgba(255, 0, 128, 1), transparent);
+        }
+        
+        @keyframes lightFloat {
+            0% {
+                transform: translateY(100vh) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0;
+            }
+        }
+        
+        /* Enhanced Hero Section */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(183, 66, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+            animation: heroNeonGlow 8s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        
+        @keyframes heroNeonGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* Logo Loading Screen */
+        .logo-loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+        .logo-loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .logo-loading-screen img {
+            max-width: 200px;
+            max-height: 200px;
+            margin-bottom: 20px;
+            animation: logoNeonPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8));
+        }
+        @keyframes logoNeonPulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1); 
+                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8));
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: scale(1.05); 
+                filter: drop-shadow(0 0 50px rgba(183, 66, 255, 1));
+            }
+        }
+        
         /* Header */
         .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:linear-gradient(180deg, rgba(10,12,25,.85), rgba(10,12,25,.55));border-bottom:1px solid rgba(157,178,255,.15)}
         .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
@@ -29,7 +329,7 @@
         .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:14px;font-weight:700;box-shadow:var(--ring)}
         /* Hero */
         .hero{position:relative;overflow:hidden}
-        .hero-inner{max-width:1100px;margin:0 auto;padding:72px 20px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+        .hero-inner{max-width:1100px;margin:0 auto;padding:72px 20px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;position:relative;z-index:2}
         .hero h1{font-size:clamp(28px,4.8vw,52px);line-height:1.05;margin:8px 0 14px}
         .hero p{color:var(--muted);font-size:clamp(16px,2vw,18px)}
         .hero .actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
@@ -39,13 +339,20 @@
         .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9999px;background:rgba(106,165,255,.12);border:1px solid rgba(157,178,255,.25);font-size:14px;margin-bottom:10px}
         /* Decorative planets */
         .orbits{position:absolute;inset:0;pointer-events:none}
-        .planet{position:absolute;border-radius:50%;filter:drop-shadow(0 10px 40px rgba(128,158,255,.35))}
+        .planet{position:absolute;border-radius:50%;filter:drop-shadow(0 10px 40px rgba(128,158,255,.35));animation:planetFloat 12s ease-in-out infinite}
         .planet.one{width:160px;height:160px;background:radial-gradient(circle at 30% 30%, #9fb8ff, #4b6cff 60%, #2b2f70);top:-40px;right:-30px}
-        .planet.two{width:90px;height:90px;background:radial-gradient(circle at 40% 35%, #ffd36a, #f6a16f 60%, #632e3a);bottom:30px;left:8%}
-        .ringed{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #d6b2ff, #7b5cff 60%, #2a125c);top:30%;left:-40px}
+        .planet.two{width:90px;height:90px;background:radial-gradient(circle at 40% 35%, #ffd36a, #f6a16f 60%, #632e3a);bottom:30px;left:8%;animation-delay:-4s}
+        .ringed{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #d6b2ff, #7b5cff 60%, #2a125c);top:30%;left:-40px;animation:planetFloat 15s ease-in-out infinite;animation-delay:-2s}
         .ring{position:absolute;inset:-10px;border-radius:50%;border:6px solid rgba(255,255,255,.2);transform:skewY(12deg) rotate(-15deg)}
+        
+        @keyframes planetFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(10px, -15px) rotate(120deg); }
+            66% { transform: translate(-8px, 10px) rotate(240deg); }
+        }
+        
         /* Sections */
-        section{max-width:1100px;margin:0 auto;padding:70px 20px}
+        section{max-width:1100px;margin:0 auto;padding:70px 20px;position:relative;z-index:2}
         h2{font-size:clamp(22px,3.6vw,36px);margin:0 0 16px}
         .lead{color:var(--muted);max-width:900px}
         .grid{display:grid;gap:16px}
@@ -72,7 +379,7 @@
         .tile{position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(157,178,255,.18);background:#0c1130;aspect-ratio:16/10}
         .tile canvas, .tile svg{position:absolute;inset:0;width:100%;height:100%}
         /* Footer */
-        footer{border-top:1px solid rgba(157,178,255,.15);padding:24px 20px;color:#aebdff;background:rgba(6,8,20,.5)}
+        footer{border-top:1px solid rgba(157,178,255,.15);padding:24px 20px;color:#aebdff;background:rgba(6,8,20,.5);position:relative;z-index:2}
         .footer-inner{max-width:1100px;margin:0 auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
         .notice{font-size:13px;opacity:.9}
         /* Inputs (kept here to avoid long top section) */
@@ -196,6 +503,22 @@
     </style>
 </head>
 <body>
+    <!-- Advanced Neon Effects Container -->
+    <div class="neon-container">
+        <div class="neon-orb blue" style="width: 200px; height: 200px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="neon-orb purple" style="width: 150px; height: 150px; top: 60%; right: 10%; animation-delay: -5s;"></div>
+        <div class="neon-orb cyan" style="width: 180px; height: 180px; bottom: 20%; left: 15%; animation-delay: -10s;"></div>
+        <div class="neon-orb pink" style="width: 120px; height: 120px; top: 30%; right: 30%; animation-delay: -15s;"></div>
+    </div>
+    
+    <!-- Enhanced Cyber Grid -->
+    <div class="cyber-grid"></div>
+    
+    <!-- Logo Loading Screen -->
+    <div class="logo-loading-screen" id="logoScreen">
+        <img src="logo.png" alt="Logo">
+    </div>
+
     <!-- Nav -->
     <header class="nav">
         <div class="nav-inner">
@@ -223,7 +546,7 @@
         <div class="hero-inner">
             <div>
                 <div class="badge">🌌 Student Project · AI + Astronomy</div>
-                <h1>Hunting for Exoplanets with <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">AI</span></h1>
+                <h1 class="neon-text">Hunting for Exoplanets with <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">AI</span></h1>
                 <p>We build machine learning models that scan stellar light curves to spot tiny dips in brightness—possible signs of a planet crossing in front of its star.</p>
                 <div class="actions">
                     <button class="btn primary" id="runDetectorBtn">Run Detector →</button>
@@ -435,22 +758,25 @@
 
     <!-- Team -->
     <section id="team">
-        <h2>Team</h2>
+        <h2>Our Team</h2>
         <div class="grid cols-3">
-            <div class="card">
-                <h3>Anmol Katiyar</h3>
-                <p class="muted">ML Engineer · Data prep, CNN models, evaluation.</p>
-                <span class="chip">@anmol</span> <span class="chip">Python</span> <span class="chip">PyTorch</span>
-            </div>
             <div class="card">
                 <h3>Agam Sahni</h3>
                 <p class="muted">Data & Research · Pipeline, feature engineering, BLS search.</p>
-                <span class="chip">@agam</span> <span class="chip">Lightkurve</span> <span class="chip">NumPy</span>
+                <p class="muted">alexpitt009@gmail.com</p>
+                <span class="chip">Lightkurve</span> <span class="chip">NumPy</span>
             </div>
             <div class="card">
-                <h3>Advisors</h3>
-                <p class="muted">Thanks to mentors and open‑source contributors in the astro‑ML community.</p>
-                <span class="chip">Acknowledgements</span>
+                <h3>Anmol Katiyar</h3>
+                <p class="muted">ML Engineer · Data prep, CNN models, evaluation.</p>
+                <p class="muted">anmolkatiyar084@gmail.com</p>
+                <span class="chip">Python</span> <span class="chip">PyTorch</span>
+            </div>
+            <div class="card">
+                <h3>Nidhin R</h3>
+                <p class="muted">Web developer, AI and ML engineer</p>
+                <p class="muted">r.nidhinofficial@gmail.com</p>
+                <span class="chip">Full Stack</span> <span class="chip">AI/ML</span>
             </div>
         </div>
     </section>
@@ -492,6 +818,62 @@
     </footer>
 
     <script>
+        // Logo Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('logoScreen').classList.add('fade-out');
+            }, 6000); // Show logo for 6 seconds
+        });
+
+        // Advanced Particle Systems
+        function createBubbles() {
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    const size = Math.random() * 40 + 20;
+                    bubble.style.width = size + 'px';
+                    bubble.style.height = size + 'px';
+                    bubble.style.left = Math.random() * 100 + '%';
+                    bubble.style.animationDelay = Math.random() * 5 + 's';
+                    bubble.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    document.body.appendChild(bubble);
+                    
+                    setTimeout(() => {
+                        if (bubble.parentNode) {
+                            bubble.parentNode.removeChild(bubble);
+                        }
+                    }, 25000);
+                }, i * 3000);
+            }
+        }
+
+        function createLightParticles() {
+            const colors = ['', 'purple', 'cyan', 'pink'];
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'light-particle ' + colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 12 + 's';
+                    particle.style.animationDuration = (12 + Math.random() * 8) + 's';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 20000);
+                }, i * 1500);
+            }
+        }
+
+        // Start all particle systems
+        createBubbles();
+        createLightParticles();
+        setInterval(createBubbles, 25000);
+        setInterval(createLightParticles, 20000);
+
         // Dynamic year
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -711,26 +1093,27 @@
             const margin = {top: 20, right: 20, bottom: 20, left: 20};
             const innerWidth = width - margin.left - margin.right;
             const innerHeight = height - margin.top - margin.bottom;
-            
+
             const xMax = Math.max(...data.map(d => d.period));
             const yMax = Math.max(...data.map(d => d.radius));
-            
-            const xScale = x => (Math.log(x) / Math.log(xMax)) * innerWidth;
+
+            const xScale = x => x / xMax * innerWidth;
             const yScale = y => (1 - y / yMax) * innerHeight;
-            
+
+            // Add points
             data.forEach(d => {
+                const cx = xScale(d.period) + margin.left;
+                const cy = yScale(d.radius) + margin.top;
                 const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute("cx", xScale(d.period) + margin.left);
-                circle.setAttribute("cy", yScale(d.radius) + margin.top);
-                circle.setAttribute("r", 3);
+                circle.setAttribute("cx", cx);
+                circle.setAttribute("cy", cy);
+                circle.setAttribute("r", "3");
                 circle.setAttribute("fill", color);
                 circle.setAttribute("opacity", d.confidence);
-                circle.setAttribute("stroke", "white");
-                circle.setAttribute("stroke-width", "1");
                 svg.appendChild(circle);
             });
 
-            // Add axes and labels
+            // Add axes
             const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
             xAxis.setAttribute("x1", margin.left);
             xAxis.setAttribute("y1", height - margin.bottom);
@@ -746,210 +1129,134 @@
             yAxis.setAttribute("y2", height - margin.bottom);
             yAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
             svg.appendChild(yAxis);
-            
-            const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            xLabel.setAttribute("x", width / 2);
-            xLabel.setAttribute("y", height - 5);
-            xLabel.setAttribute("text-anchor", "middle");
-            xLabel.setAttribute("fill", "var(--muted)");
-            xLabel.setAttribute("font-size", "10px");
-            xLabel.textContent = "Period (days)";
-            svg.appendChild(xLabel);
-
-            const yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            yLabel.setAttribute("x", 15);
-            yLabel.setAttribute("y", height / 2);
-            yLabel.setAttribute("transform", `rotate(-90, 15, ${height / 2})`);
-            yLabel.setAttribute("text-anchor", "middle");
-            yLabel.setAttribute("fill", "var(--muted)");
-            yLabel.setAttribute("font-size", "10px");
-            yLabel.textContent = "Radius (RJ)";
-            svg.appendChild(yLabel);
         }
 
-        // Function to draw a simple confusion matrix SVG
-        function drawConfusionMatrix(svg, data) {
+        // Function to draw confusion matrix
+        function drawConfusionMatrix(svg, cm) {
             const { width, height } = svg.getBoundingClientRect();
             svg.innerHTML = '';
             
-            const tp = data.tp, fp = data.fp, fn = data.fn, tn = data.tn;
-            const total = tp + fp + fn + tn;
-            const size = Math.min(width, height) - 40;
-            const rectSize = size / 2;
-            const labelOffset = 10;
-            
-            const createRect = (x, y, color, value) => {
-                const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-                rect.setAttribute("x", x);
-                rect.setAttribute("y", y);
-                rect.setAttribute("width", rectSize);
-                rect.setAttribute("height", rectSize);
-                rect.setAttribute("fill", color);
-                svg.appendChild(rect);
-                
-                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                text.setAttribute("x", x + rectSize / 2);
-                text.setAttribute("y", y + rectSize / 2 + 5);
-                text.setAttribute("text-anchor", "middle");
-                text.setAttribute("fill", "black");
-                text.setAttribute("font-size", "14px");
-                text.setAttribute("font-weight", "bold");
-                text.textContent = value;
-                svg.appendChild(text);
-            };
+            const cellSize = Math.min(width, height) / 3;
+            const startX = (width - cellSize * 2) / 2;
+            const startY = (height - cellSize * 2) / 2;
 
-            const createLabel = (x, y, text, color) => {
-                const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                label.setAttribute("x", x);
-                label.setAttribute("y", y);
-                label.setAttribute("text-anchor", "middle");
-                label.setAttribute("fill", color);
-                label.setAttribute("font-size", "12px");
-                label.textContent = text;
-                svg.appendChild(label);
-            };
+            const data = [
+                [cm.tn, cm.fp],
+                [cm.fn, cm.tp]
+            ];
 
-            const startX = (width - size) / 2;
-            const startY = (height - size) / 2;
+            const colors = [
+                ['#1f2937', '#dc2626'],
+                ['#dc2626', '#059669']
+            ];
 
-            // TP
-            createRect(startX + rectSize, startY, 'var(--ok)', tp);
-            // FN
-            createRect(startX, startY, 'var(--warn)', fn);
-            // FP
-            createRect(startX + rectSize, startY + rectSize, 'var(--warn)', fp);
-            // TN
-            createRect(startX, startY + rectSize, 'var(--ok)', tn);
-            
-            createLabel(startX + rectSize / 2, startY - labelOffset, "Actual Negative", "var(--muted)");
-            createLabel(startX + rectSize * 1.5, startY - labelOffset, "Actual Positive", "var(--muted)");
-            createLabel(startX - labelOffset, startY + rectSize / 2, "Predicted Negative", "var(--muted)");
-            createLabel(startX - labelOffset, startY + rectSize * 1.5, "Predicted Positive", "var(--muted)");
-        }
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < 2; j++) {
+                    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    rect.setAttribute("x", startX + j * cellSize);
+                    rect.setAttribute("y", startY + i * cellSize);
+                    rect.setAttribute("width", cellSize);
+                    rect.setAttribute("height", cellSize);
+                    rect.setAttribute("fill", colors[i][j]);
+                    rect.setAttribute("opacity", "0.7");
+                    rect.setAttribute("stroke", "#374151");
+                    svg.appendChild(rect);
 
-        // Function to draw a phase-folded light curve on a canvas
-        function drawPhaseFolded(canvas, data, confidence) {
-            const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            const ctx = canvas.getContext('2d');
-            ctx.scale(dpr, dpr);
-            
-            ctx.fillStyle = '#0c1130';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Add a static light curve
-            ctx.strokeStyle = '#8f7aff';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            
-            const points = 100;
-            const noise = 0.005;
-            const depth = data.flux_depth;
-            const phaseStart = 0.45;
-            const phaseEnd = 0.55;
-
-            for (let i = 0; i <= points; i++) {
-                const phase = i / points;
-                let flux = 1.0;
-                
-                if (phase > phaseStart && phase < phaseEnd) {
-                    flux -= depth;
-                }
-                
-                flux += (Math.random() - 0.5) * noise;
-                
-                const x = phase * canvas.width / dpr;
-                const y = (1 - (flux - 0.99) / 0.02) * canvas.height / dpr;
-                
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", startX + j * cellSize + cellSize / 2);
+                    text.setAttribute("y", startY + i * cellSize + cellSize / 2);
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.setAttribute("fill", "white");
+                    text.setAttribute("font-size", "14");
+                    text.textContent = data[i][j];
+                    svg.appendChild(text);
                 }
             }
-            ctx.stroke();
-
-            // Add confidence text
-            ctx.fillStyle = confidence > 0.9 ? 'var(--ok)' : 'var(--warn)';
-            ctx.font = '12px Outfit';
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'top';
-            ctx.fillText(`Confidence: ${(confidence * 100).toFixed(1)}%`, canvas.width / dpr - 10, 10);
         }
 
-        // Main detector function
-        async function runDetector() {
-            runBtn.disabled = true;
-            statusMessage.style.color = 'var(--warn)';
-            statusMessage.innerHTML = `<span class="spinner"></span> <span style="margin-left:10px">Running detector on ${datasetSelect.value.toUpperCase()} data...</span>`;
-            
-            // Simulate processing delay
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            
+        // Event listeners
+        datasetSelect.addEventListener('change', updateKPIs);
+
+        runBtn.addEventListener('click', function() {
             const mission = datasetSelect.value;
             const config = missionConfigs[mission];
             
-            // Populate the catalog table
-            catalogTableBody.innerHTML = '';
-            config.candidates.forEach(candidate => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${candidate.id}</td>
-                    <td>${candidate.period.toFixed(2)}</td>
-                    <td>${candidate.radius.toFixed(2)}</td>
-                    <td>${(candidate.confidence * 100).toFixed(1)}%</td>
-                `;
-                catalogTableBody.appendChild(row);
-            });
+            statusMessage.textContent = 'Running detector...';
+            statusMessage.style.color = '#ffd36a';
+            runBtn.disabled = true;
+            runBtn.textContent = 'Running...';
             
-            // Draw the plots
-            drawScatterPlot(periodRadiusPlot, config.candidates, 'var(--accent)');
-            drawConfusionMatrix(cmPlot, config.cm);
-            drawLineSvg(prPlot, config.pr, 'var(--accent)');
-            drawLineSvg(rocPlot, config.roc, 'var(--accent)');
-            
-            // Populate the gallery
-            gallery.innerHTML = '';
-            config.candidates.forEach(candidate => {
-                const tile = document.createElement('div');
-                tile.className = 'tile';
-                tile.innerHTML = `<canvas id="canvas-${candidate.id}" class="gallery-canvas"></canvas>`;
-                gallery.appendChild(tile);
-                
-                const canvasEl = tile.querySelector('.gallery-canvas');
-                drawPhaseFolded(canvasEl, candidate, candidate.confidence);
-            });
+            setTimeout(() => {
+                // Update catalog table
+                catalogTableBody.innerHTML = '';
+                config.candidates.forEach(candidate => {
+                    const row = catalogTableBody.insertRow();
+                    row.insertCell(0).textContent = candidate.id;
+                    row.insertCell(1).textContent = candidate.period.toFixed(2);
+                    row.insertCell(2).textContent = candidate.radius.toFixed(2);
+                    row.insertCell(3).textContent = (candidate.confidence * 100).toFixed(1) + '%';
+                });
 
-            statusMessage.innerHTML = `✅ Detector finished. Found ${config.candidates.length} candidates.`;
-            statusMessage.style.color = 'var(--ok)';
-            runBtn.disabled = false;
-        }
+                // Update plots
+                drawScatterPlot(periodRadiusPlot, config.candidates, '#6aa5ff');
+                drawConfusionMatrix(cmPlot, config.cm);
+                drawLineSvg(prPlot, config.pr, '#66e8a6');
+                drawLineSvg(rocPlot, config.roc, '#6aa5ff');
 
-        // Initial setup and event listeners
-        window.onload = function() {
-            updateKPIs();
-            animateCanvas();
-            // Call runDetector initially to populate the page
-            runDetector();
-        }
+                // Generate gallery items
+                gallery.innerHTML = '';
+                for (let i = 0; i < 6; i++) {
+                    const candidate = config.candidates[i % config.candidates.length];
+                    const tile = document.createElement('div');
+                    tile.className = 'tile';
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 300;
+                    canvas.height = 180;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Draw a simple phase-folded curve
+                    ctx.fillStyle = '#0c1130';
+                    ctx.fillRect(0, 0, 300, 180);
+                    ctx.strokeStyle = '#6aa5ff';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    
+                    for (let x = 0; x < 300; x++) {
+                        const phase = x / 300;
+                        let flux = 1.0;
+                        if (phase > 0.4 && phase < 0.6) {
+                            const transitPhase = (phase - 0.4) / 0.2;
+                            flux -= candidate.flux_depth * Math.sin(transitPhase * Math.PI);
+                        }
+                        flux += (Math.random() - 0.5) * 0.01;
+                        const y = (1 - flux) * 180;
+                        
+                        if (x === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+                    
+                    // Add probability text
+                    ctx.fillStyle = '#e8edff';
+                    ctx.font = '14px Outfit';
+                    ctx.fillText(`P = ${(candidate.confidence * 100).toFixed(1)}%`, 10, 25);
+                    
+                    tile.appendChild(canvas);
+                    gallery.appendChild(tile);
+                }
 
-        datasetSelect.addEventListener('change', () => {
-            updateKPIs();
-            cancelAnimationFrame(animationFrameId);
-            animateCanvas();
-            // Clear previous results
-            catalogTableBody.innerHTML = '<tr><td colspan="4" class="muted center">Run the detector to see results.</td></tr>';
-            gallery.innerHTML = '';
-            periodRadiusPlot.innerHTML = '';
-            cmPlot.innerHTML = '';
-            prPlot.innerHTML = '';
-            rocPlot.innerHTML = '';
+                statusMessage.textContent = `Found ${config.candidates.length} candidates.`;
+                statusMessage.style.color = 'var(--ok)';
+                runBtn.disabled = false;
+                runBtn.textContent = 'Run Detector →';
+            }, 2000);
         });
 
-        runBtn.addEventListener('click', runDetector);
-
+        // Initialize
+        updateKPIs();
+        animateCanvas();
     </script>
 </body>
 </html>
