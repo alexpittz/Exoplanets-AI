@@ -9,6 +9,143 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Splash Screen Styles - Added without changing existing code */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(1200px 800px at 80% -10%,#1a224a 0%, transparent 60%), radial-gradient(800px 500px at -10% 10%, #1b1037 0%, transparent 60%), #060814;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .splash-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .splash-logo {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+            animation: logoFloat 2s ease-in-out infinite alternate, logoGlow 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(106, 165, 255, 0.8));
+        }
+        
+        @keyframes logoFloat {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-20px) scale(1.05); }
+        }
+        
+        @keyframes logoGlow {
+            0% { filter: drop-shadow(0 0 30px rgba(106, 165, 255, 0.8)); }
+            50% { filter: drop-shadow(0 0 50px rgba(183, 66, 255, 0.9)); }
+            100% { filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)); }
+        }
+        
+        .splash-effects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .splash-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(106, 165, 255, 0.3) 0%, transparent 70%);
+            animation: splashFloat 4s ease-in-out infinite;
+        }
+        
+        .splash-orb:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .splash-orb:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            animation-delay: -1s;
+            background: radial-gradient(circle, rgba(183, 66, 255, 0.3) 0%, transparent 70%);
+        }
+        
+        .splash-orb:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 25%;
+            left: 20%;
+            animation-delay: -2s;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+        }
+        
+        @keyframes splashFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            50% { transform: translate(30px, -30px) scale(1.2); opacity: 0.9; }
+        }
+        
+        .loading-container-splash {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .loading-text {
+            color: #e8edff;
+            font-size: 24px;
+            font-weight: 300;
+            text-shadow: 0 0 20px rgba(106, 165, 255, 0.5);
+            animation: textPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        .progress-ring {
+            width: 60px;
+            height: 60px;
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: rgba(106, 165, 255, 0.2);
+            stroke-width: 4;
+            stroke-dasharray: 188.4;
+            stroke-dashoffset: 188.4;
+            animation: progressRing 6s linear;
+        }
+        
+        @keyframes progressRing {
+            0% { stroke-dashoffset: 188.4; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+        
+        .main-content.show {
+            opacity: 1;
+        }
+
         :root{
             --bg:#060814; --panel:#0b0f25; --muted:#9db2ff; --text:#e8edff; --accent:#6aa5ff; --accent-2:#8f7aff; --ok:#66e8a6; --warn:#ffd36a;
             --ring: 0 0 0 2px rgba(132,169,255,.35), 0 0 40px rgba(120,155,255,.15);
@@ -365,6 +502,13 @@
                 gap: 10px;
                 flex-wrap: wrap;
             }
+            .splash-logo {
+                width: 150px;
+                height: 150px;
+            }
+            .loading-text {
+                font-size: 20px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -416,6 +560,13 @@
             .video-card {
                 padding: 15px;
             }
+            .splash-logo {
+                width: 120px;
+                height: 120px;
+            }
+            .loading-text {
+                font-size: 18px;
+            }
         }
 
         /* Performance optimizations */
@@ -433,341 +584,387 @@
     </style>
 </head>
 <body>
-    <!-- Optimized Neon Effects -->
-    <div class="neon-container">
-        <div class="neon-orb blue" style="width: 180px; height: 180px; top: 10%; left: 5%; animation-delay: 0s;"></div>
-        <div class="neon-orb purple" style="width: 140px; height: 140px; top: 60%; right: 10%; animation-delay: -8s;"></div>
+    <!-- Splash Screen - Added without changing existing code -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-effects">
+            <div class="splash-orb"></div>
+            <div class="splash-orb"></div>
+            <div class="splash-orb"></div>
+        </div>
+        <img src="logo.png" alt="ExoAI Logo" class="splash-logo">
+        <div class="loading-container-splash">
+            <div class="loading-text">ExoAI</div>
+            <svg class="progress-ring">
+                <circle class="progress-ring-circle" cx="30" cy="30" r="30"/>
+            </svg>
+        </div>
     </div>
-    
-    <!-- Optimized Grid -->
-    <div class="cyber-grid"></div>
 
-    <!-- Nav -->
-    <header class="nav">
-        <div class="nav-inner">
-            <span class="brand"><span class="logo"></span>ExoAI</span>
-            <nav class="spacer">
-                <a href="#about">About</a>
-                <a href="#pipeline">Pipeline</a>
-                <a href="#how-it-works">How the AI Works</a>
-                <a href="#dataset">Dataset</a>
-                <a href="#catalog">Catalog</a>
-                <a href="#results">Results</a>
-                <a href="#team">Team</a>
-            </nav>
-            <a href="#contact" class="cta">Contact</a>
+    <div class="main-content" id="mainContent">
+        <!-- Optimized Neon Effects -->
+        <div class="neon-container">
+            <div class="neon-orb blue" style="width: 180px; height: 180px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+            <div class="neon-orb purple" style="width: 140px; height: 140px; top: 60%; right: 10%; animation-delay: -8s;"></div>
         </div>
-    </header>
+        
+        <!-- Optimized Grid -->
+        <div class="cyber-grid"></div>
 
-    <!-- Hero -->
-    <section class="hero" aria-label="Hero">
-        <div class="orbits" aria-hidden="true">
-            <div class="planet one"></div>
-            <div class="planet two"></div>
-            <div class="ringed"><span class="ring"></span></div>
-        </div>
-        <div class="hero-inner">
-            <div>
-                <div class="badge">🌌 Student Project · AI + Astronomy</div>
-                <h1 class="neon-text">Hunting for Exoplanets with <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">AI</span></h1>
-                <p>We build machine learning models that scan stellar light curves to spot tiny dips in brightness—possible signs of a planet crossing in front of its star.</p>
-                <div class="actions">
-                    <button class="btn primary" id="runDetectorBtn">Run Detector →</button>
-                    <a class="btn" href="#pipeline">How it works</a>
-                    <a class="btn" href="#dataset">Use the data</a>
-                </div>
-                <div style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap">
-                    <div class="kpi" id="precision-kpi" title="Precision on validation set"><strong style="font-size:20px">97.2%</strong> <span class="muted">precision</span></div>
-                    <div class="kpi" id="recall-kpi" title="Recall on validation set"><strong style="font-size:20px">94.8%</strong> <span class="muted">recall</span></div>
-                    <div class="kpi" id="model-size-kpi" title="Model size"><strong style="font-size:20px">1.8M</strong> <span class="muted">parameters</span></div>
-                </div>
-                <div style="margin-top:18px">
-                    <label for="dataset-select" class="muted">Select Mission Data:</label>
-                    <select id="dataset-select" class="inp" style="margin-left:8px;padding:8px 12px;border-radius:8px">
-                        <option value="kepler">Kepler</option>
-                        <option value="tess">TESS</option>
-                    </select>
-                    <div id="status-message" style="margin-top:12px;font-size:14px;color:var(--ok)">Detector ready. Select data and run.</div>
-                </div>
+        <!-- Nav -->
+        <header class="nav">
+            <div class="nav-inner">
+                <span class="brand"><span class="logo"></span>ExoAI</span>
+                <nav class="spacer">
+                    <a href="#about">About</a>
+                    <a href="#pipeline">Pipeline</a>
+                    <a href="#how-it-works">How the AI Works</a>
+                    <a href="#dataset">Dataset</a>
+                    <a href="#catalog">Catalog</a>
+                    <a href="#results">Results</a>
+                    <a href="#team">Team</a>
+                </nav>
+                <a href="#contact" class="cta">Contact</a>
             </div>
-            <div class="card" aria-label="Animated light-curve demo">
-                <h3 style="margin:0 0 8px">Transit Detector (demo)</h3>
-                <p class="muted" style="margin-top:0">Synthetic light curve with a periodic transit—our CNN flags the dips.</p>
-                <div class="tile"><canvas id="curve"></canvas></div>
-            </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- About -->
-    <section id="about">
-        <h2>About the Project</h2>
-        <p class="lead">ExoAI explores how deep learning can accelerate the search for exoplanets. We preprocess light curves from missions like Kepler and TESS, train convolutional networks to identify transit signals, and score candidates for follow‑up.</p>
-        <div class="grid cols-3" style="margin-top:14px">
-            <div class="card">
-                <h3>Why exoplanets?</h3>
-                <p class="muted">They help us understand planetary formation, system architectures, and the possibility of life beyond Earth.</p>
-                <span class="chip">Astrobiology</span><span class="chip">Habitability</span>
+        <!-- Hero -->
+        <section class="hero" aria-label="Hero">
+            <div class="orbits" aria-hidden="true">
+                <div class="planet one"></div>
+                <div class="planet two"></div>
+                <div class="ringed"><span class="ring"></span></div>
             </div>
-            <div class="card">
-                <h3>Why AI?</h3>
-                <p class="muted">AI is uniquely suited to handle the sheer volume of data produced by modern space telescopes. Our model can analyze millions of light curves in a fraction of the time it would take human researchers, while also learning to filter out common false positives caused by stellar variability or instrument noise.</p>
-                <span class="chip">CNN</span><span class="chip">RNN</span><span class="chip">Gradient Boosting</span>
-            </div>
-            <div class="card">
-                <h3>Open & Reproducible</h3>
-                <p class="muted">Code, data splits, and model checkpoints are organized for easy replication. Replace with your GitHub repo when ready.</p>
-                <a class="btn" href="#" aria-label="Repository link">🔗 GitHub (soon)</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Video Section - No heading, auto-play -->
-    <section class="video-section" id="demo-video">
-        <div class="video-card">
-            <div class="video-wrapper">
-                <video id="mainVideo" preload="metadata" autoplay muted loop>
-                    <source src="video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="video-controls">
-                    <button class="control-btn" id="playPauseBtn">⏸️ Pause</button>
-                    <button class="control-btn" id="muteBtn">🔇 Muted</button>
-                    <div class="progress-container" id="progressContainer">
-                        <div class="progress-bar" id="progressBar"></div>
+            <div class="hero-inner">
+                <div>
+                    <div class="badge">🌌 Student Project · AI + Astronomy</div>
+                    <h1 class="neon-text">Hunting for Exoplanets with <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">AI</span></h1>
+                    <p>We build machine learning models that scan stellar light curves to spot tiny dips in brightness—possible signs of a planet crossing in front of its star.</p>
+                    <div class="actions">
+                        <button class="btn primary" id="runDetectorBtn">Run Detector →</button>
+                        <a class="btn" href="#pipeline">How it works</a>
+                        <a class="btn" href="#dataset">Use the data</a>
                     </div>
-                    <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
-                    <select class="speed-control" id="speedControl">
-                        <option value="0.5">0.5x</option>
-                        <option value="0.75">0.75x</option>
-                        <option value="1" selected>1x</option>
-                        <option value="1.25">1.25x</option>
-                        <option value="1.5">1.5x</option>
-                        <option value="2">2x</option>
-                    </select>
-                    <button class="control-btn" id="fullscreenBtn">⛶ Full</button>
+                    <div style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap">
+                        <div class="kpi" id="precision-kpi" title="Precision on validation set"><strong style="font-size:20px">97.2%</strong> <span class="muted">precision</span></div>
+                        <div class="kpi" id="recall-kpi" title="Recall on validation set"><strong style="font-size:20px">94.8%</strong> <span class="muted">recall</span></div>
+                        <div class="kpi" id="model-size-kpi" title="Model size"><strong style="font-size:20px">1.8M</strong> <span class="muted">parameters</span></div>
+                    </div>
+                    <div style="margin-top:18px">
+                        <label for="dataset-select" class="muted">Select Mission Data:</label>
+                        <select id="dataset-select" class="inp" style="margin-left:8px;padding:8px 12px;border-radius:8px">
+                            <option value="kepler">Kepler</option>
+                            <option value="tess">TESS</option>
+                        </select>
+                        <div id="status-message" style="margin-top:12px;font-size:14px;color:var(--ok)">Detector ready. Select data and run.</div>
+                    </div>
+                </div>
+                <div class="card" aria-label="Animated light-curve demo">
+                    <h3 style="margin:0 0 8px">Transit Detector (demo)</h3>
+                    <p class="muted" style="margin-top:0">Synthetic light curve with a periodic transit—our CNN flags the dips.</p>
+                    <div class="tile"><canvas id="curve"></canvas></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pipeline -->
-    <section id="pipeline">
-        <h2>AI Pipeline</h2>
-        <p class="lead">From raw flux to planet candidates—each stage improves signal‑to‑noise and reduces false positives.</p>
-        <div class="timeline">
-            <div class="step"><strong>1. Ingestion & Cleaning</strong><br><span class="muted">Retrieve raw flux data and metadata. This step removes noise spikes, cosmic ray hits, and gaps in data, ensuring the curve is a continuous, clean signal.</span></div>
-            <div class="step"><strong>2. Detrending</strong><br><span class="muted">A Savitzky–Golay filter is applied to remove long-term stellar trends, such as starspots or flares, that can mimic or obscure a transit signal.</span></div>
-            <div class="step"><strong>3. Transit Search</strong><br><span class="muted">The Box-Least Squares (BLS) algorithm is used to find periodic dips. It tests a range of periods and durations to identify the most likely transit signal within the light curve.</span></div>
-            <div class="step"><strong>4. Feature Building</strong><br><span class="muted">The data is "phase-folded" using the period found by BLS, stacking all potential transits on top of each other to create a single, clear light curve shape for the AI to analyze.</span></div>
-            <div class="step"><strong>5. Classification</strong><br><span class="muted">A Convolutional Neural Network (CNN) analyzes the phase-folded light curve. It learns to distinguish the characteristic 'U' or 'V' shape of a planetary transit from other astrophysical events.</span></div>
-            <div class="step"><strong>6. Vetting</strong><br><span class="muted">Final checks are performed to reduce false positives. This includes analyzing centroid shifts to ensure the signal is from the target star and looking for secondary eclipses.</span></div>
-        </div>
-    </section>
+        <!-- About -->
+        <section id="about">
+            <h2>About the Project</h2>
+            <p class="lead">ExoAI explores how deep learning can accelerate the search for exoplanets. We preprocess light curves from missions like Kepler and TESS, train convolutional networks to identify transit signals, and score candidates for follow‑up.</p>
+            <div class="grid cols-3" style="margin-top:14px">
+                <div class="card">
+                    <h3>Why exoplanets?</h3>
+                    <p class="muted">They help us understand planetary formation, system architectures, and the possibility of life beyond Earth.</p>
+                    <span class="chip">Astrobiology</span><span class="chip">Habitability</span>
+                </div>
+                <div class="card">
+                    <h3>Why AI?</h3>
+                    <p class="muted">AI is uniquely suited to handle the sheer volume of data produced by modern space telescopes. Our model can analyze millions of light curves in a fraction of the time it would take human researchers, while also learning to filter out common false positives caused by stellar variability or instrument noise.</p>
+                    <span class="chip">CNN</span><span class="chip">RNN</span><span class="chip">Gradient Boosting</span>
+                </div>
+                <div class="card">
+                    <h3>Open & Reproducible</h3>
+                    <p class="muted">Code, data splits, and model checkpoints are organized for easy replication. Replace with your GitHub repo when ready.</p>
+                    <a class="btn" href="#" aria-label="Repository link">🔗 GitHub (soon)</a>
+                </div>
+            </div>
+        </section>
 
-    <!-- How the AI works -->
-    <section id="how-it-works">
-        <h2>How the AI Works</h2>
-        <p class="lead">Our core model is a Convolutional Neural Network (CNN) specifically designed to identify patterns in 1D time-series data. It works by passing the light curve through a series of specialized layers.</p>
-        <div class="grid cols-2" style="margin-top:20px">
-            <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                <h3 style="margin-bottom:10px">CNN Architecture</h3>
+        <!-- Video Section - No heading, auto-play -->
+        <section class="video-section" id="demo-video">
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video id="mainVideo" preload="metadata" autoplay muted loop>
+                        <source src="video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-controls">
+                        <button class="control-btn" id="playPauseBtn">⏸️ Pause</button>
+                        <button class="control-btn" id="muteBtn">🔇 Muted</button>
+                        <div class="progress-container" id="progressContainer">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+                        <select class="speed-control" id="speedControl">
+                            <option value="0.5">0.5x</option>
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                            <option value="2">2x</option>
+                        </select>
+                        <button class="control-btn" id="fullscreenBtn">⛶ Full</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline -->
+        <section id="pipeline">
+            <h2>AI Pipeline</h2>
+            <p class="lead">From raw flux to planet candidates—each stage improves signal‑to‑noise and reduces false positives.</p>
+            <div class="timeline">
+                <div class="step"><strong>1. Ingestion & Cleaning</strong><br><span class="muted">Retrieve raw flux data and metadata. This step removes noise spikes, cosmic ray hits, and gaps in data, ensuring the curve is a continuous, clean signal.</span></div>
+                <div class="step"><strong>2. Detrending</strong><br><span class="muted">A Savitzky–Golay filter is applied to remove long-term stellar trends, such as starspots or flares, that can mimic or obscure a transit signal.</span></div>
+                <div class="step"><strong>3. Transit Search</strong><br><span class="muted">The Box-Least Squares (BLS) algorithm is used to find periodic dips. It tests a range of periods and durations to identify the most likely transit signal within the light curve.</span></div>
+                <div class="step"><strong>4. Feature Building</strong><br><span class="muted">The data is "phase-folded" using the period found by BLS, stacking all potential transits on top of each other to create a single, clear light curve shape for the AI to analyze.</span></div>
+                <div class="step"><strong>5. Classification</strong><br><span class="muted">A Convolutional Neural Network (CNN) analyzes the phase-folded light curve. It learns to distinguish the characteristic 'U' or 'V' shape of a planetary transit from other astrophysical events.</span></div>
+                <div class="step"><strong>6. Vetting</strong><br><span class="muted">Final checks are performed to reduce false positives. This includes analyzing centroid shifts to ensure the signal is from the target star and looking for secondary eclipses.</span></div>
+            </div>
+        </section>
+
+        <!-- How the AI works -->
+        <section id="how-it-works">
+            <h2>How the AI Works</h2>
+            <p class="lead">Our core model is a Convolutional Neural Network (CNN) specifically designed to identify patterns in 1D time-series data. It works by passing the light curve through a series of specialized layers.</p>
+            <div class="grid cols-2" style="margin-top:20px">
+                <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                    <h3 style="margin-bottom:10px">CNN Architecture</h3>
+                    <div class="tile">
+                        <svg viewBox="0 0 300 180" role="img" aria-label="Diagram of a simple Convolutional Neural Network (CNN) architecture.">
+                            <rect x="0" y="0" width="100%" height="100%" fill="#0c1130"/>
+                            <!-- Input Layer -->
+                            <rect x="20" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
+                            <text x="30" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Input</text>
+                            <text x="30" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">1D Signal</text>
+
+                            <!-- Convolutional Layer -->
+                            <rect x="60" y="70" width="30" height="40" rx="4" fill="#6aa5ff" opacity="0.6"/>
+                            <text x="75" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Conv</text>
+                            <line x1="40" y1="90" x2="60" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                            
+                            <!-- Pooling Layer -->
+                            <rect x="100" y="75" width="25" height="30" rx="4" fill="#8f7aff" opacity="0.6"/>
+                            <text x="112.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Pool</text>
+                            <line x1="90" y1="90" x2="100" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                            
+                            <!-- Dense Layer 1 -->
+                            <rect x="140" y="60" width="40" height="60" rx="4" fill="#6aa5ff" opacity="0.5"/>
+                            <text x="160" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 1</text>
+                            <line x1="125" y1="90" x2="140" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                            
+                            <!-- Dense Layer 2 -->
+                            <rect x="190" y="70" width="25" height="40" rx="4" fill="#6aa5ff" opacity="0.4"/>
+                            <text x="202.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 2</text>
+                            <line x1="180" y1="90" x2="190" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                            
+                            <!-- Output Layer -->
+                            <rect x="230" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
+                            <text x="240" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Output</text>
+                            <text x="240" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Prob.</text>
+                            <line x1="215" y1="90" x2="230" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>The Layers Explained</h3>
+                    <p class="muted">Each layer has a specific job in identifying the transit signal.</p>
+                    <div class="timeline">
+                        <div class="step"><strong>Convolutional Layers</strong><br><span class="muted">These layers act like small filters that slide over the light curve, automatically learning to recognize important features like the sharp drop and gradual return of a transit.</span></div>
+                        <div class="step"><strong>Pooling Layers</strong><br><span class="muted">After a convolutional layer, pooling reduces the dimensionality of the features while keeping the most important information. This helps make the model more robust to minor variations in the signal.</span></div>
+                        <div class="step"><strong>Fully Connected (Dense) Layers</strong><br><span class="muted">The final layers of the network take the extracted features and use them to make a final decision, outputting a probability score between 0 and 1, where 1 means high confidence of a planet.</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dataset -->
+        <section id="dataset">
+            <h2>Dataset & Access</h2>
+            <p class="lead">We support public light‑curve archives. Download sample datasets or open notebooks below. The primary challenge with this data is handling missing observations and normalization across different telescope cameras and time periods.</p>
+            <div class="grid cols-2" style="margin-top:10px">
+                <div class="card">
+                    <h3>Kepler / K2</h3>
+                    <p class="muted">Long baseline, high precision. Great for learning transit shapes. Data from the Kepler mission is ideal for finding planets with longer orbital periods.</p>
+                    <a class="btn" href="https://colab.research.google.com/drive/1u6p-qGg63664h1P1_Kz58Jd5e8j88q1c?usp=sharing" target="_blank" rel="noopener noreferrer">📓 Colab Notebook</a>
+                    <button class="btn" onclick="downloadCSV('kepler')">⬇ Download CSV</button>
+                </div>
+                <div class="card">
+                    <h3>TESS</h3>
+                    <p class="muted">All‑sky survey with shorter cadence; more stars, varied noise. The TESS mission's data is more suitable for detecting hot, fast-orbiting planets around nearby, bright stars.</p>
+                    <a class="btn" href="https://colab.research.com/drive/1A_w-N4-xX28o4mX93qT2s3f6f6f6f6f?usp=sharing" target="_blank" rel="noopener noreferrer">📓 Colab Notebook</a>
+                    <button class="btn" onclick="downloadCSV('tess')">⬇ Download CSV</button>
+                </div>
+            </div>
+            <div class="card" style="margin-top:12px">
+                <h3>Data Schema</h3>
+                <div style="overflow-x:auto;">
+                    <table aria-label="Data schema table">
+                        <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td>time</td><td>float</td><td>BJD or mission time</td></tr>
+                            <tr><td>flux</td><td>float</td><td>Normalized flux</td></tr>
+                            <tr><td>flux_err</td><td>float</td><td>Uncertainty</td></tr>
+                            <tr><td>quality</td><td>int</td><td>Data flags</td></tr>
+                            <tr><td>sector/quarter</td><td>int</td><td>TESS sector / Kepler quarter</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog -->
+        <section id="catalog">
+            <h2>Candidate Catalog</h2>
+            <p class="lead">A table of all detected candidates with key properties. This data is simulated based on the mission type you select.</p>
+            <div class="card" style="margin-top:10px">
+                <h3>Detected Planets</h3>
+                <div style="overflow-x:auto;">
+                    <table aria-label="Detected planets table">
+                        <thead>
+                            <tr>
+                                <th>Candidate ID</th>
+                                <th>Period (days)</th>
+                                <th>Radius ($$R_J$$)</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalog-table-body">
+                            <tr><td colspan="4" class="muted center">Run the detector to see results.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card" style="margin-top:12px">
+                <h3>Period vs. Radius</h3>
                 <div class="tile">
-                    <svg viewBox="0 0 300 180" role="img" aria-label="Diagram of a simple Convolutional Neural Network (CNN) architecture.">
-                        <rect x="0" y="0" width="100%" height="100%" fill="#0c1130"/>
-                        <!-- Input Layer -->
-                        <rect x="20" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
-                        <text x="30" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Input</text>
-                        <text x="30" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">1D Signal</text>
-
-                        <!-- Convolutional Layer -->
-                        <rect x="60" y="70" width="30" height="40" rx="4" fill="#6aa5ff" opacity="0.6"/>
-                        <text x="75" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Conv</text>
-                        <line x1="40" y1="90" x2="60" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                        
-                        <!-- Pooling Layer -->
-                        <rect x="100" y="75" width="25" height="30" rx="4" fill="#8f7aff" opacity="0.6"/>
-                        <text x="112.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Pool</text>
-                        <line x1="90" y1="90" x2="100" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                        
-                        <!-- Dense Layer 1 -->
-                        <rect x="140" y="60" width="40" height="60" rx="4" fill="#6aa5ff" opacity="0.5"/>
-                        <text x="160" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 1</text>
-                        <line x1="125" y1="90" x2="140" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                        
-                        <!-- Dense Layer 2 -->
-                        <rect x="190" y="70" width="25" height="40" rx="4" fill="#6aa5ff" opacity="0.4"/>
-                        <text x="202.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 2</text>
-                        <line x1="180" y1="90" x2="190" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                        
-                        <!-- Output Layer -->
-                        <rect x="230" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
-                        <text x="240" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Output</text>
-                        <text x="240" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Prob.</text>
-                        <line x1="215" y1="90" x2="230" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                    </svg>
+                    <svg id="period-radius-plot" viewBox="0 0 300 180" role="img" aria-label="Period vs Radius plot"></svg>
                 </div>
             </div>
-            <div class="card">
-                <h3>The Layers Explained</h3>
-                <p class="muted">Each layer has a specific job in identifying the transit signal.</p>
-                <div class="timeline">
-                    <div class="step"><strong>Convolutional Layers</strong><br><span class="muted">These layers act like small filters that slide over the light curve, automatically learning to recognize important features like the sharp drop and gradual return of a transit.</span></div>
-                    <div class="step"><strong>Pooling Layers</strong><br><span class="muted">After a convolutional layer, pooling reduces the dimensionality of the features while keeping the most important information. This helps make the model more robust to minor variations in the signal.</span></div>
-                    <div class="step"><strong>Fully Connected (Dense) Layers</strong><br><span class="muted">The final layers of the network take the extracted features and use them to make a final decision, outputting a probability score between 0 and 1, where 1 means high confidence of a planet.</span></div>
+        </section>
+
+        <!-- Results -->
+        <section id="results">
+            <h2>Results & Visuals</h2>
+            <p class="lead">Examples of detections. Each card shows a phase‑folded light curve with predicted probability.</p>
+            <div class="gallery" id="gallery"></div>
+            <div class="grid cols-3" style="margin-top:16px">
+                <div class="card">
+                    <h3>Confusion Matrix</h3>
+                    <p class="muted">Balanced validation set.</p>
+                    <div class="tile"><svg id="cm" viewBox="0 0 300 180" role="img" aria-label="Confusion matrix"></svg></div>
+                </div>
+                <div class="card">
+                    <h3>PR Curve</h3>
+                    <p class="muted">Area under curve highlights threshold trade‑offs.</p>
+                    <div class="tile"><svg id="pr" viewBox="0 0 300 180" role="img" aria-label="Precision‑Recall curve"></svg></div>
+                </div>
+                <div class="card">
+                    <h3>ROC Curve</h3>
+                    <p class="muted">Near‑perfect separability on held‑out sample.</p>
+                    <div class="tile"><svg id="roc" viewBox="0 0 300 180" role="img" aria-label="ROC curve"></svg></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Dataset -->
-    <section id="dataset">
-        <h2>Dataset & Access</h2>
-        <p class="lead">We support public light‑curve archives. Download sample datasets or open notebooks below. The primary challenge with this data is handling missing observations and normalization across different telescope cameras and time periods.</p>
-        <div class="grid cols-2" style="margin-top:10px">
-            <div class="card">
-                <h3>Kepler / K2</h3>
-                <p class="muted">Long baseline, high precision. Great for learning transit shapes. Data from the Kepler mission is ideal for finding planets with longer orbital periods.</p>
-                <a class="btn" href="https://colab.research.google.com/drive/1u6p-qGg63664h1P1_Kz58Jd5e8j88q1c?usp=sharing" target="_blank" rel="noopener noreferrer">📓 Colab Notebook</a>
-                <button class="btn" onclick="downloadCSV('kepler')">⬇ Download CSV</button>
+        <!-- Team -->
+        <section id="team">
+            <h2>Our Team</h2>
+            <div class="grid cols-3">
+                <div class="card">
+                    <h3>Agam Sahni</h3>
+                    <p class="muted">Data & Research · Pipeline, feature engineering, BLS search.</p>
+                    <p class="muted">alexpitt009@gmail.com</p>
+                    <span class="chip">Lightkurve</span> <span class="chip">NumPy</span>
+                </div>
+                <div class="card">
+                    <h3>Anmol Katiyar</h3>
+                    <p class="muted">ML Engineer · Data prep, CNN models, evaluation.</p>
+                    <p class="muted">anmolkatiyar084@gmail.com</p>
+                    <span class="chip">Python</span> <span class="chip">PyTorch</span>
+                </div>
+                <div class="card">
+                    <h3>Nidhin R</h3>
+                    <p class="muted">Web developer, AI and ML engineer</p>
+                    <p class="muted">r.nidhinofficial@gmail.com</p>
+                    <span class="chip">Full Stack</span> <span class="chip">AI/ML</span>
+                </div>
             </div>
-            <div class="card">
-                <h3>TESS</h3>
-                <p class="muted">All‑sky survey with shorter cadence; more stars, varied noise. The TESS mission's data is more suitable for detecting hot, fast-orbiting planets around nearby, bright stars.</p>
-                <a class="btn" href="https://colab.research.com/drive/1A_w-N4-xX28o4mX93qT2s3f6f6f6f6f?usp=sharing" target="_blank" rel="noopener noreferrer">📓 Colab Notebook</a>
-                <button class="btn" onclick="downloadCSV('tess')">⬇ Download CSV</button>
-            </div>
-        </div>
-        <div class="card" style="margin-top:12px">
-            <h3>Data Schema</h3>
-            <div style="overflow-x:auto;">
-                <table aria-label="Data schema table">
-                    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td>time</td><td>float</td><td>BJD or mission time</td></tr>
-                        <tr><td>flux</td><td>float</td><td>Normalized flux</td></tr>
-                        <tr><td>flux_err</td><td>float</td><td>Uncertainty</td></tr>
-                        <tr><td>quality</td><td>int</td><td>Data flags</td></tr>
-                        <tr><td>sector/quarter</td><td>int</td><td>TESS sector / Kepler quarter</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Catalog -->
-    <section id="catalog">
-        <h2>Candidate Catalog</h2>
-        <p class="lead">A table of all detected candidates with key properties. This data is simulated based on the mission type you select.</p>
-        <div class="card" style="margin-top:10px">
-            <h3>Detected Planets</h3>
-            <div style="overflow-x:auto;">
-                <table aria-label="Detected planets table">
-                    <thead>
-                        <tr>
-                            <th>Candidate ID</th>
-                            <th>Period (days)</th>
-                            <th>Radius ($$R_J$$)</th>
-                            <th>Confidence</th>
-                        </tr>
-                    </thead>
-                    <tbody id="catalog-table-body">
-                        <tr><td colspan="4" class="muted center">Run the detector to see results.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card" style="margin-top:12px">
-            <h3>Period vs. Radius</h3>
-            <div class="tile">
-                <svg id="period-radius-plot" viewBox="0 0 300 180" role="img" aria-label="Period vs Radius plot"></svg>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results -->
-    <section id="results">
-        <h2>Results & Visuals</h2>
-        <p class="lead">Examples of detections. Each card shows a phase‑folded light curve with predicted probability.</p>
-        <div class="gallery" id="gallery"></div>
-        <div class="grid cols-3" style="margin-top:16px">
-            <div class="card">
-                <h3>Confusion Matrix</h3>
-                <p class="muted">Balanced validation set.</p>
-                <div class="tile"><svg id="cm" viewBox="0 0 300 180" role="img" aria-label="Confusion matrix"></svg></div>
-            </div>
-            <div class="card">
-                <h3>PR Curve</h3>
-                <p class="muted">Area under curve highlights threshold trade‑offs.</p>
-                <div class="tile"><svg id="pr" viewBox="0 0 300 180" role="img" aria-label="Precision‑Recall curve"></svg></div>
-            </div>
-            <div class="card">
-                <h3>ROC Curve</h3>
-                <p class="muted">Near‑perfect separability on held‑out sample.</p>
-                <div class="tile"><svg id="roc" viewBox="0 0 300 180" role="img" aria-label="ROC curve"></svg></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section id="team">
-        <h2>Our Team</h2>
-        <div class="grid cols-3">
-            <div class="card">
-                <h3>Agam Sahni</h3>
-                <p class="muted">Data & Research · Pipeline, feature engineering, BLS search.</p>
-                <p class="muted">alexpitt009@gmail.com</p>
-                <span class="chip">Lightkurve</span> <span class="chip">NumPy</span>
-            </div>
-            <div class="card">
-                <h3>Anmol Katiyar</h3>
-                <p class="muted">ML Engineer · Data prep, CNN models, evaluation.</p>
-                <p class="muted">anmolkatiyar084@gmail.com</p>
-                <span class="chip">Python</span> <span class="chip">PyTorch</span>
-            </div>
-            <div class="card">
-                <h3>Nidhin R</h3>
-                <p class="muted">Web developer, AI and ML engineer</p>
-                <p class="muted">r.nidhinofficial@gmail.com</p>
-                <span class="chip">Full Stack</span> <span class="chip">AI/ML</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-        <h2>Contact</h2>
-        <p class="lead">Want to collaborate or use our models? Send us a message.</p>
-        <form class="card" onsubmit="event.preventDefault(); showMessage('Thanks! We\'ll get back to you.', 'success');">
-            <div class="grid cols-2">
-                <label>
-                    <span class="muted">Name</span>
-                    <input type="text" class="inp" placeholder="Your name" required>
+        <!-- Contact -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <p class="lead">Want to collaborate or use our models? Send us a message.</p>
+            <form class="card" onsubmit="event.preventDefault(); showMessage('Thanks! We\'ll get back to you.', 'success');">
+                <div class="grid cols-2">
+                    <label>
+                        <span class="muted">Name</span>
+                        <input type="text" class="inp" placeholder="Your name" required>
+                    </label>
+                    <label>
+                        <span class="muted">Email</span>
+                        <input type="email" class="inp" placeholder="your@email.com" required>
+                    </label>
+                </div>
+                <label style="margin-top:12px">
+                    <span class="muted">Message</span>
+                    <textarea class="inp" rows="4" placeholder="Tell us about your project or question..." required></textarea>
                 </label>
-                <label>
-                    <span class="muted">Email</span>
-                    <input type="email" class="inp" placeholder="your@email.com" required>
-                </label>
-            </div>
-            <label style="margin-top:12px">
-                <span class="muted">Message</span>
-                <textarea class="inp" rows="4" placeholder="Tell us about your project or question..." required></textarea>
-            </label>
-            <button type="submit" class="btn primary" style="margin-top:14px">Send Message</button>
-        </form>
-    </section>
+                <button type="submit" class="btn primary" style="margin-top:14px">Send Message</button>
+            </form>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-inner">
-            <div class="notice">© 2025 ExoAI Team · Student research project for educational purposes</div>
-            <div>
-                <a href="#team" style="opacity:.8">Team</a> · 
-                <a href="#contact" style="opacity:.8">Contact</a>
+        <!-- Footer -->
+        <footer>
+            <div class="footer-inner">
+                <div class="notice">© 2025 ExoAI Team · Student research project for educational purposes</div>
+                <div>
+                    <a href="#team" style="opacity:.8">Team</a> · 
+                    <a href="#contact" style="opacity:.8">Contact</a>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <script>
+        // Splash Screen Handler - Added without changing existing code
+        document.addEventListener('DOMContentLoaded', () => {
+            const splashScreen = document.getElementById('splashScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Hide splash and show main content after 6 seconds
+            setTimeout(() => {
+                splashScreen.classList.add('hide');
+                setTimeout(() => {
+                    mainContent.classList.add('show');
+                    splashScreen.style.display = 'none';
+                }, 800);
+            }, 6000);
+            
+            // Start animations
+            animate();
+            
+            // Render static charts
+            setTimeout(() => {
+                renderConfusionMatrix();
+                renderPRCurve();
+                renderROCCurve();
+            }, 100);
+            
+            // Event listeners
+            document.getElementById('runDetectorBtn')?.addEventListener('click', runDetector);
+        });
+
         // Optimized JavaScript for better performance
         let animationId;
         let time = 0;
@@ -1125,22 +1322,6 @@
             status.textContent = msg;
             status.style.color = type === 'success' ? 'var(--ok)' : 'var(--warn)';
         }
-
-        // Initialize everything when DOM loads
-        document.addEventListener('DOMContentLoaded', () => {
-            // Start animations
-            animate();
-            
-            // Render static charts
-            setTimeout(() => {
-                renderConfusionMatrix();
-                renderPRCurve();
-                renderROCCurve();
-            }, 100);
-            
-            // Event listeners
-            document.getElementById('runDetectorBtn')?.addEventListener('click', runDetector);
-        });
 
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
