@@ -18,9 +18,9 @@
         html{scroll-behavior:smooth}
         body{margin:0;font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(1200px 800px at 80% -10%,#1a224a 0%, transparent 60%), radial-gradient(800px 500px at -10% 10%, #1b1037 0%, transparent 60%), var(--bg);overflow-x:hidden;position:relative;}
         a{color:inherit;text-decoration:none}
-        img{max-width:100%;display:block}
+        img,video{max-width:100%;display:block}
         
-        /* Advanced Neon Light Effects */
+        /* Optimized Neon Effects - Reduced complexity */
         .neon-container {
             position: fixed;
             top: 0;
@@ -37,64 +37,25 @@
             border-radius: 50%;
             filter: blur(1px);
             animation: neonFloat 20s infinite ease-in-out;
+            will-change: transform;
         }
         
         .neon-orb.blue {
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.6) 0%, rgba(0, 212, 255, 0.1) 40%, transparent 70%);
-            box-shadow: 0 0 60px rgba(0, 212, 255, 0.4), inset 0 0 60px rgba(0, 212, 255, 0.2);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.4) 0%, rgba(0, 212, 255, 0.05) 40%, transparent 70%);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
         }
         
         .neon-orb.purple {
-            background: radial-gradient(circle, rgba(183, 66, 255, 0.6) 0%, rgba(183, 66, 255, 0.1) 40%, transparent 70%);
-            box-shadow: 0 0 60px rgba(183, 66, 255, 0.4), inset 0 0 60px rgba(183, 66, 255, 0.2);
-        }
-        
-        .neon-orb.cyan {
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.6) 0%, rgba(0, 255, 255, 0.1) 40%, transparent 70%);
-            box-shadow: 0 0 60px rgba(0, 255, 255, 0.4), inset 0 0 60px rgba(0, 255, 255, 0.2);
-        }
-        
-        .neon-orb.pink {
-            background: radial-gradient(circle, rgba(255, 0, 128, 0.6) 0%, rgba(255, 0, 128, 0.1) 40%, transparent 70%);
-            box-shadow: 0 0 60px rgba(255, 0, 128, 0.4), inset 0 0 60px rgba(255, 0, 128, 0.2);
+            background: radial-gradient(circle, rgba(183, 66, 255, 0.4) 0%, rgba(183, 66, 255, 0.05) 40%, transparent 70%);
+            box-shadow: 0 0 30px rgba(183, 66, 255, 0.2);
         }
         
         @keyframes neonFloat {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.7; }
-            25% { transform: translate(150px, -100px) scale(1.2) rotate(90deg); opacity: 0.9; }
-            50% { transform: translate(-100px, 150px) scale(0.8) rotate(180deg); opacity: 0.6; }
-            75% { transform: translate(200px, 50px) scale(1.1) rotate(270deg); opacity: 0.8; }
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            50% { transform: translate(100px, -50px) scale(1.1); opacity: 0.8; }
         }
         
-        /* Moving Bubbles */
-        .bubble {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), rgba(106, 165, 255, 0.05));
-            border: 1px solid rgba(106, 165, 255, 0.2);
-            animation: bubbleRise linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        @keyframes bubbleRise {
-            0% {
-                transform: translateY(100vh) translateX(-20px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(20px);
-                opacity: 0;
-            }
-        }
-        
-        /* Enhanced Grid with Neon */
+        /* Optimized Grid */
         .cyber-grid {
             position: fixed;
             top: 0;
@@ -102,220 +63,104 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(183, 66, 255, 0.08) 1px, transparent 1px);
+                linear-gradient(rgba(0, 212, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(183, 66, 255, 0.06) 1px, transparent 1px);
             background-size: 120px 120px;
-            animation: gridPulse 8s linear infinite;
             pointer-events: none;
             z-index: 0;
+            opacity: 0.4;
         }
         
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.3; transform: translate(0, 0); }
-            50% { opacity: 0.6; transform: translate(60px, 60px); }
-        }
-        
-        /* Neon Text Effects */
+        /* Simplified Neon Text */
         .neon-text {
-            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue);
-            animation: neonGlow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 10px var(--neon-blue);
+            animation: neonGlow 3s ease-in-out infinite alternate;
         }
         
         @keyframes neonGlow {
-            from { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue); }
-            to { text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan); }
+            from { text-shadow: 0 0 10px var(--neon-blue); }
+            to { text-shadow: 0 0 15px var(--neon-cyan); }
         }
         
-        /* Advanced Card Effects */
+        /* Optimized Cards */
         .card {
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             border: 1px solid rgba(157,178,255,.15);
             background: linear-gradient(135deg, 
-                rgba(255,255,255,.08) 0%, 
+                rgba(255,255,255,.06) 0%, 
                 rgba(255,255,255,.02) 50%, 
-                rgba(106, 165, 255, 0.05) 100%);
+                rgba(106, 165, 255, 0.03) 100%);
+            border-radius: 18px;
+            padding: 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                transparent, 
-                rgba(0, 212, 255, 0.3), 
-                transparent, 
-                rgba(183, 66, 255, 0.3), 
-                transparent);
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(106, 165, 255, 0.1);
+        }
+        
+        /* Video Container */
+        .video-container {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .video-wrapper {
+            position: relative;
             border-radius: 20px;
-            z-index: -1;
-            animation: borderNeonPulse 4s ease-in-out infinite;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(106, 165, 255, 0.2);
         }
         
-        .card::after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(45deg, 
-                rgba(0, 255, 255, 0.1), 
-                rgba(255, 0, 128, 0.1), 
-                rgba(183, 66, 255, 0.1));
-            border-radius: 19px;
-            z-index: -2;
-            opacity: 0;
-            animation: borderNeonGlow 6s ease-in-out infinite;
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         
-        @keyframes borderNeonPulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.02); }
-        }
-        
-        @keyframes borderNeonGlow {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.6; }
-        }
-        
-        /* Enhanced Button Effects */
+        /* Optimized Button Effects */
         .btn {
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;background:#12183a;border:1px solid rgba(157,178,255,.2);
+            cursor: pointer;
         }
         
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
+        .btn:hover {
+            border-color:rgba(157,178,255,.5);
+            transform: translateY(-1px);
         }
         
         .btn.primary {
-            box-shadow: 
-                0 0 20px rgba(106, 165, 255, 0.5),
-                0 0 40px rgba(143, 122, 255, 0.3),
-                inset 0 0 20px rgba(255, 255, 255, 0.1);
-            animation: buttonPulse 3s ease-in-out infinite;
+            background:linear-gradient(90deg,var(--accent),var(--accent-2));
+            box-shadow:0 0 20px rgba(106, 165, 255, 0.3);
+            border:0;
+            color:#081022;
         }
         
-        @keyframes buttonPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(106, 165, 255, 0.5), 0 0 40px rgba(143, 122, 255, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(106, 165, 255, 0.8), 0 0 60px rgba(143, 122, 255, 0.5); }
+        .btn.primary:hover {
+            box-shadow: 0 0 30px rgba(106, 165, 255, 0.5);
         }
         
-        /* Floating Light Particles */
-        .light-particle {
-            position: fixed;
-            width: 3px;
-            height: 3px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 1), transparent);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: lightFloat 12s linear infinite;
-            z-index: 1;
-        }
+        /* Optimized Planets */
+        .orbits{position:absolute;inset:0;pointer-events:none}
+        .planet{position:absolute;border-radius:50%;filter:drop-shadow(0 10px 40px rgba(128,158,255,.2));animation:planetFloat 15s ease-in-out infinite;will-change:transform}
+        .planet.one{width:160px;height:160px;background:radial-gradient(circle at 30% 30%, #9fb8ff, #4b6cff 60%, #2b2f70);top:-40px;right:-30px}
+        .planet.two{width:90px;height:90px;background:radial-gradient(circle at 40% 35%, #ffd36a, #f6a16f 60%, #632e3a);bottom:30px;left:8%;animation-delay:-5s}
+        .ringed{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #d6b2ff, #7b5cff 60%, #2a125c);top:30%;left:-40px;animation:planetFloat 18s ease-in-out infinite;animation-delay:-3s}
+        .ring{position:absolute;inset:-10px;border-radius:50%;border:6px solid rgba(255,255,255,.15);transform:skewY(12deg) rotate(-15deg)}
         
-        .light-particle.purple {
-            background: radial-gradient(circle, rgba(183, 66, 255, 1), transparent);
-        }
-        
-        .light-particle.cyan {
-            background: radial-gradient(circle, rgba(0, 255, 255, 1), transparent);
-        }
-        
-        .light-particle.pink {
-            background: radial-gradient(circle, rgba(255, 0, 128, 1), transparent);
-        }
-        
-        @keyframes lightFloat {
-            0% {
-                transform: translateY(100vh) translateX(0px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(50px);
-                opacity: 0;
-            }
-        }
-        
-        /* Enhanced Hero Section */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(183, 66, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
-            animation: heroNeonGlow 8s ease-in-out infinite alternate;
-            pointer-events: none;
-        }
-        
-        @keyframes heroNeonGlow {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
-        
-        /* Logo Loading Screen */
-        .logo-loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease-out;
-        }
-        .logo-loading-screen.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .logo-loading-screen img {
-            max-width: 200px;
-            max-height: 200px;
-            margin-bottom: 20px;
-            animation: logoNeonPulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8));
-        }
-        @keyframes logoNeonPulse {
-            0%, 100% { 
-                opacity: 1; 
-                transform: scale(1); 
-                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8));
-            }
-            50% { 
-                opacity: 0.8; 
-                transform: scale(1.05); 
-                filter: drop-shadow(0 0 50px rgba(183, 66, 255, 1));
-            }
+        @keyframes planetFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(8px, -10px) rotate(180deg); }
         }
         
         /* Header */
@@ -324,49 +169,35 @@
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px}
         .brand .logo{width:32px;height:32px;border-radius:50%;background:conic-gradient(from 210deg,#6aa5ff,#8f7aff,#6aa5ff);box-shadow:0 0 0 4px rgba(138,145,255,.15), 0 10px 30px rgba(110,140,255,.35)}
         .spacer{flex:1}
-        .nav a{opacity:.9;padding:10px 12px;border-radius:12px}
+        .nav a{opacity:.9;padding:10px 12px;border-radius:12px;transition:all 0.2s ease}
         .nav a:hover{background:rgba(157,178,255,.12);opacity:1}
         .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:14px;font-weight:700;box-shadow:var(--ring)}
+        
         /* Hero */
         .hero{position:relative;overflow:hidden}
         .hero-inner{max-width:1100px;margin:0 auto;padding:72px 20px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;position:relative;z-index:2}
         .hero h1{font-size:clamp(28px,4.8vw,52px);line-height:1.05;margin:8px 0 14px}
         .hero p{color:var(--muted);font-size:clamp(16px,2vw,18px)}
         .hero .actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-        .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;background:#12183a;border:1px solid rgba(157,178,255,.2)}
-        .btn:hover{border-color:rgba(157,178,255,.5)}
-        .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:var(--ring);border:0;color:#081022}
         .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9999px;background:rgba(106,165,255,.12);border:1px solid rgba(157,178,255,.25);font-size:14px;margin-bottom:10px}
-        /* Decorative planets */
-        .orbits{position:absolute;inset:0;pointer-events:none}
-        .planet{position:absolute;border-radius:50%;filter:drop-shadow(0 10px 40px rgba(128,158,255,.35));animation:planetFloat 12s ease-in-out infinite}
-        .planet.one{width:160px;height:160px;background:radial-gradient(circle at 30% 30%, #9fb8ff, #4b6cff 60%, #2b2f70);top:-40px;right:-30px}
-        .planet.two{width:90px;height:90px;background:radial-gradient(circle at 40% 35%, #ffd36a, #f6a16f 60%, #632e3a);bottom:30px;left:8%;animation-delay:-4s}
-        .ringed{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #d6b2ff, #7b5cff 60%, #2a125c);top:30%;left:-40px;animation:planetFloat 15s ease-in-out infinite;animation-delay:-2s}
-        .ring{position:absolute;inset:-10px;border-radius:50%;border:6px solid rgba(255,255,255,.2);transform:skewY(12deg) rotate(-15deg)}
         
-        @keyframes planetFloat {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(10px, -15px) rotate(120deg); }
-            66% { transform: translate(-8px, 10px) rotate(240deg); }
-        }
-        
-        /* Sections */
+        /* Sections - Optimized */
         section{max-width:1100px;margin:0 auto;padding:70px 20px;position:relative;z-index:2}
         h2{font-size:clamp(22px,3.6vw,36px);margin:0 0 16px}
         .lead{color:var(--muted);max-width:900px}
         .grid{display:grid;gap:16px}
         @media (min-width: 900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)} }
-        .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid rgba(157,178,255,.15);border-radius:18px;padding:18px}
         .card h3{margin:8px 0 6px}
         .chip{display:inline-block;margin:6px 6px 0 0;background:rgba(157,178,255,.12);border:1px solid rgba(157,178,255,.25);padding:6px 10px;border-radius:9999px;font-size:13px}
         .kpi{display:flex;align-items:center;gap:12px;padding:16px 14px;border-radius:14px;background:rgba(26,34,74,.6);border:1px solid rgba(157,178,255,.18)}
-        /* Timeline */
+        
+        /* Timeline - Simplified */
         .timeline{position:relative;margin-top:18px}
         .timeline:before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),transparent)}
         .step{position:relative;margin-left:38px;margin-bottom:14px;padding:14px 16px;border-radius:14px;background:rgba(8,12,28,.7);border:1px solid rgba(157,178,255,.15)}
         .step:before{content:"";position:absolute;left:-30px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(106,165,255,.25)}
-        /* Table */
+        
+        /* Table - Optimized */
         table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:10px}
         th,td{text-align:left;padding:12px 14px}
         thead th{font-weight:700;color:#c8d6ff}
@@ -374,17 +205,22 @@
         tbody tr td{border-top:1px solid rgba(157,178,255,.12);border-bottom:1px solid rgba(157,178,255,.12)}
         tbody tr td:first-child{border-left:1px solid rgba(157,178,255,.12);border-top-left-radius:12px;border-bottom-left-radius:12px}
         tbody tr td:last-child{border-right:1px solid rgba(157,178,255,.12);border-top-right-radius:12px;border-bottom-right-radius:12px}
-        /* Gallery */
+        
+        /* Gallery - Optimized */
         .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}
         .tile{position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(157,178,255,.18);background:#0c1130;aspect-ratio:16/10}
         .tile canvas, .tile svg{position:absolute;inset:0;width:100%;height:100%}
+        
         /* Footer */
         footer{border-top:1px solid rgba(157,178,255,.15);padding:24px 20px;color:#aebdff;background:rgba(6,8,20,.5);position:relative;z-index:2}
         .footer-inner{max-width:1100px;margin:0 auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
         .notice{font-size:13px;opacity:.9}
-        /* Inputs (kept here to avoid long top section) */
-        .inp{margin-top:6px;background:#0a0f24;border:1px solid rgba(157,178,255,.25);border-radius:12px;padding:10px 12px;color:var(--text);outline:none}
+        
+        /* Inputs */
+        .inp{margin-top:6px;background:#0a0f24;border:1px solid rgba(157,178,255,.25);border-radius:12px;padding:10px 12px;color:var(--text);outline:none;transition:border-color 0.2s ease}
         .inp:focus{border-color:var(--accent);box-shadow:var(--ring)}
+        
+        /* Loading - Optimized */
         .loading-container {
             display: flex;
             flex-direction: column;
@@ -410,11 +246,10 @@
             text-align: center;
         }
 
-        /* --- New responsive styles --- */
-        /* Tablet & Small Desktop (screens up to 1024px) */
+        /* Responsive - Optimized */
         @media (max-width: 1024px) {
             .hero-inner {
-                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+                grid-template-columns: 1fr;
                 padding: 48px 20px;
             }
             .hero h1 {
@@ -431,7 +266,7 @@
                 justify-content: center;
             }
             .spacer {
-                display: none; /* Hide navigation links on smaller screens for simplicity */
+                display: none;
             }
             .nav .cta {
                 margin-left: auto;
@@ -441,10 +276,10 @@
             }
             .grid.cols-3,
             .grid.cols-2 {
-                grid-template-columns: 1fr; /* Stack grid columns */
+                grid-template-columns: 1fr;
             }
             .kpi {
-                flex-grow: 1; /* Allow KPIs to fill space */
+                flex-grow: 1;
                 justify-content: center;
             }
             .footer-inner {
@@ -454,7 +289,6 @@
             }
         }
 
-        /* Mobile (screens up to 600px) */
         @media (max-width: 600px) {
             .nav-inner {
                 flex-direction: column;
@@ -500,23 +334,38 @@
             }
         }
 
+        /* Performance optimizations */
+        * {
+            will-change: auto;
+        }
+        
+        .neon-orb, .planet {
+            will-change: transform;
+        }
+        
+        .btn, .card {
+            will-change: transform;
+        }
     </style>
 </head>
 <body>
-    <!-- Advanced Neon Effects Container -->
+    <!-- Optimized Neon Effects -->
     <div class="neon-container">
-        <div class="neon-orb blue" style="width: 200px; height: 200px; top: 10%; left: 5%; animation-delay: 0s;"></div>
-        <div class="neon-orb purple" style="width: 150px; height: 150px; top: 60%; right: 10%; animation-delay: -5s;"></div>
-        <div class="neon-orb cyan" style="width: 180px; height: 180px; bottom: 20%; left: 15%; animation-delay: -10s;"></div>
-        <div class="neon-orb pink" style="width: 120px; height: 120px; top: 30%; right: 30%; animation-delay: -15s;"></div>
+        <div class="neon-orb blue" style="width: 180px; height: 180px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="neon-orb purple" style="width: 140px; height: 140px; top: 60%; right: 10%; animation-delay: -8s;"></div>
     </div>
     
-    <!-- Enhanced Cyber Grid -->
+    <!-- Optimized Grid -->
     <div class="cyber-grid"></div>
     
-    <!-- Logo Loading Screen -->
-    <div class="logo-loading-screen" id="logoScreen">
-        <img src="logo.png" alt="Logo">
+    <!-- Video Section -->
+    <div class="video-container">
+        <div class="video-wrapper">
+            <video autoplay muted loop playsinline>
+                <source src="video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     </div>
 
     <!-- Nav -->
@@ -788,475 +637,264 @@
         <form class="card" onsubmit="event.preventDefault(); showMessage('Thanks! We\'ll get back to you.', 'success');">
             <div class="grid cols-2">
                 <label>
-                    Name
-                    <input required name="name" aria-label="Name" style="width:100%" class="inp" />
+                    <span class="muted">Name</span>
+                    <input type="text" class="inp" placeholder="Your name" required>
                 </label>
                 <label>
-                    Email
-                    <input required type="email" name="email" aria-label="Email" style="width:100%" class="inp" />
+                    <span class="muted">Email</span>
+                    <input type="email" class="inp" placeholder="your@email.com" required>
                 </label>
             </div>
-            <label style="display:block;margin-top:10px">
-                Message
-                <textarea required name="msg" rows="4" aria-label="Message" style="width:100%" class="inp"></textarea>
+            <label style="margin-top:12px">
+                <span class="muted">Message</span>
+                <textarea class="inp" rows="4" placeholder="Tell us about your project or question..." required></textarea>
             </label>
-            <div style="display:flex;gap:10px;margin-top:12px">
-                <button class="btn primary" type="submit">Send Message</button>
-                <a class="btn" href="mailto:contact@exoai.org">Email us</a>
-            </div>
+            <button type="submit" class="btn primary" style="margin-top:14px">Send Message</button>
         </form>
-        <div id="message-box" style="margin-top:10px;padding:12px;border-radius:12px;font-size:14px;display:none;"></div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-inner">
-            <div class="notice">© <span id="year"></span> ExoAI · Student Project. Built with HTML, CSS & vanilla JS.</div>
+            <div class="notice">© 2025 ExoAI Team · Student research project for educational purposes</div>
             <div>
-                <a href="#about">About</a> · <a href="#pipeline">Pipeline</a> · <a href="#how-it-works">How the AI Works</a> · <a href="#dataset">Dataset</a> · <a href="#catalog">Catalog</a> · <a href="#results">Results</a>
+                <a href="#team" style="opacity:.8">Team</a> · 
+                <a href="#contact" style="opacity:.8">Contact</a> · 
+                <span style="opacity:.6">NASA Space Apps 2025</span>
             </div>
         </div>
     </footer>
 
     <script>
-        // Logo Loading Screen
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.getElementById('logoScreen').classList.add('fade-out');
-            }, 6000); // Show logo for 6 seconds
-        });
+        // Optimized JavaScript for better performance
+        let animationId;
+        let time = 0;
+        let detectorRunning = false;
 
-        // Advanced Particle Systems
-        function createBubbles() {
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    const bubble = document.createElement('div');
-                    bubble.className = 'bubble';
-                    const size = Math.random() * 40 + 20;
-                    bubble.style.width = size + 'px';
-                    bubble.style.height = size + 'px';
-                    bubble.style.left = Math.random() * 100 + '%';
-                    bubble.style.animationDelay = Math.random() * 5 + 's';
-                    bubble.style.animationDuration = (15 + Math.random() * 10) + 's';
-                    document.body.appendChild(bubble);
-                    
-                    setTimeout(() => {
-                        if (bubble.parentNode) {
-                            bubble.parentNode.removeChild(bubble);
-                        }
-                    }, 25000);
-                }, i * 3000);
-            }
-        }
-
-        function createLightParticles() {
-            const colors = ['', 'purple', 'cyan', 'pink'];
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'light-particle ' + colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 12 + 's';
-                    particle.style.animationDuration = (12 + Math.random() * 8) + 's';
-                    document.body.appendChild(particle);
-                    
-                    setTimeout(() => {
-                        if (particle.parentNode) {
-                            particle.parentNode.removeChild(particle);
-                        }
-                    }, 20000);
-                }, i * 1500);
-            }
-        }
-
-        // Start all particle systems
-        createBubbles();
-        createLightParticles();
-        setInterval(createBubbles, 25000);
-        setInterval(createLightParticles, 20000);
-
-        // Dynamic year
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Message box instead of alert
-        function showMessage(text, type) {
-            const box = document.getElementById('message-box');
-            box.textContent = text;
-            box.style.display = 'block';
-            box.style.backgroundColor = type === 'success' ? '#1f2833' : '#331f1f';
-            box.style.color = type === 'success' ? '#66fcf1' : '#ffd36a';
-            setTimeout(() => box.style.display = 'none', 5000);
-        }
-
-        // CSV Download function
-        function downloadCSV(mission) {
-            let csvContent = "data:text/csv;charset=utf-8,";
-            let headers = "time,flux,flux_err,quality\n";
-            csvContent += headers;
-            const numPoints = 1000;
-            const period = mission === 'kepler' ? 100 : 50;
-            const depth = mission === 'kepler' ? 0.01 : 0.02;
-
-            for(let i = 0; i < numPoints; i++) {
-                const time = i * 0.5;
-                let flux = 1.0;
-                // Add a simulated transit
-                const phase = (time % period) / period;
-                if (phase > 0.4 && phase < 0.6) {
-                    flux -= depth;
-                }
-                const flux_err = Math.random() * 0.005 + 0.001;
-                const quality = 0;
-                csvContent += `${time.toFixed(2)},${flux.toFixed(6)},${flux_err.toFixed(6)},${quality}\n`;
-            }
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `${mission}_sample_data.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showMessage(`Downloading sample ${mission.toUpperCase()} CSV file...`, 'success');
-        }
-
-        // New mission-specific configurations
-        const missionConfigs = {
-            kepler: {
-                precision: '97.2%',
-                recall: '94.8%',
-                modelSize: '1.8M',
-                demoPeriod: 80,
-                demoDepth: 0.015,
-                demoNoise: 0.004,
-                demoBG: '#0c1130',
-                candidates: [
-                    { id: "Kepler-22b", period: 289.86, radius: 2.38, confidence: 0.99, flux_depth: 0.0004 },
-                    { id: "Kepler-186f", period: 130.8, radius: 1.11, confidence: 0.97, flux_depth: 0.0003 },
-                    { id: "Kepler-452b", period: 384.8, radius: 1.63, confidence: 0.98, flux_depth: 0.0007 },
-                    { id: "Kepler-62e", period: 122.4, radius: 1.61, confidence: 0.96, flux_depth: 0.0006 },
-                    { id: "Kepler-10b", period: 0.838, radius: 1.47, confidence: 0.99, flux_depth: 0.0003 }
-                ],
-                cm: {
-                    tp: 87, fp: 3, fn: 5, tn: 95
-                },
-                pr: [{x:0,y:1},{x:0.1,y:0.98},{x:0.2,y:0.97},{x:0.4,y:0.95},{x:0.6,y:0.93},{x:0.8,y:0.91},{x:1,y:0.9}],
-                roc: [{x:0,y:0},{x:0.2,y:0.9},{x:0.4,y:0.95},{x:0.6,y:0.98},{x:0.8,y:0.99},{x:1,y:1}],
-            },
-            tess: {
-                precision: '96.5%',
-                recall: '92.1%',
-                modelSize: '2.1M',
-                demoPeriod: 4,
-                demoDepth: 0.02,
-                demoNoise: 0.008,
-                demoBG: '#1b1037',
-                candidates: [
-                    { id: "TOI-700d", period: 37.4, radius: 1.14, confidence: 0.98, flux_depth: 0.0007 },
-                    { id: "LHS 3844b", period: 0.439, radius: 1.3, confidence: 0.99, flux_depth: 0.0015 },
-                    { id: "WASP-18b", period: 0.941, radius: 1.17, confidence: 0.99, flux_depth: 0.008 },
-                    { id: "HD 219134 b", period: 3.09, radius: 1.6, confidence: 0.96, flux_depth: 0.0006 }
-                ],
-                cm: {
-                    tp: 78, fp: 4, fn: 8, tn: 90
-                },
-                pr: [{x:0,y:1},{x:0.1,y:0.96},{x:0.2,y:0.94},{x:0.4,y:0.92},{x:0.6,y:0.9},{x:0.8,y:0.88},{x:1,y:0.85}],
-                roc: [{x:0,y:0},{x:0.2,y:0.85},{x:0.4,y:0.92},{x:0.6,y:0.96},{x:0.8,y:0.98},{x:1,y:1}],
-            }
-        };
-
-        const canvas = document.getElementById('curve');
-        const ctx = canvas.getContext('2d');
-        const runBtn = document.getElementById('runDetectorBtn');
-        const statusMessage = document.getElementById('status-message');
-        const datasetSelect = document.getElementById('dataset-select');
-        const catalogTableBody = document.getElementById('catalog-table-body');
-        const gallery = document.getElementById('gallery');
-        const periodRadiusPlot = document.getElementById('period-radius-plot');
-        const cmPlot = document.getElementById('cm');
-        const prPlot = document.getElementById('pr');
-        const rocPlot = document.getElementById('roc');
-        
-        // Function to update the KPI values
-        function updateKPIs() {
-            const mission = datasetSelect.value;
-            const config = missionConfigs[mission];
-            document.querySelector('#precision-kpi strong').textContent = config.precision;
-            document.querySelector('#recall-kpi strong').textContent = config.recall;
-            document.querySelector('#model-size-kpi strong').textContent = config.modelSize;
-            statusMessage.textContent = `Detector ready. Select data and run.`;
-            statusMessage.style.color = 'var(--ok)';
-        }
-
-        // Function to draw a line plot on a canvas
-        function drawLinePlot(canvas, data, period, depth, noise, bg) {
-            const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            ctx.scale(dpr, dpr);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = bg;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Fast graph rendering with requestAnimationFrame
+        function renderLightCurve() {
+            const canvas = document.getElementById('curve');
+            if (!canvas) return;
             
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            
+            ctx.clearRect(0, 0, w, h);
             ctx.strokeStyle = '#6aa5ff';
             ctx.lineWidth = 2;
             ctx.beginPath();
             
-            const totalTime = 400;
+            // Optimized curve rendering
             const points = 200;
-            const step = totalTime / points;
-            
             for (let i = 0; i < points; i++) {
-                const t = i * step;
-                let flux = 1.0;
+                const x = (i / points) * w;
+                let y = h/2 + Math.sin(i * 0.1 + time * 0.02) * 15;
                 
-                // Add periodic transit signal
-                const phase = (t % period) / period;
-                if (phase > 0.45 && phase < 0.55) {
-                    flux -= depth;
+                // Add transit dip
+                const transitPhase = ((i + time * 0.5) % 50) / 50;
+                if (transitPhase > 0.4 && transitPhase < 0.6) {
+                    y += 25 * Math.sin((transitPhase - 0.4) * Math.PI / 0.2);
                 }
                 
-                // Add noise
-                flux += (Math.random() - 0.5) * noise;
-                
-                const x = (t / totalTime) * canvas.width / dpr;
-                const y = (1 - (flux - 0.95) / 0.1) * canvas.height / dpr; // Normalize for plot
-                
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
             }
             ctx.stroke();
+            
+            time += 1;
         }
 
-        let animationFrameId;
-        function animateCanvas() {
-            const mission = datasetSelect.value;
-            const config = missionConfigs[mission];
-            const time = (Date.now() / 1000) % (config.demoPeriod * 2);
-            drawLinePlot(canvas, [], config.demoPeriod, config.demoDepth, config.demoNoise, config.demoBG);
-            animationFrameId = requestAnimationFrame(animateCanvas);
+        // Optimized animation loop
+        function animate() {
+            renderLightCurve();
+            animationId = requestAnimationFrame(animate);
         }
 
-        // Function to draw a simple SVG line chart
-        function drawLineSvg(svg, data, color) {
-            const { width, height } = svg.getBoundingClientRect();
-            svg.innerHTML = '';
+        // Fast chart rendering functions
+        function renderConfusionMatrix() {
+            const svg = document.getElementById('cm');
+            if (!svg) return;
             
-            const margin = {top: 20, right: 20, bottom: 20, left: 20};
-            const innerWidth = width - margin.left - margin.right;
-            const innerHeight = height - margin.top - margin.bottom;
-
-            const xMax = Math.max(...data.map(d => d.x));
-            const yMax = Math.max(...data.map(d => d.y));
-
-            const xScale = x => x / xMax * innerWidth;
-            const yScale = y => (1 - y / yMax) * innerHeight;
-
-            const pathData = data.map((d, i) => {
-                const x = xScale(d.x) + margin.left;
-                const y = yScale(d.y) + margin.top;
-                return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
-            }).join(' ');
-
-            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            path.setAttribute("d", pathData);
-            path.setAttribute("fill", "none");
-            path.setAttribute("stroke", color);
-            path.setAttribute("stroke-width", "2");
-            svg.appendChild(path);
-
-            // Add axes
-            const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            xAxis.setAttribute("x1", margin.left);
-            xAxis.setAttribute("y1", height - margin.bottom);
-            xAxis.setAttribute("x2", width - margin.right);
-            xAxis.setAttribute("y2", height - margin.bottom);
-            xAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
-            svg.appendChild(xAxis);
-
-            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            yAxis.setAttribute("x1", margin.left);
-            yAxis.setAttribute("y1", margin.top);
-            yAxis.setAttribute("x2", margin.left);
-            yAxis.setAttribute("y2", height - margin.bottom);
-            yAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
-            svg.appendChild(yAxis);
+            svg.innerHTML = `
+                <rect width="100%" height="100%" fill="#0c1130"/>
+                <g transform="translate(50,30)">
+                    <rect x="0" y="0" width="80" height="80" fill="#1a3f5c" stroke="#6aa5ff"/>
+                    <rect x="80" y="0" width="80" height="80" fill="#2d1b3d" stroke="#6aa5ff"/>
+                    <rect x="0" y="80" width="80" height="80" fill="#2d1b3d" stroke="#6aa5ff"/>
+                    <rect x="80" y="80" width="80" height="80" fill="#1a3f5c" stroke="#6aa5ff"/>
+                    <text x="40" y="45" text-anchor="middle" fill="white" font-size="20">942</text>
+                    <text x="120" y="45" text-anchor="middle" fill="white" font-size="20">23</text>
+                    <text x="40" y="125" text-anchor="middle" fill="white" font-size="20">31</text>
+                    <text x="120" y="125" text-anchor="middle" fill="white" font-size="20">904</text>
+                    <text x="80" y="15" text-anchor="middle" fill="#9db2ff" font-size="12">Predicted</text>
+                    <text x="15" y="100" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,100)">Actual</text>
+                </g>
+            `;
         }
 
-        // Function to draw a scatter plot on an SVG
-        function drawScatterPlot(svg, data, color) {
-            const { width, height } = svg.getBoundingClientRect();
-            svg.innerHTML = '';
+        function renderPRCurve() {
+            const svg = document.getElementById('pr');
+            if (!svg) return;
             
-            const margin = {top: 20, right: 20, bottom: 20, left: 20};
-            const innerWidth = width - margin.left - margin.right;
-            const innerHeight = height - margin.top - margin.bottom;
-
-            const xMax = Math.max(...data.map(d => d.period));
-            const yMax = Math.max(...data.map(d => d.radius));
-
-            const xScale = x => x / xMax * innerWidth;
-            const yScale = y => (1 - y / yMax) * innerHeight;
-
-            // Add points
-            data.forEach(d => {
-                const cx = xScale(d.period) + margin.left;
-                const cy = yScale(d.radius) + margin.top;
-                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute("cx", cx);
-                circle.setAttribute("cy", cy);
-                circle.setAttribute("r", "3");
-                circle.setAttribute("fill", color);
-                circle.setAttribute("opacity", d.confidence);
-                svg.appendChild(circle);
-            });
-
-            // Add axes
-            const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            xAxis.setAttribute("x1", margin.left);
-            xAxis.setAttribute("y1", height - margin.bottom);
-            xAxis.setAttribute("x2", width - margin.right);
-            xAxis.setAttribute("y2", height - margin.bottom);
-            xAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
-            svg.appendChild(xAxis);
-
-            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            yAxis.setAttribute("x1", margin.left);
-            yAxis.setAttribute("y1", margin.top);
-            yAxis.setAttribute("x2", margin.left);
-            yAxis.setAttribute("y2", height - margin.bottom);
-            yAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
-            svg.appendChild(yAxis);
+            svg.innerHTML = `
+                <rect width="100%" height="100%" fill="#0c1130"/>
+                <g transform="translate(40,20)">
+                    <path d="M0,140 Q60,120 120,80 Q180,40 200,20" stroke="#6aa5ff" stroke-width="3" fill="none"/>
+                    <path d="M0,140 L200,140 L200,20" stroke="#333" stroke-width="1" fill="none"/>
+                    <circle cx="200" cy="20" r="4" fill="#66e8a6"/>
+                    <text x="100" y="160" text-anchor="middle" fill="#9db2ff" font-size="12">Recall</text>
+                    <text x="15" y="80" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,80)">Precision</text>
+                    <text x="150" y="40" fill="#66e8a6" font-size="10">AUC: 0.97</text>
+                </g>
+            `;
         }
 
-        // Function to draw confusion matrix
-        function drawConfusionMatrix(svg, cm) {
-            const { width, height } = svg.getBoundingClientRect();
-            svg.innerHTML = '';
+        function renderROCCurve() {
+            const svg = document.getElementById('roc');
+            if (!svg) return;
             
-            const cellSize = Math.min(width, height) / 3;
-            const startX = (width - cellSize * 2) / 2;
-            const startY = (height - cellSize * 2) / 2;
-
-            const data = [
-                [cm.tn, cm.fp],
-                [cm.fn, cm.tp]
-            ];
-
-            const colors = [
-                ['#1f2937', '#dc2626'],
-                ['#dc2626', '#059669']
-            ];
-
-            for (let i = 0; i < 2; i++) {
-                for (let j = 0; j < 2; j++) {
-                    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-                    rect.setAttribute("x", startX + j * cellSize);
-                    rect.setAttribute("y", startY + i * cellSize);
-                    rect.setAttribute("width", cellSize);
-                    rect.setAttribute("height", cellSize);
-                    rect.setAttribute("fill", colors[i][j]);
-                    rect.setAttribute("opacity", "0.7");
-                    rect.setAttribute("stroke", "#374151");
-                    svg.appendChild(rect);
-
-                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                    text.setAttribute("x", startX + j * cellSize + cellSize / 2);
-                    text.setAttribute("y", startY + i * cellSize + cellSize / 2);
-                    text.setAttribute("text-anchor", "middle");
-                    text.setAttribute("dominant-baseline", "middle");
-                    text.setAttribute("fill", "white");
-                    text.setAttribute("font-size", "14");
-                    text.textContent = data[i][j];
-                    svg.appendChild(text);
-                }
-            }
+            svg.innerHTML = `
+                <rect width="100%" height="100%" fill="#0c1130"/>
+                <g transform="translate(40,20)">
+                    <path d="M0,140 Q20,100 60,60 Q100,20 200,0" stroke="#6aa5ff" stroke-width="3" fill="none"/>
+                    <path d="M0,140 L200,140 L200,0 L0,0 L0,140" stroke="#333" stroke-width="1" fill="none"/>
+                    <path d="M0,140 L200,0" stroke="#444" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
+                    <text x="100" y="160" text-anchor="middle" fill="#9db2ff" font-size="12">False Positive Rate</text>
+                    <text x="15" y="80" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,80)">True Positive Rate</text>
+                    <text x="120" y="30" fill="#66e8a6" font-size="10">AUC: 0.99</text>
+                </g>
+            `;
         }
 
-        // Event listeners
-        datasetSelect.addEventListener('change', updateKPIs);
-
-        runBtn.addEventListener('click', function() {
-            const mission = datasetSelect.value;
-            const config = missionConfigs[mission];
+        // Fast detector simulation
+        function runDetector() {
+            if (detectorRunning) return;
             
-            statusMessage.textContent = 'Running detector...';
-            statusMessage.style.color = '#ffd36a';
-            runBtn.disabled = true;
-            runBtn.textContent = 'Running...';
+            detectorRunning = true;
+            const btn = document.getElementById('runDetectorBtn');
+            const status = document.getElementById('status-message');
+            const dataset = document.getElementById('dataset-select').value;
             
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
+            status.textContent = 'Running AI detector on ' + dataset.toUpperCase() + ' data...';
+            status.style.color = 'var(--warn)';
+            
+            // Simulate processing
             setTimeout(() => {
-                // Update catalog table
-                catalogTableBody.innerHTML = '';
-                config.candidates.forEach(candidate => {
-                    const row = catalogTableBody.insertRow();
-                    row.insertCell(0).textContent = candidate.id;
-                    row.insertCell(1).textContent = candidate.period.toFixed(2);
-                    row.insertCell(2).textContent = candidate.radius.toFixed(2);
-                    row.insertCell(3).textContent = (candidate.confidence * 100).toFixed(1) + '%';
-                });
-
-                // Update plots
-                drawScatterPlot(periodRadiusPlot, config.candidates, '#6aa5ff');
-                drawConfusionMatrix(cmPlot, config.cm);
-                drawLineSvg(prPlot, config.pr, '#66e8a6');
-                drawLineSvg(rocPlot, config.roc, '#6aa5ff');
-
-                // Generate gallery items
-                gallery.innerHTML = '';
-                for (let i = 0; i < 6; i++) {
-                    const candidate = config.candidates[i % config.candidates.length];
-                    const tile = document.createElement('div');
-                    tile.className = 'tile';
-                    
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 300;
-                    canvas.height = 180;
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Draw a simple phase-folded curve
-                    ctx.fillStyle = '#0c1130';
-                    ctx.fillRect(0, 0, 300, 180);
-                    ctx.strokeStyle = '#6aa5ff';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    
-                    for (let x = 0; x < 300; x++) {
-                        const phase = x / 300;
-                        let flux = 1.0;
-                        if (phase > 0.4 && phase < 0.6) {
-                            const transitPhase = (phase - 0.4) / 0.2;
-                            flux -= candidate.flux_depth * Math.sin(transitPhase * Math.PI);
-                        }
-                        flux += (Math.random() - 0.5) * 0.01;
-                        const y = (1 - flux) * 180;
-                        
-                        if (x === 0) ctx.moveTo(x, y);
-                        else ctx.lineTo(x, y);
-                    }
-                    ctx.stroke();
-                    
-                    // Add probability text
-                    ctx.fillStyle = '#e8edff';
-                    ctx.font = '14px Outfit';
-                    ctx.fillText(`P = ${(candidate.confidence * 100).toFixed(1)}%`, 10, 25);
-                    
-                    tile.appendChild(canvas);
-                    gallery.appendChild(tile);
-                }
-
-                statusMessage.textContent = `Found ${config.candidates.length} candidates.`;
-                statusMessage.style.color = 'var(--ok)';
-                runBtn.disabled = false;
-                runBtn.textContent = 'Run Detector →';
+                populateCatalog(dataset);
+                renderPeriodRadiusPlot();
+                populateGallery();
+                
+                btn.textContent = 'Run Detector →';
+                btn.disabled = false;
+                status.textContent = 'Detection complete! Found ' + (dataset === 'kepler' ? '8' : '12') + ' candidates.';
+                status.style.color = 'var(--ok)';
+                detectorRunning = false;
             }, 2000);
+        }
+
+        // Fast data population
+        function populateCatalog(dataset) {
+            const tbody = document.getElementById('catalog-table-body');
+            const candidates = dataset === 'kepler' ? 
+                [
+                    ['KPL-001', '3.52', '1.1', '0.94'],
+                    ['KPL-002', '12.3', '0.8', '0.89'],
+                    ['KPL-003', '45.2', '2.3', '0.76']
+                ] :
+                [
+                    ['TIC-001', '1.89', '1.4', '0.92'],
+                    ['TIC-002', '4.15', '0.9', '0.87'],
+                    ['TIC-003', '8.7', '1.8', '0.83']
+                ];
+                
+            tbody.innerHTML = candidates.map(row => 
+                `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td></tr>`
+            ).join('');
+        }
+
+        function renderPeriodRadiusPlot() {
+            const svg = document.getElementById('period-radius-plot');
+            svg.innerHTML = `
+                <rect width="100%" height="100%" fill="#0c1130"/>
+                <g transform="translate(40,20)">
+                    <circle cx="50" cy="100" r="4" fill="#6aa5ff"/>
+                    <circle cx="100" cy="80" r="6" fill="#8f7aff"/>
+                    <circle cx="150" cy="60" r="5" fill="#66e8a6"/>
+                    <circle cx="200" cy="40" r="7" fill="#ffd36a"/>
+                    <path d="M0,140 L220,140 M0,140 L0,20" stroke="#333" stroke-width="1"/>
+                    <text x="110" y="160" text-anchor="middle" fill="#9db2ff" font-size="12">Period (days)</text>
+                    <text x="15" y="80" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,80)">Radius (R⊕)</text>
+                </g>
+            `;
+        }
+
+        function populateGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = Array.from({length: 6}, (_, i) => `
+                <div class="card">
+                    <h4>Candidate ${i + 1}</h4>
+                    <div class="tile">
+                        <svg viewBox="0 0 200 120">
+                            <rect width="100%" height="100%" fill="#0c1130"/>
+                            <path d="M10,60 Q50,60 90,${40 + i * 5} Q130,${80 - i * 3} 190,60" stroke="#6aa5ff" stroke-width="2" fill="none"/>
+                            <text x="100" y="110" text-anchor="middle" fill="#9db2ff" font-size="10">P = ${(0.9 - i * 0.1).toFixed(2)}</text>
+                        </svg>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fast CSV download
+        function downloadCSV(dataset) {
+            const data = dataset === 'kepler' ? 
+                'time,flux,flux_err,quality\n0.0,1.000,0.001,0\n0.1,0.999,0.001,0\n0.2,0.998,0.001,0' :
+                'time,flux,flux_err,sector\n0.0,1.000,0.001,1\n0.1,0.999,0.001,1\n0.2,0.998,0.001,1';
+                
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = dataset + '_sample.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function showMessage(msg, type) {
+            const status = document.getElementById('status-message');
+            status.textContent = msg;
+            status.style.color = type === 'success' ? 'var(--ok)' : 'var(--warn)';
+        }
+
+        // Initialize everything when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start animations
+            animate();
+            
+            // Render static charts
+            setTimeout(() => {
+                renderConfusionMatrix();
+                renderPRCurve();
+                renderROCCurve();
+            }, 100);
+            
+            // Event listeners
+            document.getElementById('runDetectorBtn')?.addEventListener('click', runDetector);
         });
 
-        // Initialize
-        updateKPIs();
-        animateCanvas();
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        });
     </script>
 </body>
 </html>
