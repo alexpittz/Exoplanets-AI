@@ -521,19 +521,17 @@
         </div>
     </section>
 
-    <!-- Video Section - Moved to Middle -->
+    <!-- Video Section - No heading, auto-play -->
     <section class="video-section" id="demo-video">
         <div class="video-card">
-            <h2 style="margin-bottom: 16px; text-align: center;">Project Demo Video</h2>
-            <p class="lead" style="text-align: center; margin-bottom: 20px;">Watch our AI model in action detecting exoplanets from real telescope data</p>
             <div class="video-wrapper">
-                <video id="mainVideo" preload="metadata">
+                <video id="mainVideo" preload="metadata" autoplay muted loop>
                     <source src="video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="video-controls">
-                    <button class="control-btn" id="playPauseBtn">▶️ Play</button>
-                    <button class="control-btn" id="muteBtn">🔊 Audio</button>
+                    <button class="control-btn" id="playPauseBtn">⏸️ Pause</button>
+                    <button class="control-btn" id="muteBtn">🔇 Muted</button>
                     <div class="progress-container" id="progressContainer">
                         <div class="progress-bar" id="progressBar"></div>
                     </div>
@@ -764,8 +762,7 @@
             <div class="notice">© 2025 ExoAI Team · Student research project for educational purposes</div>
             <div>
                 <a href="#team" style="opacity:.8">Team</a> · 
-                <a href="#contact" style="opacity:.8">Contact</a> · 
-                
+                <a href="#contact" style="opacity:.8">Contact</a>
             </div>
         </div>
     </footer>
@@ -851,7 +848,6 @@
             // Video ended
             video.addEventListener('ended', () => {
                 playPauseBtn.textContent = '▶️ Play';
-                progressBar.style.width = '0%';
             });
 
             // Keyboard shortcuts
@@ -1008,7 +1004,7 @@
             `;
         }
 
-        // Fast detector simulation
+        // Fast detector simulation with scroll to catalog
         function runDetector() {
             if (detectorRunning) return;
             
@@ -1030,25 +1026,46 @@
                 
                 btn.textContent = 'Run Detector →';
                 btn.disabled = false;
-                status.textContent = 'Detection complete! Found ' + (dataset === 'kepler' ? '8' : '12') + ' candidates.';
+                const candidateCount = dataset === 'kepler' ? 8 : 12;
+                status.textContent = 'Detection complete! Found ' + candidateCount + ' candidates.';
                 status.style.color = 'var(--ok)';
                 detectorRunning = false;
+                
+                // Auto-scroll to catalog section
+                document.getElementById('catalog').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }, 2000);
         }
 
-        // Fast data population
+        // Fast data population - Fixed to show correct number of candidates
         function populateCatalog(dataset) {
             const tbody = document.getElementById('catalog-table-body');
             const candidates = dataset === 'kepler' ? 
                 [
                     ['KPL-001', '3.52', '1.1', '0.94'],
                     ['KPL-002', '12.3', '0.8', '0.89'],
-                    ['KPL-003', '45.2', '2.3', '0.76']
+                    ['KPL-003', '45.2', '2.3', '0.76'],
+                    ['KPL-004', '8.7', '1.5', '0.82'],
+                    ['KPL-005', '15.6', '0.9', '0.88'],
+                    ['KPL-006', '22.4', '1.8', '0.75'],
+                    ['KPL-007', '6.1', '1.2', '0.91'],
+                    ['KPL-008', '18.9', '2.1', '0.79']
                 ] :
                 [
                     ['TIC-001', '1.89', '1.4', '0.92'],
                     ['TIC-002', '4.15', '0.9', '0.87'],
-                    ['TIC-003', '8.7', '1.8', '0.83']
+                    ['TIC-003', '8.7', '1.8', '0.83'],
+                    ['TIC-004', '2.3', '1.1', '0.89'],
+                    ['TIC-005', '5.8', '1.6', '0.85'],
+                    ['TIC-006', '3.4', '0.7', '0.90'],
+                    ['TIC-007', '7.2', '1.9', '0.81'],
+                    ['TIC-008', '1.1', '1.3', '0.93'],
+                    ['TIC-009', '9.6', '0.8', '0.86'],
+                    ['TIC-010', '4.7', '1.7', '0.84'],
+                    ['TIC-011', '6.3', '1.0', '0.88'],
+                    ['TIC-012', '2.8', '2.2', '0.80']
                 ];
                 
             tbody.innerHTML = candidates.map(row => 
@@ -1134,4 +1151,3 @@
     </script>
 </body>
 </html>
-
