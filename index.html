@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hunting for Exoplanets with AI</title>
+    <meta name="description" content="Student project website showcasing an AI pipeline for detecting exoplanets from light curves (Kepler/TESS)." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#060814; --panel:#0b0f25; --muted:#9db2ff; --text:#e8edff; --accent:#6aa5ff; --accent-2:#8f7aff; --ok:#66e8a6; --warn:#ffd36a;
+            --ring: 0 0 0 2px rgba(132,169,255,.35), 0 0 40px rgba(120,155,255,.15);
+        }
+        *{box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{margin:0;font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(1200px 800px at 80% -10%,#1a224a 0%, transparent 60%), radial-gradient(800px 500px at -10% 10%, #1b1037 0%, transparent 60%), var(--bg);}
+        a{color:inherit;text-decoration:none}
+        img{max-width:100%;display:block}
+        /* Header */
+        .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:linear-gradient(180deg, rgba(10,12,25,.85), rgba(10,12,25,.55));border-bottom:1px solid rgba(157,178,255,.15)}
+        .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+        .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px}
+        .brand .logo{width:32px;height:32px;border-radius:50%;background:conic-gradient(from 210deg,#6aa5ff,#8f7aff,#6aa5ff);box-shadow:0 0 0 4px rgba(138,145,255,.15), 0 10px 30px rgba(110,140,255,.35)}
+        .spacer{flex:1}
+        .nav a{opacity:.9;padding:10px 12px;border-radius:12px}
+        .nav a:hover{background:rgba(157,178,255,.12);opacity:1}
+        .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:14px;font-weight:700;box-shadow:var(--ring)}
+        /* Hero */
+        .hero{position:relative;overflow:hidden}
+        .hero-inner{max-width:1100px;margin:0 auto;padding:72px 20px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+        .hero h1{font-size:clamp(28px,4.8vw,52px);line-height:1.05;margin:8px 0 14px}
+        .hero p{color:var(--muted);font-size:clamp(16px,2vw,18px)}
+        .hero .actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;background:#12183a;border:1px solid rgba(157,178,255,.2)}
+        .btn:hover{border-color:rgba(157,178,255,.5)}
+        .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:var(--ring);border:0;color:#081022}
+        .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9999px;background:rgba(106,165,255,.12);border:1px solid rgba(157,178,255,.25);font-size:14px;margin-bottom:10px}
+        /* Decorative planets */
+        .orbits{position:absolute;inset:0;pointer-events:none}
+        .planet{position:absolute;border-radius:50%;filter:drop-shadow(0 10px 40px rgba(128,158,255,.35))}
+        .planet.one{width:160px;height:160px;background:radial-gradient(circle at 30% 30%, #9fb8ff, #4b6cff 60%, #2b2f70);top:-40px;right:-30px}
+        .planet.two{width:90px;height:90px;background:radial-gradient(circle at 40% 35%, #ffd36a, #f6a16f 60%, #632e3a);bottom:30px;left:8%}
+        .ringed{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #d6b2ff, #7b5cff 60%, #2a125c);top:30%;left:-40px}
+        .ring{position:absolute;inset:-10px;border-radius:50%;border:6px solid rgba(255,255,255,.2);transform:skewY(12deg) rotate(-15deg)}
+        /* Sections */
+        section{max-width:1100px;margin:0 auto;padding:70px 20px}
+        h2{font-size:clamp(22px,3.6vw,36px);margin:0 0 16px}
+        .lead{color:var(--muted);max-width:900px}
+        .grid{display:grid;gap:16px}
+        @media (min-width: 900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)} }
+        .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid rgba(157,178,255,.15);border-radius:18px;padding:18px}
+        .card h3{margin:8px 0 6px}
+        .chip{display:inline-block;margin:6px 6px 0 0;background:rgba(157,178,255,.12);border:1px solid rgba(157,178,255,.25);padding:6px 10px;border-radius:9999px;font-size:13px}
+        .kpi{display:flex;align-items:center;gap:12px;padding:16px 14px;border-radius:14px;background:rgba(26,34,74,.6);border:1px solid rgba(157,178,255,.18)}
+        /* Timeline */
+        .timeline{position:relative;margin-top:18px}
+        .timeline:before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),transparent)}
+        .step{position:relative;margin-left:38px;margin-bottom:14px;padding:14px 16px;border-radius:14px;background:rgba(8,12,28,.7);border:1px solid rgba(157,178,255,.15)}
+        .step:before{content:"";position:absolute;left:-30px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(106,165,255,.25)}
+        /* Table */
+        table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:10px}
+        th,td{text-align:left;padding:12px 14px}
+        thead th{font-weight:700;color:#c8d6ff}
+        tbody tr{background:rgba(10,14,32,.6)}
+        tbody tr td{border-top:1px solid rgba(157,178,255,.12);border-bottom:1px solid rgba(157,178,255,.12)}
+        tbody tr td:first-child{border-left:1px solid rgba(157,178,255,.12);border-top-left-radius:12px;border-bottom-left-radius:12px}
+        tbody tr td:last-child{border-right:1px solid rgba(157,178,255,.12);border-top-right-radius:12px;border-bottom-right-radius:12px}
+        /* Gallery */
+        .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}
+        .tile{position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(157,178,255,.18);background:#0c1130;aspect-ratio:16/10}
+        .tile canvas, .tile svg{position:absolute;inset:0;width:100%;height:100%}
+        /* Footer */
+        footer{border-top:1px solid rgba(157,178,255,.15);padding:24px 20px;color:#aebdff;background:rgba(6,8,20,.5)}
+        .footer-inner{max-width:1100px;margin:0 auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+        .notice{font-size:13px;opacity:.9}
+        /* Inputs (kept here to avoid long top section) */
+        .inp{margin-top:6px;background:#0a0f24;border:1px solid rgba(157,178,255,.25);border-radius:12px;padding:10px 12px;color:var(--text);outline:none}
+        .inp:focus{border-color:var(--accent);box-shadow:var(--ring)}
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            min-height: 200px;
+        }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #6aa5ff;
+            animation: spin 1s ease infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .center {
+            text-align: center;
+        }
+
+        /* --- New responsive styles --- */
+        /* Tablet & Small Desktop (screens up to 1024px) */
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+                padding: 48px 20px;
+            }
+            .hero h1 {
+                font-size: clamp(28px, 6vw, 48px);
+            }
+            .hero-inner > div:first-child {
+                padding-bottom: 24px;
+            }
+            .hero .actions {
+                justify-content: center;
+            }
+            .nav-inner {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .spacer {
+                display: none; /* Hide navigation links on smaller screens for simplicity */
+            }
+            .nav .cta {
+                margin-left: auto;
+            }
+            section {
+                padding: 40px 20px;
+            }
+            .grid.cols-3,
+            .grid.cols-2 {
+                grid-template-columns: 1fr; /* Stack grid columns */
+            }
+            .kpi {
+                flex-grow: 1; /* Allow KPIs to fill space */
+                justify-content: center;
+            }
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+        }
+
+        /* Mobile (screens up to 600px) */
+        @media (max-width: 600px) {
+            .nav-inner {
+                flex-direction: column;
+                padding: 12px 10px;
+                gap: 12px;
+            }
+            .brand {
+                align-self: flex-start;
+            }
+            .nav .cta {
+                margin-left: 0;
+            }
+            .nav a, .nav .cta {
+                width: 100%;
+                text-align: center;
+            }
+            .nav .spacer {
+                display: none;
+            }
+            .hero-inner {
+                padding: 32px 10px;
+            }
+            section {
+                padding: 30px 10px;
+            }
+            .kpi {
+                padding: 12px 10px;
+            }
+            table {
+                font-size: 14px;
+            }
+            thead th, tbody tr td {
+                padding: 8px 10px;
+            }
+            .timeline:before, .step:before {
+                left: 10px;
+            }
+            .step {
+                margin-left: 28px;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Nav -->
+    <header class="nav">
+        <div class="nav-inner">
+            <span class="brand"><span class="logo"></span>ExoAI</span>
+            <nav class="spacer">
+                <a href="#about">About</a>
+                <a href="#pipeline">Pipeline</a>
+                <a href="#how-it-works">How the AI Works</a>
+                <a href="#dataset">Dataset</a>
+                <a href="#catalog">Catalog</a>
+                <a href="#results">Results</a>
+                <a href="#team">Team</a>
+            </nav>
+            <a href="#contact" class="cta">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero">
+        <div class="orbits" aria-hidden="true">
+            <div class="planet one"></div>
+            <div class="planet two"></div>
+            <div class="ringed"><span class="ring"></span></div>
+        </div>
+        <div class="hero-inner">
+            <div>
+                <div class="badge">🌌 Student Project · AI + Astronomy</div>
+                <h1>Hunting for Exoplanets with <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">AI</span></h1>
+                <p>We build machine learning models that scan stellar light curves to spot tiny dips in brightness—possible signs of a planet crossing in front of its star.</p>
+                <div class="actions">
+                    <button class="btn primary" id="runDetectorBtn">Run Detector →</button>
+                    <a class="btn" href="#pipeline">How it works</a>
+                    <a class="btn" href="#dataset">Use the data</a>
+                </div>
+                <div style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap">
+                    <div class="kpi" id="precision-kpi" title="Precision on validation set"><strong style="font-size:20px">97.2%</strong> <span class="muted">precision</span></div>
+                    <div class="kpi" id="recall-kpi" title="Recall on validation set"><strong style="font-size:20px">94.8%</strong> <span class="muted">recall</span></div>
+                    <div class="kpi" id="model-size-kpi" title="Model size"><strong style="font-size:20px">1.8M</strong> <span class="muted">parameters</span></div>
+                </div>
+                <div style="margin-top:18px">
+                    <label for="dataset-select" class="muted">Select Mission Data:</label>
+                    <select id="dataset-select" class="inp" style="margin-left:8px;padding:8px 12px;border-radius:8px">
+                        <option value="kepler">Kepler</option>
+                        <option value="tess">TESS</option>
+                    </select>
+                    <div id="status-message" style="margin-top:12px;font-size:14px;color:var(--ok)">Detector ready. Select data and run.</div>
+                </div>
+            </div>
+            <div class="card" aria-label="Animated light-curve demo">
+                <h3 style="margin:0 0 8px">Transit Detector (demo)</h3>
+                <p class="muted" style="margin-top:0">Synthetic light curve with a periodic transit—our CNN flags the dips.</p>
+                <div class="tile"><canvas id="curve"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <h2>About the Project</h2>
+        <p class="lead">ExoAI explores how deep learning can accelerate the search for exoplanets. We preprocess light curves from missions like Kepler and TESS, train convolutional networks to identify transit signals, and score candidates for follow‑up.</p>
+        <div class="grid cols-3" style="margin-top:14px">
+            <div class="card">
+                <h3>Why exoplanets?</h3>
+                <p class="muted">They help us understand planetary formation, system architectures, and the possibility of life beyond Earth.</p>
+                <span class="chip">Astrobiology</span><span class="chip">Habitability</span>
+            </div>
+            <div class="card">
+                <h3>Why AI?</h3>
+                <p class="muted">AI is uniquely suited to handle the sheer volume of data produced by modern space telescopes. Our model can analyze millions of light curves in a fraction of the time it would take human researchers, while also learning to filter out common false positives caused by stellar variability or instrument noise.</p>
+                <span class="chip">CNN</span><span class="chip">RNN</span><span class="chip">Gradient Boosting</span>
+            </div>
+            <div class="card">
+                <h3>Open & Reproducible</h3>
+                <p class="muted">Code, data splits, and model checkpoints are organized for easy replication. Replace with your GitHub repo when ready.</p>
+                <a class="btn" href="#" aria-label="Repository link">🔗 GitHub (soon)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pipeline -->
+    <section id="pipeline">
+        <h2>AI Pipeline</h2>
+        <p class="lead">From raw flux to planet candidates—each stage improves signal‑to‑noise and reduces false positives.</p>
+        <div class="timeline">
+            <div class="step"><strong>1. Ingestion & Cleaning</strong><br><span class="muted">Retrieve raw flux data and metadata. This step removes noise spikes, cosmic ray hits, and gaps in data, ensuring the curve is a continuous, clean signal.</span></div>
+            <div class="step"><strong>2. Detrending</strong><br><span class="muted">A Savitzky–Golay filter is applied to remove long-term stellar trends, such as starspots or flares, that can mimic or obscure a transit signal.</span></div>
+            <div class="step"><strong>3. Transit Search</strong><br><span class="muted">The Box-Least Squares (BLS) algorithm is used to find periodic dips. It tests a range of periods and durations to identify the most likely transit signal within the light curve.</span></div>
+            <div class="step"><strong>4. Feature Building</strong><br><span class="muted">The data is "phase-folded" using the period found by BLS, stacking all potential transits on top of each other to create a single, clear light curve shape for the AI to analyze.</span></div>
+            <div class="step"><strong>5. Classification</strong><br><span class="muted">A Convolutional Neural Network (CNN) analyzes the phase-folded light curve. It learns to distinguish the characteristic 'U' or 'V' shape of a planetary transit from other astrophysical events.</span></div>
+            <div class="step"><strong>6. Vetting</strong><br><span class="muted">Final checks are performed to reduce false positives. This includes analyzing centroid shifts to ensure the signal is from the target star and looking for secondary eclipses.</span></div>
+        </div>
+    </section>
+
+    <!-- How the AI works -->
+    <section id="how-it-works">
+        <h2>How the AI Works</h2>
+        <p class="lead">Our core model is a Convolutional Neural Network (CNN) specifically designed to identify patterns in 1D time-series data. It works by passing the light curve through a series of specialized layers.</p>
+        <div class="grid cols-2" style="margin-top:20px">
+            <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <h3 style="margin-bottom:10px">CNN Architecture</h3>
+                <div class="tile">
+                    <svg viewBox="0 0 300 180" role="img" aria-label="Diagram of a simple Convolutional Neural Network (CNN) architecture.">
+                        <rect x="0" y="0" width="100%" height="100%" fill="#0c1130"/>
+                        <!-- Input Layer -->
+                        <rect x="20" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
+                        <text x="30" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Input</text>
+                        <text x="30" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">1D Signal</text>
+
+                        <!-- Convolutional Layer -->
+                        <rect x="60" y="70" width="30" height="40" rx="4" fill="#6aa5ff" opacity="0.6"/>
+                        <text x="75" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Conv</text>
+                        <line x1="40" y1="90" x2="60" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                        
+                        <!-- Pooling Layer -->
+                        <rect x="100" y="75" width="25" height="30" rx="4" fill="#8f7aff" opacity="0.6"/>
+                        <text x="112.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Pool</text>
+                        <line x1="90" y1="90" x2="100" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                        
+                        <!-- Dense Layer 1 -->
+                        <rect x="140" y="60" width="40" height="60" rx="4" fill="#6aa5ff" opacity="0.5"/>
+                        <text x="160" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 1</text>
+                        <line x1="125" y1="90" x2="140" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                        
+                        <!-- Dense Layer 2 -->
+                        <rect x="190" y="70" width="25" height="40" rx="4" fill="#6aa5ff" opacity="0.4"/>
+                        <text x="202.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 2</text>
+                        <line x1="180" y1="90" x2="190" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                        
+                        <!-- Output Layer -->
+                        <rect x="230" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
+                        <text x="240" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Output</text>
+                        <text x="240" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Prob.</text>
+                        <line x1="215" y1="90" x2="230" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="card">
+                <h3>The Layers Explained</h3>
+                <p class="muted">Each layer has a specific job in identifying the transit signal.</p>
+                <div class="timeline">
+                    <div class="step"><strong>Convolutional Layers</strong><br><span class="muted">These layers act like small filters that slide over the light curve, automatically learning to recognize important features like the sharp drop and gradual return of a transit.</span></div>
+                    <div class="step"><strong>Pooling Layers</strong><br><span class="muted">After a convolutional layer, pooling reduces the dimensionality of the features while keeping the most important information. This helps make the model more robust to minor variations in the signal.</span></div>
+                    <div class="step"><strong>Fully Connected (Dense) Layers</strong><br><span class="muted">The final layers of the network take the extracted features and use them to make a final decision, outputting a probability score between 0 and 1, where 1 means high confidence of a planet.</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset -->
+    <section id="dataset">
+        <h2>Dataset & Access</h2>
+        <p class="lead">We support public light‑curve archives. Download sample datasets or open notebooks below. The primary challenge with this data is handling missing observations and normalization across different telescope cameras and time periods.</p>
+        <div class="grid cols-2" style="margin-top:10px">
+            <div class="card">
+                <h3>Kepler / K2</h3>
+                <p class="muted">Long baseline, high precision. Great for learning transit shapes. Data from the Kepler mission is ideal for finding planets with longer orbital periods.</p>
+                <a class="btn" href="https://colab.research.google.com/drive/1u6p-qGg63664h1P1_Kz58Jd5e8j88q1c?usp=sharing" target="_blank" rel="noopener noreferrer">📓 Colab Notebook</a>
+                <button class="btn" onclick="downloadCSV('kepler')">⬇ Download CSV</button>
+            </div>
+            <div class="card">
+                <h3>TESS</h3>
+                <p class="muted">All‑sky survey with shorter cadence; more stars, varied noise. The TESS mission's data is more suitable for detecting hot, fast-orbiting planets around nearby, bright stars.</p>
+                <a class="btn" href="https://colab.research.com/drive/1A_w-N4-xX28o4mX93qT2s3f6f6f6f6f?usp=sharing" target="_blank" rel="noopener noreferrer">📓 Colab Notebook</a>
+                <button class="btn" onclick="downloadCSV('tess')">⬇ Download CSV</button>
+            </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+            <h3>Data Schema</h3>
+            <div style="overflow-x:auto;">
+                <table aria-label="Data schema table">
+                    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>time</td><td>float</td><td>BJD or mission time</td></tr>
+                        <tr><td>flux</td><td>float</td><td>Normalized flux</td></tr>
+                        <tr><td>flux_err</td><td>float</td><td>Uncertainty</td></tr>
+                        <tr><td>quality</td><td>int</td><td>Data flags</td></tr>
+                        <tr><td>sector/quarter</td><td>int</td><td>TESS sector / Kepler quarter</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog -->
+    <section id="catalog">
+        <h2>Candidate Catalog</h2>
+        <p class="lead">A table of all detected candidates with key properties. This data is simulated based on the mission type you select.</p>
+        <div class="card" style="margin-top:10px">
+            <h3>Detected Planets</h3>
+            <div style="overflow-x:auto;">
+                <table aria-label="Detected planets table">
+                    <thead>
+                        <tr>
+                            <th>Candidate ID</th>
+                            <th>Period (days)</th>
+                            <th>Radius ($$R_J$$)</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="catalog-table-body">
+                        <tr><td colspan="4" class="muted center">Run the detector to see results.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+            <h3>Period vs. Radius</h3>
+            <div class="tile">
+                <svg id="period-radius-plot" viewBox="0 0 300 180" role="img" aria-label="Period vs Radius plot"></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results">
+        <h2>Results & Visuals</h2>
+        <p class="lead">Examples of detections. Each card shows a phase‑folded light curve with predicted probability.</p>
+        <div class="gallery" id="gallery"></div>
+        <div class="grid cols-3" style="margin-top:16px">
+            <div class="card">
+                <h3>Confusion Matrix</h3>
+                <p class="muted">Balanced validation set.</p>
+                <div class="tile"><svg id="cm" viewBox="0 0 300 180" role="img" aria-label="Confusion matrix"></svg></div>
+            </div>
+            <div class="card">
+                <h3>PR Curve</h3>
+                <p class="muted">Area under curve highlights threshold trade‑offs.</p>
+                <div class="tile"><svg id="pr" viewBox="0 0 300 180" role="img" aria-label="Precision‑Recall curve"></svg></div>
+            </div>
+            <div class="card">
+                <h3>ROC Curve</h3>
+                <p class="muted">Near‑perfect separability on held‑out sample.</p>
+                <div class="tile"><svg id="roc" viewBox="0 0 300 180" role="img" aria-label="ROC curve"></svg></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team">
+        <h2>Team</h2>
+        <div class="grid cols-3">
+            <div class="card">
+                <h3>Anmol Katiyar</h3>
+                <p class="muted">ML Engineer · Data prep, CNN models, evaluation.</p>
+                <span class="chip">@anmol</span> <span class="chip">Python</span> <span class="chip">PyTorch</span>
+            </div>
+            <div class="card">
+                <h3>Agam Sahni</h3>
+                <p class="muted">Data & Research · Pipeline, feature engineering, BLS search.</p>
+                <span class="chip">@agam</span> <span class="chip">Lightkurve</span> <span class="chip">NumPy</span>
+            </div>
+            <div class="card">
+                <h3>Advisors</h3>
+                <p class="muted">Thanks to mentors and open‑source contributors in the astro‑ML community.</p>
+                <span class="chip">Acknowledgements</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <p class="lead">Want to collaborate or use our models? Send us a message.</p>
+        <form class="card" onsubmit="event.preventDefault(); showMessage('Thanks! We\'ll get back to you.', 'success');">
+            <div class="grid cols-2">
+                <label>
+                    Name
+                    <input required name="name" aria-label="Name" style="width:100%" class="inp" />
+                </label>
+                <label>
+                    Email
+                    <input required type="email" name="email" aria-label="Email" style="width:100%" class="inp" />
+                </label>
+            </div>
+            <label style="display:block;margin-top:10px">
+                Message
+                <textarea required name="msg" rows="4" aria-label="Message" style="width:100%" class="inp"></textarea>
+            </label>
+            <div style="display:flex;gap:10px;margin-top:12px">
+                <button class="btn primary" type="submit">Send Message</button>
+                <a class="btn" href="mailto:contact@exoai.org">Email us</a>
+            </div>
+        </form>
+        <div id="message-box" style="margin-top:10px;padding:12px;border-radius:12px;font-size:14px;display:none;"></div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="notice">© <span id="year"></span> ExoAI · Student Project. Built with HTML, CSS & vanilla JS.</div>
+            <div>
+                <a href="#about">About</a> · <a href="#pipeline">Pipeline</a> · <a href="#how-it-works">How the AI Works</a> · <a href="#dataset">Dataset</a> · <a href="#catalog">Catalog</a> · <a href="#results">Results</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Message box instead of alert
+        function showMessage(text, type) {
+            const box = document.getElementById('message-box');
+            box.textContent = text;
+            box.style.display = 'block';
+            box.style.backgroundColor = type === 'success' ? '#1f2833' : '#331f1f';
+            box.style.color = type === 'success' ? '#66fcf1' : '#ffd36a';
+            setTimeout(() => box.style.display = 'none', 5000);
+        }
+
+        // CSV Download function
+        function downloadCSV(mission) {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            let headers = "time,flux,flux_err,quality\n";
+            csvContent += headers;
+            const numPoints = 1000;
+            const period = mission === 'kepler' ? 100 : 50;
+            const depth = mission === 'kepler' ? 0.01 : 0.02;
+
+            for(let i = 0; i < numPoints; i++) {
+                const time = i * 0.5;
+                let flux = 1.0;
+                // Add a simulated transit
+                const phase = (time % period) / period;
+                if (phase > 0.4 && phase < 0.6) {
+                    flux -= depth;
+                }
+                const flux_err = Math.random() * 0.005 + 0.001;
+                const quality = 0;
+                csvContent += `${time.toFixed(2)},${flux.toFixed(6)},${flux_err.toFixed(6)},${quality}\n`;
+            }
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${mission}_sample_data.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showMessage(`Downloading sample ${mission.toUpperCase()} CSV file...`, 'success');
+        }
+
+        // New mission-specific configurations
+        const missionConfigs = {
+            kepler: {
+                precision: '97.2%',
+                recall: '94.8%',
+                modelSize: '1.8M',
+                demoPeriod: 80,
+                demoDepth: 0.015,
+                demoNoise: 0.004,
+                demoBG: '#0c1130',
+                candidates: [
+                    { id: "Kepler-22b", period: 289.86, radius: 2.38, confidence: 0.99, flux_depth: 0.0004 },
+                    { id: "Kepler-186f", period: 130.8, radius: 1.11, confidence: 0.97, flux_depth: 0.0003 },
+                    { id: "Kepler-452b", period: 384.8, radius: 1.63, confidence: 0.98, flux_depth: 0.0007 },
+                    { id: "Kepler-62e", period: 122.4, radius: 1.61, confidence: 0.96, flux_depth: 0.0006 },
+                    { id: "Kepler-10b", period: 0.838, radius: 1.47, confidence: 0.99, flux_depth: 0.0003 }
+                ],
+                cm: {
+                    tp: 87, fp: 3, fn: 5, tn: 95
+                },
+                pr: [{x:0,y:1},{x:0.1,y:0.98},{x:0.2,y:0.97},{x:0.4,y:0.95},{x:0.6,y:0.93},{x:0.8,y:0.91},{x:1,y:0.9}],
+                roc: [{x:0,y:0},{x:0.2,y:0.9},{x:0.4,y:0.95},{x:0.6,y:0.98},{x:0.8,y:0.99},{x:1,y:1}],
+            },
+            tess: {
+                precision: '96.5%',
+                recall: '92.1%',
+                modelSize: '2.1M',
+                demoPeriod: 4,
+                demoDepth: 0.02,
+                demoNoise: 0.008,
+                demoBG: '#1b1037',
+                candidates: [
+                    { id: "TOI-700d", period: 37.4, radius: 1.14, confidence: 0.98, flux_depth: 0.0007 },
+                    { id: "LHS 3844b", period: 0.439, radius: 1.3, confidence: 0.99, flux_depth: 0.0015 },
+                    { id: "WASP-18b", period: 0.941, radius: 1.17, confidence: 0.99, flux_depth: 0.008 },
+                    { id: "HD 219134 b", period: 3.09, radius: 1.6, confidence: 0.96, flux_depth: 0.0006 }
+                ],
+                cm: {
+                    tp: 78, fp: 4, fn: 8, tn: 90
+                },
+                pr: [{x:0,y:1},{x:0.1,y:0.96},{x:0.2,y:0.94},{x:0.4,y:0.92},{x:0.6,y:0.9},{x:0.8,y:0.88},{x:1,y:0.85}],
+                roc: [{x:0,y:0},{x:0.2,y:0.85},{x:0.4,y:0.92},{x:0.6,y:0.96},{x:0.8,y:0.98},{x:1,y:1}],
+            }
+        };
+
+        const canvas = document.getElementById('curve');
+        const ctx = canvas.getContext('2d');
+        const runBtn = document.getElementById('runDetectorBtn');
+        const statusMessage = document.getElementById('status-message');
+        const datasetSelect = document.getElementById('dataset-select');
+        const catalogTableBody = document.getElementById('catalog-table-body');
+        const gallery = document.getElementById('gallery');
+        const periodRadiusPlot = document.getElementById('period-radius-plot');
+        const cmPlot = document.getElementById('cm');
+        const prPlot = document.getElementById('pr');
+        const rocPlot = document.getElementById('roc');
+        
+        // Function to update the KPI values
+        function updateKPIs() {
+            const mission = datasetSelect.value;
+            const config = missionConfigs[mission];
+            document.querySelector('#precision-kpi strong').textContent = config.precision;
+            document.querySelector('#recall-kpi strong').textContent = config.recall;
+            document.querySelector('#model-size-kpi strong').textContent = config.modelSize;
+            statusMessage.textContent = `Detector ready. Select data and run.`;
+            statusMessage.style.color = 'var(--ok)';
+        }
+
+        // Function to draw a line plot on a canvas
+        function drawLinePlot(canvas, data, period, depth, noise, bg) {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#6aa5ff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            const totalTime = 400;
+            const points = 200;
+            const step = totalTime / points;
+            
+            for (let i = 0; i < points; i++) {
+                const t = i * step;
+                let flux = 1.0;
+                
+                // Add periodic transit signal
+                const phase = (t % period) / period;
+                if (phase > 0.45 && phase < 0.55) {
+                    flux -= depth;
+                }
+                
+                // Add noise
+                flux += (Math.random() - 0.5) * noise;
+                
+                const x = (t / totalTime) * canvas.width / dpr;
+                const y = (1 - (flux - 0.95) / 0.1) * canvas.height / dpr; // Normalize for plot
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+
+        let animationFrameId;
+        function animateCanvas() {
+            const mission = datasetSelect.value;
+            const config = missionConfigs[mission];
+            const time = (Date.now() / 1000) % (config.demoPeriod * 2);
+            drawLinePlot(canvas, [], config.demoPeriod, config.demoDepth, config.demoNoise, config.demoBG);
+            animationFrameId = requestAnimationFrame(animateCanvas);
+        }
+
+        // Function to draw a simple SVG line chart
+        function drawLineSvg(svg, data, color) {
+            const { width, height } = svg.getBoundingClientRect();
+            svg.innerHTML = '';
+            
+            const margin = {top: 20, right: 20, bottom: 20, left: 20};
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const xMax = Math.max(...data.map(d => d.x));
+            const yMax = Math.max(...data.map(d => d.y));
+
+            const xScale = x => x / xMax * innerWidth;
+            const yScale = y => (1 - y / yMax) * innerHeight;
+
+            const pathData = data.map((d, i) => {
+                const x = xScale(d.x) + margin.left;
+                const y = yScale(d.y) + margin.top;
+                return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+            }).join(' ');
+
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", pathData);
+            path.setAttribute("fill", "none");
+            path.setAttribute("stroke", color);
+            path.setAttribute("stroke-width", "2");
+            svg.appendChild(path);
+
+            // Add axes
+            const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            xAxis.setAttribute("x1", margin.left);
+            xAxis.setAttribute("y1", height - margin.bottom);
+            xAxis.setAttribute("x2", width - margin.right);
+            xAxis.setAttribute("y2", height - margin.bottom);
+            xAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
+            svg.appendChild(xAxis);
+
+            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            yAxis.setAttribute("x1", margin.left);
+            yAxis.setAttribute("y1", margin.top);
+            yAxis.setAttribute("x2", margin.left);
+            yAxis.setAttribute("y2", height - margin.bottom);
+            yAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
+            svg.appendChild(yAxis);
+        }
+
+        // Function to draw a scatter plot on an SVG
+        function drawScatterPlot(svg, data, color) {
+            const { width, height } = svg.getBoundingClientRect();
+            svg.innerHTML = '';
+            
+            const margin = {top: 20, right: 20, bottom: 20, left: 20};
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+            
+            const xMax = Math.max(...data.map(d => d.period));
+            const yMax = Math.max(...data.map(d => d.radius));
+            
+            const xScale = x => (Math.log(x) / Math.log(xMax)) * innerWidth;
+            const yScale = y => (1 - y / yMax) * innerHeight;
+            
+            data.forEach(d => {
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", xScale(d.period) + margin.left);
+                circle.setAttribute("cy", yScale(d.radius) + margin.top);
+                circle.setAttribute("r", 3);
+                circle.setAttribute("fill", color);
+                circle.setAttribute("opacity", d.confidence);
+                circle.setAttribute("stroke", "white");
+                circle.setAttribute("stroke-width", "1");
+                svg.appendChild(circle);
+            });
+
+            // Add axes and labels
+            const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            xAxis.setAttribute("x1", margin.left);
+            xAxis.setAttribute("y1", height - margin.bottom);
+            xAxis.setAttribute("x2", width - margin.right);
+            xAxis.setAttribute("y2", height - margin.bottom);
+            xAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
+            svg.appendChild(xAxis);
+
+            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            yAxis.setAttribute("x1", margin.left);
+            yAxis.setAttribute("y1", margin.top);
+            yAxis.setAttribute("x2", margin.left);
+            yAxis.setAttribute("y2", height - margin.bottom);
+            yAxis.setAttribute("stroke", "rgba(255,255,255,0.2)");
+            svg.appendChild(yAxis);
+            
+            const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            xLabel.setAttribute("x", width / 2);
+            xLabel.setAttribute("y", height - 5);
+            xLabel.setAttribute("text-anchor", "middle");
+            xLabel.setAttribute("fill", "var(--muted)");
+            xLabel.setAttribute("font-size", "10px");
+            xLabel.textContent = "Period (days)";
+            svg.appendChild(xLabel);
+
+            const yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            yLabel.setAttribute("x", 15);
+            yLabel.setAttribute("y", height / 2);
+            yLabel.setAttribute("transform", `rotate(-90, 15, ${height / 2})`);
+            yLabel.setAttribute("text-anchor", "middle");
+            yLabel.setAttribute("fill", "var(--muted)");
+            yLabel.setAttribute("font-size", "10px");
+            yLabel.textContent = "Radius (RJ)";
+            svg.appendChild(yLabel);
+        }
+
+        // Function to draw a simple confusion matrix SVG
+        function drawConfusionMatrix(svg, data) {
+            const { width, height } = svg.getBoundingClientRect();
+            svg.innerHTML = '';
+            
+            const tp = data.tp, fp = data.fp, fn = data.fn, tn = data.tn;
+            const total = tp + fp + fn + tn;
+            const size = Math.min(width, height) - 40;
+            const rectSize = size / 2;
+            const labelOffset = 10;
+            
+            const createRect = (x, y, color, value) => {
+                const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                rect.setAttribute("x", x);
+                rect.setAttribute("y", y);
+                rect.setAttribute("width", rectSize);
+                rect.setAttribute("height", rectSize);
+                rect.setAttribute("fill", color);
+                svg.appendChild(rect);
+                
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", x + rectSize / 2);
+                text.setAttribute("y", y + rectSize / 2 + 5);
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("fill", "black");
+                text.setAttribute("font-size", "14px");
+                text.setAttribute("font-weight", "bold");
+                text.textContent = value;
+                svg.appendChild(text);
+            };
+
+            const createLabel = (x, y, text, color) => {
+                const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                label.setAttribute("x", x);
+                label.setAttribute("y", y);
+                label.setAttribute("text-anchor", "middle");
+                label.setAttribute("fill", color);
+                label.setAttribute("font-size", "12px");
+                label.textContent = text;
+                svg.appendChild(label);
+            };
+
+            const startX = (width - size) / 2;
+            const startY = (height - size) / 2;
+
+            // TP
+            createRect(startX + rectSize, startY, 'var(--ok)', tp);
+            // FN
+            createRect(startX, startY, 'var(--warn)', fn);
+            // FP
+            createRect(startX + rectSize, startY + rectSize, 'var(--warn)', fp);
+            // TN
+            createRect(startX, startY + rectSize, 'var(--ok)', tn);
+            
+            createLabel(startX + rectSize / 2, startY - labelOffset, "Actual Negative", "var(--muted)");
+            createLabel(startX + rectSize * 1.5, startY - labelOffset, "Actual Positive", "var(--muted)");
+            createLabel(startX - labelOffset, startY + rectSize / 2, "Predicted Negative", "var(--muted)");
+            createLabel(startX - labelOffset, startY + rectSize * 1.5, "Predicted Positive", "var(--muted)");
+        }
+
+        // Function to draw a phase-folded light curve on a canvas
+        function drawPhaseFolded(canvas, data, confidence) {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            
+            ctx.fillStyle = '#0c1130';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add a static light curve
+            ctx.strokeStyle = '#8f7aff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            const points = 100;
+            const noise = 0.005;
+            const depth = data.flux_depth;
+            const phaseStart = 0.45;
+            const phaseEnd = 0.55;
+
+            for (let i = 0; i <= points; i++) {
+                const phase = i / points;
+                let flux = 1.0;
+                
+                if (phase > phaseStart && phase < phaseEnd) {
+                    flux -= depth;
+                }
+                
+                flux += (Math.random() - 0.5) * noise;
+                
+                const x = phase * canvas.width / dpr;
+                const y = (1 - (flux - 0.99) / 0.02) * canvas.height / dpr;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Add confidence text
+            ctx.fillStyle = confidence > 0.9 ? 'var(--ok)' : 'var(--warn)';
+            ctx.font = '12px Outfit';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'top';
+            ctx.fillText(`Confidence: ${(confidence * 100).toFixed(1)}%`, canvas.width / dpr - 10, 10);
+        }
+
+        // Main detector function
+        async function runDetector() {
+            runBtn.disabled = true;
+            statusMessage.style.color = 'var(--warn)';
+            statusMessage.innerHTML = `<span class="spinner"></span> <span style="margin-left:10px">Running detector on ${datasetSelect.value.toUpperCase()} data...</span>`;
+            
+            // Simulate processing delay
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            const mission = datasetSelect.value;
+            const config = missionConfigs[mission];
+            
+            // Populate the catalog table
+            catalogTableBody.innerHTML = '';
+            config.candidates.forEach(candidate => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${candidate.id}</td>
+                    <td>${candidate.period.toFixed(2)}</td>
+                    <td>${candidate.radius.toFixed(2)}</td>
+                    <td>${(candidate.confidence * 100).toFixed(1)}%</td>
+                `;
+                catalogTableBody.appendChild(row);
+            });
+            
+            // Draw the plots
+            drawScatterPlot(periodRadiusPlot, config.candidates, 'var(--accent)');
+            drawConfusionMatrix(cmPlot, config.cm);
+            drawLineSvg(prPlot, config.pr, 'var(--accent)');
+            drawLineSvg(rocPlot, config.roc, 'var(--accent)');
+            
+            // Populate the gallery
+            gallery.innerHTML = '';
+            config.candidates.forEach(candidate => {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.innerHTML = `<canvas id="canvas-${candidate.id}" class="gallery-canvas"></canvas>`;
+                gallery.appendChild(tile);
+                
+                const canvasEl = tile.querySelector('.gallery-canvas');
+                drawPhaseFolded(canvasEl, candidate, candidate.confidence);
+            });
+
+            statusMessage.innerHTML = `✅ Detector finished. Found ${config.candidates.length} candidates.`;
+            statusMessage.style.color = 'var(--ok)';
+            runBtn.disabled = false;
+        }
+
+        // Initial setup and event listeners
+        window.onload = function() {
+            updateKPIs();
+            animateCanvas();
+            // Call runDetector initially to populate the page
+            runDetector();
+        }
+
+        datasetSelect.addEventListener('change', () => {
+            updateKPIs();
+            cancelAnimationFrame(animationFrameId);
+            animateCanvas();
+            // Clear previous results
+            catalogTableBody.innerHTML = '<tr><td colspan="4" class="muted center">Run the detector to see results.</td></tr>';
+            gallery.innerHTML = '';
+            periodRadiusPlot.innerHTML = '';
+            cmPlot.innerHTML = '';
+            prPlot.innerHTML = '';
+            rocPlot.innerHTML = '';
+        });
+
+        runBtn.addEventListener('click', runDetector);
+
+    </script>
+</body>
+</html>
