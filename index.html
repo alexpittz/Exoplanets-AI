@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Splash Screen Styles - Added without changing existing code */
         .splash-screen {
             position: fixed;
             top: 0;
@@ -157,7 +156,6 @@
         a{color:inherit;text-decoration:none}
         img,video{max-width:100%;display:block}
         
-        /* Optimized Neon Effects - Reduced complexity */
         .neon-container {
             position: fixed;
             top: 0;
@@ -192,7 +190,6 @@
             50% { transform: translate(100px, -50px) scale(1.1); opacity: 0.8; }
         }
         
-        /* Optimized Grid */
         .cyber-grid {
             position: fixed;
             top: 0;
@@ -208,7 +205,6 @@
             opacity: 0.4;
         }
         
-        /* Simplified Neon Text */
         .neon-text {
             text-shadow: 0 0 10px var(--neon-blue);
             animation: neonGlow 3s ease-in-out infinite alternate;
@@ -219,7 +215,6 @@
             to { text-shadow: 0 0 15px var(--neon-cyan); }
         }
         
-        /* Optimized Cards */
         .card {
             position: relative;
             z-index: 2;
@@ -238,8 +233,349 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(106, 165, 255, 0.1);
         }
+
+        .exo-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            font-family: "Outfit", system-ui, -apple-system, sans-serif;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(106, 165, 255, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: chatbotPulse 2s infinite;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(106, 165, 255, 0.6);
+        }
+
+        .chatbot-toggle img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        @keyframes chatbotPulse {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(106, 165, 255, 0.4);
+            }
+            50% {
+                box-shadow: 0 6px 30px rgba(106, 165, 255, 0.7);
+            }
+        }
+
+        .chatbot-container {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 400px;
+            height: 600px;
+            background: linear-gradient(135deg, 
+                rgba(11, 15, 37, 0.95) 0%, 
+                rgba(10, 14, 32, 0.95) 100%);
+            border: 1px solid rgba(157, 178, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transform: scale(0) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
+        }
+
+        .chatbot-container.active {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .chatbot-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(157, 178, 255, 0.15);
+            background: linear-gradient(135deg, 
+                rgba(106, 165, 255, 0.1) 0%, 
+                rgba(143, 122, 255, 0.1) 100%);
+        }
+
+        .chatbot-header-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(106, 165, 255, 0.3);
+        }
+
+        .chatbot-avatar img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .chatbot-info h3 {
+            margin: 0;
+            font-size: 16px;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .chatbot-info p {
+            margin: 2px 0 0 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .chatbot-close {
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatbot-messages {
+            height: 420px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: rgba(106, 165, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .message-avatar.bot {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-avatar.bot img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.bot .message-content {
+            background: rgba(106, 165, 255, 0.1);
+            color: var(--text);
+            border: 1px solid rgba(106, 165, 255, 0.2);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #081022;
+            font-weight: 500;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-input-area {
+            padding: 20px;
+            border-top: 1px solid rgba(157, 178, 255, 0.15);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chatbot-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            background: rgba(11, 15, 37, 0.8);
+            border: 1px solid rgba(157, 178, 255, 0.25);
+            border-radius: 20px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .chatbot-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(106, 165, 255, 0.2);
+        }
+
+        .chatbot-input::placeholder {
+            color: var(--muted);
+        }
+
+        .chatbot-send {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(106, 165, 255, 0.4);
+        }
+
+        .chatbot-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 2px;
+        }
+
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .exo-chatbot {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .chatbot-container {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 140px);
+                bottom: 80px;
+                right: -10px;
+            }
+
+            .chatbot-toggle {
+                width: 50px;
+                height: 50px;
+            }
+
+            .chatbot-toggle img {
+                width: 28px;
+                height: 28px;
+            }
+        }
         
-        /* Enhanced Video Container with Controls */
         .video-section {
             position: relative;
             max-width: 1100px;
@@ -275,7 +611,6 @@
             background: #000;
         }
         
-        /* Custom Video Controls */
         .video-controls {
             position: relative;
             background: linear-gradient(180deg, transparent, rgba(0,0,0,0.8));
@@ -335,7 +670,6 @@
             cursor: pointer;
         }
         
-        /* Optimized Button Effects */
         .btn {
             position: relative;
             overflow: hidden;
@@ -360,7 +694,6 @@
             box-shadow: 0 0 30px rgba(106, 165, 255, 0.5);
         }
         
-        /* White CSV Download Button */
         .btn.csv-download {
             background: #ffffff;
             color: #081022;
@@ -373,7 +706,6 @@
             transform: translateY(-1px);
         }
         
-        /* Optimized Planets */
         .orbits{position:absolute;inset:0;pointer-events:none}
         .planet{position:absolute;border-radius:50%;filter:drop-shadow(0 10px 40px rgba(128,158,255,.2));animation:planetFloat 15s ease-in-out infinite;will-change:transform}
         .planet.one{width:160px;height:160px;background:radial-gradient(circle at 30% 30%, #9fb8ff, #4b6cff 60%, #2b2f70);top:-40px;right:-30px}
@@ -386,7 +718,6 @@
             50% { transform: translate(8px, -10px) rotate(180deg); }
         }
         
-        /* Header */
         .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:linear-gradient(180deg, rgba(10,12,25,.85), rgba(10,12,25,.55));border-bottom:1px solid rgba(157,178,255,.15)}
         .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
         .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px}
@@ -396,7 +727,6 @@
         .nav a:hover{background:rgba(157,178,255,.12);opacity:1}
         .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:14px;font-weight:700;box-shadow:var(--ring)}
         
-        /* Hero */
         .hero{position:relative;overflow:hidden}
         .hero-inner{max-width:1100px;margin:0 auto;padding:72px 20px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;position:relative;z-index:2}
         .hero h1{font-size:clamp(28px,4.8vw,52px);line-height:1.05;margin:8px 0 14px}
@@ -404,7 +734,6 @@
         .hero .actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
         .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9999px;background:rgba(106,165,255,.12);border:1px solid rgba(157,178,255,.25);font-size:14px;margin-bottom:10px}
         
-        /* Sections - Optimized */
         section{max-width:1100px;margin:0 auto;padding:70px 20px;position:relative;z-index:2}
         h2{font-size:clamp(22px,3.6vw,36px);margin:0 0 16px}
         .lead{color:var(--muted);max-width:900px}
@@ -414,13 +743,11 @@
         .chip{display:inline-block;margin:6px 6px 0 0;background:rgba(157,178,255,.12);border:1px solid rgba(157,178,255,.25);padding:6px 10px;border-radius:9999px;font-size:13px}
         .kpi{display:flex;align-items:center;gap:12px;padding:16px 14px;border-radius:14px;background:rgba(26,34,74,.6);border:1px solid rgba(157,178,255,.18)}
         
-        /* Timeline - Simplified */
         .timeline{position:relative;margin-top:18px}
         .timeline:before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),transparent)}
         .step{position:relative;margin-left:38px;margin-bottom:14px;padding:14px 16px;border-radius:14px;background:rgba(8,12,28,.7);border:1px solid rgba(157,178,255,.15)}
         .step:before{content:"";position:absolute;left:-30px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(106,165,255,.25)}
         
-        /* Table - Optimized */
         table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:10px}
         th,td{text-align:left;padding:12px 14px}
         thead th{font-weight:700;color:#c8d6ff}
@@ -429,21 +756,111 @@
         tbody tr td:first-child{border-left:1px solid rgba(157,178,255,.12);border-top-left-radius:12px;border-bottom-left-radius:12px}
         tbody tr td:last-child{border-right:1px solid rgba(157,178,255,.12);border-top-right-radius:12px;border-bottom-right-radius:12px}
         
-        /* Gallery - Optimized */
         .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}
         .tile{position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(157,178,255,.18);background:#0c1130;aspect-ratio:16/10}
         .tile canvas, .tile svg{position:absolute;inset:0;width:100%;height:100%}
         
-        /* Footer */
+        .result-card {
+            position: relative;
+            padding: 16px;
+            border-radius: 16px;
+            background: rgba(8,12,28,.7);
+            border: 1px solid rgba(157,178,255,.15);
+            text-align: center;
+        }
+        
+        .result-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: var(--text);
+        }
+        
+        .result-card .prob {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--ok);
+            margin-bottom: 8px;
+        }
+        
+        .result-card .details {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        .team-photo {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(106, 165, 255, 0.2);
+            border: 1px solid rgba(157, 178, 255, 0.2);
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .team-member h3 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+            color: var(--text);
+        }
+        
+        .team-member .role {
+            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .team-member .description {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .team-member .email {
+            color: var(--accent);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        
+        .team-member .skills {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
         footer{border-top:1px solid rgba(157,178,255,.15);padding:24px 20px;color:#aebdff;background:rgba(6,8,20,.5);position:relative;z-index:2}
         .footer-inner{max-width:1100px;margin:0 auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
         .notice{font-size:13px;opacity:.9}
         
-        /* Inputs */
         .inp{margin-top:6px;background:#0a0f24;border:1px solid rgba(157,178,255,.25);border-radius:12px;padding:10px 12px;color:var(--text);outline:none;transition:border-color 0.2s ease}
         .inp:focus{border-color:var(--accent);box-shadow:var(--ring)}
         
-        /* Loading - Optimized */
+        .contact-form {
+            display: grid;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        
+        .contact-form .form-group {
+            display: grid;
+            gap: 6px;
+        }
+        
+        .contact-form label {
+            font-size: 14px;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
         .loading-container {
             display: flex;
             flex-direction: column;
@@ -469,7 +886,6 @@
             text-align: center;
         }
 
-        /* Responsive - Optimized */
         @media (max-width: 1024px) {
             .hero-inner {
                 grid-template-columns: 1fr;
@@ -582,7 +998,6 @@
             }
         }
 
-        /* Performance optimizations */
         * {
             will-change: auto;
         }
@@ -597,7 +1012,6 @@
     </style>
 </head>
 <body>
-    <!-- Splash Screen - Added without changing existing code -->
     <div class="splash-screen" id="splashScreen">
         <div class="splash-effects">
             <div class="splash-orb"></div>
@@ -614,16 +1028,13 @@
     </div>
 
     <div class="main-content" id="mainContent">
-        <!-- Optimized Neon Effects -->
         <div class="neon-container">
             <div class="neon-orb blue" style="width: 180px; height: 180px; top: 10%; left: 5%; animation-delay: 0s;"></div>
             <div class="neon-orb purple" style="width: 140px; height: 140px; top: 60%; right: 10%; animation-delay: -8s;"></div>
         </div>
         
-        <!-- Optimized Grid -->
         <div class="cyber-grid"></div>
 
-        <!-- Nav -->
         <header class="nav">
             <div class="nav-inner">
                 <span class="brand"><span class="logo"></span>ExoAI</span>
@@ -640,7 +1051,6 @@
             </div>
         </header>
 
-        <!-- Hero -->
         <section class="hero" aria-label="Hero">
             <div class="orbits" aria-hidden="true">
                 <div class="planet one"></div>
@@ -679,7 +1089,6 @@
             </div>
         </section>
 
-        <!-- About -->
         <section id="about">
             <h2>About the Project</h2>
             <p class="lead">ExoAI explores how deep learning can accelerate the search for exoplanets. We preprocess light curves from missions like Kepler and TESS, train convolutional networks to identify transit signals, and score candidates for follow‑up.</p>
@@ -702,7 +1111,6 @@
             </div>
         </section>
 
-        <!-- Video Section - No heading, auto-play -->
         <section class="video-section" id="demo-video">
             <div class="video-card">
                 <div class="video-wrapper">
@@ -731,7 +1139,6 @@
             </div>
         </section>
 
-        <!-- Pipeline -->
         <section id="pipeline">
             <h2>AI Pipeline</h2>
             <p class="lead">From raw flux to planet candidates—each stage improves signal‑to‑noise and reduces false positives.</p>
@@ -745,7 +1152,6 @@
             </div>
         </section>
 
-        <!-- How the AI works -->
         <section id="how-it-works">
             <h2>How the AI Works</h2>
             <p class="lead">Our core model is a Convolutional Neural Network (CNN) specifically designed to identify patterns in 1D time-series data. It works by passing the light curve through a series of specialized layers.</p>
@@ -755,32 +1161,21 @@
                     <div class="tile">
                         <svg viewBox="0 0 300 180" role="img" aria-label="Diagram of a simple Convolutional Neural Network (CNN) architecture.">
                             <rect x="0" y="0" width="100%" height="100%" fill="#0c1130"/>
-                            <!-- Input Layer -->
                             <rect x="20" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
                             <text x="30" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Input</text>
                             <text x="30" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">1D Signal</text>
-
-                            <!-- Convolutional Layer -->
                             <rect x="60" y="70" width="30" height="40" rx="4" fill="#6aa5ff" opacity="0.6"/>
                             <text x="75" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Conv</text>
                             <line x1="40" y1="90" x2="60" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                            
-                            <!-- Pooling Layer -->
                             <rect x="100" y="75" width="25" height="30" rx="4" fill="#8f7aff" opacity="0.6"/>
                             <text x="112.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Pool</text>
                             <line x1="90" y1="90" x2="100" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                            
-                            <!-- Dense Layer 1 -->
                             <rect x="140" y="60" width="40" height="60" rx="4" fill="#6aa5ff" opacity="0.5"/>
                             <text x="160" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 1</text>
                             <line x1="125" y1="90" x2="140" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                            
-                            <!-- Dense Layer 2 -->
                             <rect x="190" y="70" width="25" height="40" rx="4" fill="#6aa5ff" opacity="0.4"/>
                             <text x="202.5" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Dense 2</text>
                             <line x1="180" y1="90" x2="190" y2="90" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                            
-                            <!-- Output Layer -->
                             <rect x="230" y="80" width="20" height="20" rx="3" fill="#6aa5ff" opacity="0.8"/>
                             <text x="240" y="110" text-anchor="middle" fill="var(--text)" font-size="10">Output</text>
                             <text x="240" y="125" text-anchor="middle" fill="var(--muted)" font-size="8">Prob.</text>
@@ -800,7 +1195,6 @@
             </div>
         </section>
 
-        <!-- Dataset -->
         <section id="dataset">
             <h2>Dataset & Access</h2>
             <p class="lead">We support public light‑curve archives. Download sample datasets or open notebooks below. The primary challenge with this data is handling missing observations and normalization across different telescope cameras and time periods.</p>
@@ -835,14 +1229,14 @@
             </div>
         </section>
 
-        <!-- Catalog -->
         <section id="catalog">
             <h2>Candidate Catalog</h2>
             <p class="lead">A table of all detected candidates with key properties. This data is simulated based on the mission type you select.</p>
-            <div class="card" style="margin-top:10px">
+            
+            <div class="card" style="margin-top:20px">
                 <h3>Detected Planets</h3>
                 <div style="overflow-x:auto;">
-                    <table aria-label="Detected planets table">
+                    <table id="candidateTable" aria-label="Detected planet candidates">
                         <thead>
                             <tr>
                                 <th>Candidate ID</th>
@@ -851,166 +1245,235 @@
                                 <th>Confidence</th>
                             </tr>
                         </thead>
-                        <tbody id="catalog-table-body">
-                            <tr><td colspan="4" class="muted center">Run the detector to see results.</td></tr>
+                        <tbody id="candidateTableBody">
+                            <tr>
+                                <td colspan="4" style="text-align:center;padding:40px;color:var(--muted)">
+                                    Run the detector to see results.
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card" style="margin-top:12px">
+
+            <div class="card" style="margin-top:20px">
                 <h3>Period vs. Radius</h3>
                 <div class="tile">
-                    <svg id="period-radius-plot" viewBox="0 0 300 180" role="img" aria-label="Period vs Radius plot"></svg>
+                    <canvas id="periodRadiusChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- Results -->
         <section id="results">
             <h2>Results & Visuals</h2>
             <p class="lead">Examples of detections. Each card shows a phase‑folded light curve with predicted probability.</p>
-            <div class="gallery" id="gallery"></div>
-            <div class="grid cols-3" style="margin-top:16px">
+            
+            <div class="gallery" id="resultsGallery">
+                <div class="result-card">
+                    <h4>Confirmed Transit</h4>
+                    <div class="prob">98.4%</div>
+                    <div class="details">Period: 3.2d | Radius: 1.1 R⊕</div>
+                </div>
+                <div class="result-card">
+                    <h4>Hot Jupiter</h4>
+                    <div class="prob">95.7%</div>
+                    <div class="details">Period: 4.8d | Radius: 11.3 R⊕</div>
+                </div>
+                <div class="result-card">
+                    <h4>Super Earth</h4>
+                    <div class="prob">92.1%</div>
+                    <div class="details">Period: 12.6d | Radius: 1.8 R⊕</div>
+                </div>
+            </div>
+
+            <div class="grid cols-3" style="margin-top:40px">
                 <div class="card">
                     <h3>Confusion Matrix</h3>
                     <p class="muted">Balanced validation set.</p>
-                    <div class="tile"><svg id="cm" viewBox="0 0 300 180" role="img" aria-label="Confusion matrix"></svg></div>
+                    <div class="tile">
+                        <canvas id="confusionMatrix"></canvas>
+                    </div>
                 </div>
                 <div class="card">
                     <h3>PR Curve</h3>
                     <p class="muted">Area under curve highlights threshold trade‑offs.</p>
-                    <div class="tile"><svg id="pr" viewBox="0 0 300 180" role="img" aria-label="Precision‑Recall curve"></svg></div>
+                    <div class="tile">
+                        <canvas id="prCurve"></canvas>
+                    </div>
                 </div>
                 <div class="card">
                     <h3>ROC Curve</h3>
                     <p class="muted">Near‑perfect separability on held‑out sample.</p>
-                    <div class="tile"><svg id="roc" viewBox="0 0 300 180" role="img" aria-label="ROC curve"></svg></div>
+                    <div class="tile">
+                        <canvas id="rocCurve"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Team -->
         <section id="team">
             <h2>Our Team</h2>
-            <div style="text-align: center; margin-bottom: 30px;">
-                <img src="team.jpg" alt="Our Team" style="max-width: 100%; height: auto; border-radius: 16px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); border: 2px solid rgba(106, 165, 255, 0.2);">
-            </div>
-            <div class="grid cols-3">
-                <div class="card">
-                    <h3>Agam Sahni</h3>
-                    <p class="muted">Data & Research · Pipeline, feature engineering, BLS search.</p>
-                    <p class="muted">alexpitt009@gmail.com</p>
-                    <span class="chip">Lightkurve</span> <span class="chip">NumPy</span>
-                </div>
-                <div class="card">
-                    <h3>Anmol Katiyar</h3>
-                    <p class="muted">ML Engineer · Data prep, CNN models, evaluation.</p>
-                    <p class="muted">anmolkatiyar084@gmail.com</p>
-                    <span class="chip">Python</span> <span class="chip">PyTorch</span>
-                </div>
-                <div class="card">
-                    <h3>Nidhin R</h3>
-                    <p class="muted">Web developer, AI and ML engineer</p>
-                    <p class="muted">r.nidhinofficial@gmail.com</p>
-                    <span class="chip">UI/UX</span> <span class="chip">AI/ML</span>
-                </div>
-            </div>
+            
+            <img src="team.jpg" alt="ExoVision AI Team" class="team-photo">
+            
+            <div class="grid cols-3" style="margin-top:20px">
+    <div class="card team-member">
+        <h3>Agam Sahni</h3>
+        <div class="role">Data & Research Lead</div>
+        <div class="description">Pipeline, feature engineering, BLS search algorithms. Skilled in Lightkurve and NumPy libraries.</div>
+        <div class="email">alexpitt009@gmail.com</div>
+        <div class="skills">
+            <span class="chip">Lightkurve</span>
+            <span class="chip">NumPy</span>
+        </div>
+    </div>
+
+    <!-- Nidhin moved to second -->
+    <div class="card team-member">
+        <h3>Nidhin R</h3>
+        <div class="role">AI/ML Engineer, UI/UX Designer, Web Developer</div>
+        <div class="description">Skilled AI/ML engineer and Web Developer who handles Development , UI/UX design and implements cutting-edge AI/ML solutions.</div>
+        <div class="email">r.nidhinofficial@gmail.com</div>
+        <div class="skills">
+            <span class="chip">UI/UX</span>
+            <span class="chip">AI/ML</span>
+        </div>
+    </div>
+
+    <div class="card team-member">
+        <h3>Anmol Katiyar</h3>
+        <div class="role">ML Engineer</div>
+        <div class="description">Data prep, CNN models, evaluation. Proficient in Python and PyTorch frameworks, specializing in data preparation and model development.</div>
+        <div class="email">anmolkatiyar084@gmail.com</div>
+        <div class="skills">
+            <span class="chip">Python</span>
+            <span class="chip">PyTorch</span>
+        </div>
+    </div>
+</div>
         </section>
 
-        <!-- Contact -->
         <section id="contact">
             <h2>Contact</h2>
             <p class="lead">Want to collaborate or use our models? Send us a message.</p>
-            <form class="card" onsubmit="event.preventDefault(); showMessage('Thanks! We\'ll get back to you.', 'success');">
-                <div class="grid cols-2">
-                    <label>
-                        <span class="muted">Name</span>
-                        <input type="text" class="inp" placeholder="Your name" required>
-                    </label>
-                    <label>
-                        <span class="muted">Email</span>
-                        <input type="email" class="inp" placeholder="your@email.com" required>
-                    </label>
-                </div>
-                <label style="margin-top:12px">
-                    <span class="muted">Message</span>
-                    <textarea class="inp" rows="4" placeholder="Tell us about your project or question..." required></textarea>
-                </label>
-                <button type="submit" class="btn primary" style="margin-top:14px">Send Message</button>
-            </form>
+            
+            <div class="card" style="margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto;">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="inp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="inp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" class="inp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" class="inp" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Send Message</button>
+                </form>
+            </div>
         </section>
 
-        <!-- Footer -->
+        <div class="exo-chatbot">
+            <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open ExoAI Chatbot">
+                <img src="logo.png" alt="ExoAI Bot">
+            </button>
+            
+            <div class="chatbot-container" id="chatbotContainer">
+                <div class="chatbot-header">
+                    <div class="chatbot-header-content">
+                        <div class="chatbot-avatar">
+                            <img src="logo.png" alt="ExoAI Bot">
+                        </div>
+                        <div class="chatbot-info">
+                            <h3>ExoAI Bot</h3>
+                            <p>Space & Exoplanet Expert</p>
+                        </div>
+                        <button class="chatbot-close" id="chatbotClose" aria-label="Close chatbot">×</button>
+                    </div>
+                </div>
+                
+                <div class="chatbot-messages" id="chatbotMessages">
+                    <div class="message bot">
+                        <div class="message-avatar bot">
+                            <img src="logo.png" alt="ExoAI Bot">
+                        </div>
+                        <div class="message-content">
+                            Hello! I'm ExoAI Bot 🌌 I can answer questions about exoplanets, space missions, galaxies, satellites, ISRO, NASA, and our ExoVision AI team. What would you like to know?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chatbot-input-area">
+                    <div class="chatbot-input-container">
+                        <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask about space, exoplanets, or our team..." maxlength="500">
+                        <button class="chatbot-send" id="chatbotSend" aria-label="Send message">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <footer>
             <div class="footer-inner">
-                <div class="notice">© 2025 ExoAI Team · Student research project for educational purposes</div>
-                <div>
-                    <a href="#team" style="opacity:.8">Team</a> · 
-                    <a href="#contact" style="opacity:.8">Contact</a>
-                </div>
+                <div class="notice">© 2025 ExoVision AI Project. Student research initiative.</div>
+                <div>🌌 Exploring the cosmos with artificial intelligence</div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Splash Screen Handler - Added without changing existing code
-        document.addEventListener('DOMContentLoaded', () => {
-            const splashScreen = document.getElementById('splashScreen');
-            const mainContent = document.getElementById('mainContent');
-            
-            // Hide splash and show main content after 6 seconds
-            setTimeout(() => {
-                splashScreen.classList.add('hide');
+        const missionData = {
+            kepler: {
+                precision: 97.2,
+                recall: 94.8,
+                parameters: 1.8,
+                confusionMatrix: [[0.94, 0.06], [0.03, 0.97]],
+                auc: { pr: 0.94, roc: 0.99 },
+                candidatePrefix: 'KPL',
+                periodRange: [1, 400],
+                radiusRange: [0.5, 15]
+            },
+            tess: {
+                precision: 89.6,
+                recall: 91.3,
+                parameters: 2.1,
+                confusionMatrix: [[0.89, 0.11], [0.09, 0.91]],
+                auc: { pr: 0.87, roc: 0.95 },
+                candidatePrefix: 'TIC',
+                periodRange: [0.5, 50],
+                radiusRange: [0.3, 8]
+            }
+        };
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('splashScreen').classList.add('hide');
+                document.getElementById('mainContent').classList.add('show');
+                
                 setTimeout(() => {
-                    mainContent.classList.add('show');
-                    splashScreen.style.display = 'none';
-                }, 800);
-            }, 6000);
-            
-            // Start animations
-            animate();
-            
-            // Render static charts
-            setTimeout(() => {
-                renderConfusionMatrix();
-                renderPRCurve();
-                renderROCCurve();
-            }, 100);
-            
-            // Event listeners
-            document.getElementById('runDetectorBtn')?.addEventListener('click', runDetector);
-            
-            // Dataset selection change listener for KPI updates
-            document.getElementById('dataset-select')?.addEventListener('change', updateKPIs);
-            
-            // Initial KPI update
-            updateKPIs();
+                    initializeCharts();
+                }, 500);
+            }, 3000);
         });
 
-        // Function to update KPIs based on dataset selection
-        function updateKPIs() {
-            const dataset = document.getElementById('dataset-select').value;
-            const precisionElement = document.getElementById('precision-value');
-            const recallElement = document.getElementById('recall-value');
-            const parametersElement = document.getElementById('parameters-value');
-            
-            if (dataset === 'kepler') {
-                precisionElement.textContent = '97.2%';
-                recallElement.textContent = '94.8%';
-                parametersElement.textContent = '1.8M';
-            } else { // TESS
-                precisionElement.textContent = '95.6%';
-                recallElement.textContent = '92.3%';
-                parametersElement.textContent = '2.1M';
-            }
+        function initializeCharts() {
+            drawConfusionMatrix();
+            drawPRCurve();
+            drawROCCurve();
+            drawPeriodRadiusChart();
         }
 
-        // Optimized JavaScript for better performance
-        let animationId;
-        let time = 0;
-        let detectorRunning = false;
-
-        // Enhanced Video Controls
         const video = document.getElementById('mainVideo');
         const playPauseBtn = document.getElementById('playPauseBtn');
         const muteBtn = document.getElementById('muteBtn');
@@ -1020,9 +1483,7 @@
         const speedControl = document.getElementById('speedControl');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
 
-        // Video event listeners
         if (video) {
-            // Play/Pause functionality
             playPauseBtn.addEventListener('click', () => {
                 if (video.paused) {
                     video.play();
@@ -1033,341 +1494,627 @@
                 }
             });
 
-            // Mute/Unmute functionality
             muteBtn.addEventListener('click', () => {
-                if (video.muted) {
-                    video.muted = false;
-                    muteBtn.textContent = '🔊 Audio';
-                } else {
-                    video.muted = true;
-                    muteBtn.textContent = '🔇 Muted';
-                }
+                video.muted = !video.muted;
+                muteBtn.textContent = video.muted ? '🔇 Muted' : '🔊 Sound';
             });
 
-            // Speed control
-            speedControl.addEventListener('change', () => {
-                video.playbackRate = parseFloat(speedControl.value);
-            });
-
-            // Progress bar click
-            progressContainer.addEventListener('click', (e) => {
-                const rect = progressContainer.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const width = rect.width;
-                const percentage = clickX / width;
-                video.currentTime = percentage * video.duration;
-            });
-
-            // Fullscreen functionality
-            fullscreenBtn.addEventListener('click', () => {
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                } else if (video.webkitRequestFullscreen) {
-                    video.webkitRequestFullscreen();
-                } else if (video.msRequestFullscreen) {
-                    video.msRequestFullscreen();
-                }
-            });
-
-            // Update progress and time
             video.addEventListener('timeupdate', () => {
                 const progress = (video.currentTime / video.duration) * 100;
                 progressBar.style.width = progress + '%';
                 
-                const currentMinutes = Math.floor(video.currentTime / 60);
-                const currentSeconds = Math.floor(video.currentTime % 60);
-                const durationMinutes = Math.floor(video.duration / 60);
-                const durationSeconds = Math.floor(video.duration % 60);
+                const currentTime = formatTime(video.currentTime);
+                const duration = formatTime(video.duration);
+                timeDisplay.textContent = `${currentTime} / ${duration}`;
+            });
+
+            progressContainer.addEventListener('click', (e) => {
+                const clickX = e.offsetX;
+                const width = progressContainer.offsetWidth;
+                const duration = video.duration;
+                video.currentTime = (clickX / width) * duration;
+            });
+
+            speedControl.addEventListener('change', () => {
+                video.playbackRate = parseFloat(speedControl.value);
+            });
+
+            fullscreenBtn.addEventListener('click', () => {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                }
+            });
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function downloadCSV(dataset) {
+            const data = dataset === 'kepler' ? 
+                'time,flux,flux_err,quality,quarter\n0.0,1.0,0.001,0,1\n0.02,0.999,0.001,0,1\n' :
+                'time,flux,flux_err,quality,sector\n1325.0,1.0,0.002,0,1\n1325.02,0.998,0.002,0,1\n';
+            
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${dataset}_sample.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        const canvas = document.getElementById('curve');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            let animationFrame = 0;
+            
+            function drawCurve() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = '#6aa5ff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
                 
-                timeDisplay.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
-            });
-
-            // Video ended
-            video.addEventListener('ended', () => {
-                playPauseBtn.textContent = '▶️ Play';
-            });
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', (e) => {
-                if (e.target.tagName.toLowerCase() !== 'input' && e.target.tagName.toLowerCase() !== 'textarea') {
-                    switch(e.key) {
-                        case ' ':
-                            e.preventDefault();
-                            if (video.paused) {
-                                video.play();
-                                playPauseBtn.textContent = '⏸️ Pause';
-                            } else {
-                                video.pause();
-                                playPauseBtn.textContent = '▶️ Play';
-                            }
-                            break;
-                        case 'ArrowRight':
-                            e.preventDefault();
-                            video.currentTime += 10;
-                            break;
-                        case 'ArrowLeft':
-                            e.preventDefault();
-                            video.currentTime -= 10;
-                            break;
-                        case 'ArrowUp':
-                            e.preventDefault();
-                            video.volume = Math.min(1, video.volume + 0.1);
-                            break;
-                        case 'ArrowDown':
-                            e.preventDefault();
-                            video.volume = Math.max(0, video.volume - 0.1);
-                            break;
-                        case 'm':
-                        case 'M':
-                            e.preventDefault();
-                            if (video.muted) {
-                                video.muted = false;
-                                muteBtn.textContent = '🔊 Audio';
-                            } else {
-                                video.muted = true;
-                                muteBtn.textContent = '🔇 Muted';
-                            }
-                            break;
-                        case 'f':
-                        case 'F':
-                            e.preventDefault();
-                            if (video.requestFullscreen) {
-                                video.requestFullscreen();
-                            }
-                            break;
+                for (let x = 0; x < canvas.width; x++) {
+                    const t = (x / canvas.width) * 4 * Math.PI + animationFrame * 0.02;
+                    let y = canvas.height / 2;
+                    
+                    if (Math.sin(t) > 0.8) {
+                        y += 20;
+                    }
+                    
+                    y += Math.sin(t * 3) * 5 + Math.random() * 4 - 2;
+                    
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
                     }
                 }
-            });
-        }
-
-        // Fast graph rendering with requestAnimationFrame
-        function renderLightCurve() {
-            const canvas = document.getElementById('curve');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * window.devicePixelRatio;
-            canvas.height = rect.height * window.devicePixelRatio;
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-            
-            const w = rect.width;
-            const h = rect.height;
-            
-            ctx.clearRect(0, 0, w, h);
-            ctx.strokeStyle = '#6aa5ff';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            
-            // Optimized curve rendering
-            const points = 200;
-            for (let i = 0; i < points; i++) {
-                const x = (i / points) * w;
-                let y = h/2 + Math.sin(i * 0.1 + time * 0.02) * 15;
                 
-                // Add transit dip
-                const transitPhase = ((i + time * 0.5) % 50) / 50;
-                if (transitPhase > 0.4 && transitPhase < 0.6) {
-                    y += 25 * Math.sin((transitPhase - 0.4) * Math.PI / 0.2);
-                }
-                
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
+                ctx.stroke();
+                animationFrame++;
+                requestAnimationFrame(drawCurve);
             }
-            ctx.stroke();
             
-            time += 1;
+            drawCurve();
         }
 
-        // Optimized animation loop
-        function animate() {
-            renderLightCurve();
-            animationId = requestAnimationFrame(animate);
+        function updateKPIs(dataset) {
+            const data = missionData[dataset];
+            document.getElementById('precision-value').textContent = `${data.precision}%`;
+            document.getElementById('recall-value').textContent = `${data.recall}%`;
+            document.getElementById('parameters-value').textContent = `${data.parameters}M`;
         }
 
-        // Fast chart rendering functions
-        function renderConfusionMatrix() {
-            const svg = document.getElementById('cm');
-            if (!svg) return;
-            
-            svg.innerHTML = `
-                <rect width="100%" height="100%" fill="#0c1130"/>
-                <g transform="translate(50,30)">
-                    <rect x="0" y="0" width="80" height="80" fill="#1a3f5c" stroke="#6aa5ff"/>
-                    <rect x="80" y="0" width="80" height="80" fill="#2d1b3d" stroke="#6aa5ff"/>
-                    <rect x="0" y="80" width="80" height="80" fill="#2d1b3d" stroke="#6aa5ff"/>
-                    <rect x="80" y="80" width="80" height="80" fill="#1a3f5c" stroke="#6aa5ff"/>
-                    <text x="40" y="45" text-anchor="middle" fill="white" font-size="20">942</text>
-                    <text x="120" y="45" text-anchor="middle" fill="white" font-size="20">23</text>
-                    <text x="40" y="125" text-anchor="middle" fill="white" font-size="20">31</text>
-                    <text x="120" y="125" text-anchor="middle" fill="white" font-size="20">904</text>
-                    <text x="80" y="15" text-anchor="middle" fill="#9db2ff" font-size="12">Predicted</text>
-                    <text x="15" y="100" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,100)">Actual</text>
-                </g>
-            `;
-        }
+        document.getElementById('dataset-select').addEventListener('change', function() {
+            const dataset = this.value;
+            updateKPIs(dataset);
+            initializeCharts();
+        });
 
-        function renderPRCurve() {
-            const svg = document.getElementById('pr');
-            if (!svg) return;
-            
-            svg.innerHTML = `
-                <rect width="100%" height="100%" fill="#0c1130"/>
-                <g transform="translate(40,20)">
-                    <path d="M0,140 Q60,120 120,80 Q180,40 200,20" stroke="#6aa5ff" stroke-width="3" fill="none"/>
-                    <path d="M0,140 L200,140 L200,20" stroke="#333" stroke-width="1" fill="none"/>
-                    <circle cx="200" cy="20" r="4" fill="#66e8a6"/>
-                    <text x="100" y="160" text-anchor="middle" fill="#9db2ff" font-size="12">Recall</text>
-                    <text x="15" y="80" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,80)">Precision</text>
-                    <text x="150" y="40" fill="#66e8a6" font-size="10">AUC: 0.97</text>
-                </g>
-            `;
-        }
-
-        function renderROCCurve() {
-            const svg = document.getElementById('roc');
-            if (!svg) return;
-            
-            svg.innerHTML = `
-                <rect width="100%" height="100%" fill="#0c1130"/>
-                <g transform="translate(40,20)">
-                    <path d="M0,140 Q20,100 60,60 Q100,20 200,0" stroke="#6aa5ff" stroke-width="3" fill="none"/>
-                    <path d="M0,140 L200,140 L200,0 L0,0 L0,140" stroke="#333" stroke-width="1" fill="none"/>
-                    <path d="M0,140 L200,0" stroke="#444" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
-                    <text x="100" y="160" text-anchor="middle" fill="#9db2ff" font-size="12">False Positive Rate</text>
-                    <text x="15" y="80" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,80)">True Positive Rate</text>
-                    <text x="120" y="30" fill="#66e8a6" font-size="10">AUC: 0.99</text>
-                </g>
-            `;
-        }
-
-        // Fast detector simulation with scroll to catalog
-        function runDetector() {
-            if (detectorRunning) return;
-            
-            detectorRunning = true;
-            const btn = document.getElementById('runDetectorBtn');
-            const status = document.getElementById('status-message');
+        document.getElementById('runDetectorBtn').addEventListener('click', function() {
+            const statusMsg = document.getElementById('status-message');
             const dataset = document.getElementById('dataset-select').value;
             
-            btn.textContent = 'Processing...';
-            btn.disabled = true;
-            status.textContent = 'Running AI detector on ' + dataset.toUpperCase() + ' data...';
-            status.style.color = 'var(--warn)';
+            statusMsg.textContent = 'Running detector...';
+            statusMsg.style.color = 'var(--warn)';
+            this.disabled = true;
+            this.textContent = 'Processing...';
             
-            // Simulate processing
             setTimeout(() => {
-                populateCatalog(dataset);
-                renderPeriodRadiusPlot();
-                populateGallery();
+                const candidateCount = generateResults(dataset);
+                statusMsg.textContent = `Detection complete! Found ${candidateCount} candidates.`;
+                statusMsg.style.color = 'var(--ok)';
+                this.disabled = false;
+                this.textContent = 'Run Detector →';
                 
-                btn.textContent = 'Run Detector →';
-                btn.disabled = false;
-                const candidateCount = dataset === 'kepler' ? 8 : 12;
-                status.textContent = 'Detection complete! Found ' + candidateCount + ' candidates.';
-                status.style.color = 'var(--ok)';
-                detectorRunning = false;
-                
-                // Auto-scroll to catalog section
                 document.getElementById('catalog').scrollIntoView({ 
                     behavior: 'smooth',
                     block: 'start'
                 });
-            }, 2000);
+            }, 3000);
+        });
+
+        function generateResults(dataset) {
+            const data = missionData[dataset];
+            const candidateCount = Math.floor(Math.random() * 5) + 8;
+            
+            const tableBody = document.getElementById('candidateTableBody');
+            tableBody.innerHTML = '';
+            
+            const candidates = [];
+            for (let i = 0; i < candidateCount; i++) {
+                const candidate = {
+                    id: `${data.candidatePrefix}-${1000 + i}`,
+                    period: (Math.random() * (data.periodRange[1] - data.periodRange[0]) + data.periodRange[0]).toFixed(2),
+                    radius: (Math.random() * (data.radiusRange[1] - data.radiusRange[0]) + data.radiusRange[0]).toFixed(2),
+                    confidence: (Math.random() * 30 + 70).toFixed(1)
+                };
+                candidates.push(candidate);
+                
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = candidate.id;
+                row.insertCell(1).textContent = candidate.period;
+                row.insertCell(2).textContent = `${candidate.radius} R⊕`;
+                row.insertCell(3).textContent = `${candidate.confidence}%`;
+            }
+            
+            drawPeriodRadiusChart(candidates);
+            
+            return candidateCount;
         }
 
-        // Fast data population - Fixed to show correct number of candidates
-        function populateCatalog(dataset) {
-            const tbody = document.getElementById('catalog-table-body');
-            const candidates = dataset === 'kepler' ? 
-                [
-                    ['KPL-001', '3.52', '1.1', '0.94'],
-                    ['KPL-002', '12.3', '0.8', '0.89'],
-                    ['KPL-003', '45.2', '2.3', '0.76'],
-                    ['KPL-004', '8.7', '1.5', '0.82'],
-                    ['KPL-005', '15.6', '0.9', '0.88'],
-                    ['KPL-006', '22.4', '1.8', '0.75'],
-                    ['KPL-007', '6.1', '1.2', '0.91'],
-                    ['KPL-008', '18.9', '2.1', '0.79']
-                ] :
-                [
-                    ['TIC-001', '1.89', '1.4', '0.92'],
-                    ['TIC-002', '4.15', '0.9', '0.87'],
-                    ['TIC-003', '8.7', '1.8', '0.83'],
-                    ['TIC-004', '2.3', '1.1', '0.89'],
-                    ['TIC-005', '5.8', '1.6', '0.85'],
-                    ['TIC-006', '3.4', '0.7', '0.90'],
-                    ['TIC-007', '7.2', '1.9', '0.81'],
-                    ['TIC-008', '1.1', '1.3', '0.93'],
-                    ['TIC-009', '9.6', '0.8', '0.86'],
-                    ['TIC-010', '4.7', '1.7', '0.84'],
-                    ['TIC-011', '6.3', '1.0', '0.88'],
-                    ['TIC-012', '2.8', '2.2', '0.80']
+        function drawConfusionMatrix() {
+            const confusionCanvas = document.getElementById('confusionMatrix');
+            if (!confusionCanvas) return;
+            
+            const ctx = confusionCanvas.getContext('2d');
+            confusionCanvas.width = confusionCanvas.offsetWidth;
+            confusionCanvas.height = confusionCanvas.offsetHeight;
+            
+            const dataset = document.getElementById('dataset-select').value;
+            const values = missionData[dataset].confusionMatrix;
+            
+            const size = Math.min(confusionCanvas.width, confusionCanvas.height);
+            const margin = size * 0.15;
+            const cellSize = (size - 2 * margin) / 2;
+            
+            ctx.clearRect(0, 0, confusionCanvas.width, confusionCanvas.height);
+            
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < 2; j++) {
+                    const x = margin + j * cellSize;
+                    const y = margin + i * cellSize;
+                    const value = values[i][j];
+                    
+                    ctx.fillStyle = `rgba(106, 165, 255, ${value})`;
+                    ctx.fillRect(x, y, cellSize, cellSize);
+                    
+                    ctx.strokeStyle = 'rgba(157, 178, 255, 0.3)';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(x, y, cellSize, cellSize);
+                    
+                    ctx.fillStyle = '#e8edff';
+                    ctx.font = `${Math.max(12, cellSize * 0.12)}px Outfit`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(value.toFixed(2), x + cellSize/2, y + cellSize/2);
+                }
+            }
+            
+            ctx.fillStyle = '#9db2ff';
+            ctx.font = `${Math.max(10, size * 0.04)}px Outfit`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            ctx.fillText('Predicted', confusionCanvas.width/2, confusionCanvas.height - 5);
+            
+            ctx.save();
+            ctx.translate(10, confusionCanvas.height/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('Actual', 0, 0);
+            ctx.restore();
+        }
+
+        function drawPRCurve() {
+            const prCanvas = document.getElementById('prCurve');
+            if (!prCanvas) return;
+            
+            const ctx = prCanvas.getContext('2d');
+            prCanvas.width = prCanvas.offsetWidth;
+            prCanvas.height = prCanvas.offsetHeight;
+            
+            const dataset = document.getElementById('dataset-select').value;
+            const auc = missionData[dataset].auc.pr;
+            
+            const w = prCanvas.width;
+            const h = prCanvas.height;
+            const margin = 20;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            ctx.strokeStyle = 'rgba(157, 178, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(w - margin, h - margin);
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(margin, margin);
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#6aa5ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = margin; x < w - margin; x++) {
+                const t = (x - margin) / (w - 2 * margin);
+                const precision = auc - t * 0.15 + Math.sin(t * 6) * 0.02;
+                const y = h - margin - Math.max(0, Math.min(1, precision)) * (h - 2 * margin);
+                
+                if (x === margin) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            ctx.fillStyle = '#9db2ff';
+            ctx.font = '12px Outfit';
+            ctx.textAlign = 'left';
+            ctx.fillText(`AUC = ${auc.toFixed(2)}`, margin + 5, margin + 15);
+            
+            ctx.textAlign = 'center';
+            ctx.fillText('Recall', w/2, h - 5);
+            ctx.save();
+            ctx.translate(10, h/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('Precision', 0, 0);
+            ctx.restore();
+        }
+
+        function drawROCCurve() {
+            const rocCanvas = document.getElementById('rocCurve');
+            if (!rocCanvas) return;
+            
+            const ctx = rocCanvas.getContext('2d');
+            rocCanvas.width = rocCanvas.offsetWidth;
+            rocCanvas.height = rocCanvas.offsetHeight;
+            
+            const dataset = document.getElementById('dataset-select').value;
+            const auc = missionData[dataset].auc.roc;
+            
+            const w = rocCanvas.width;
+            const h = rocCanvas.height;
+            const margin = 20;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            ctx.strokeStyle = 'rgba(157, 178, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(w - margin, h - margin);
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(margin, margin);
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(w - margin, margin);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.strokeStyle = '#6aa5ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = margin; x < w - margin; x++) {
+                const t = (x - margin) / (w - 2 * margin);
+                const tpr = Math.min(auc, t * 1.2 + Math.pow(t, 0.3) * 0.8);
+                const y = h - margin - Math.max(0, Math.min(1, tpr)) * (h - 2 * margin);
+                
+                if (x === margin) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            ctx.fillStyle = '#9db2ff';
+            ctx.font = '12px Outfit';
+            ctx.textAlign = 'left';
+            ctx.fillText(`AUC = ${auc.toFixed(2)}`, margin + 5, margin + 15);
+            
+            ctx.textAlign = 'center';
+            ctx.fillText('False Positive Rate', w/2, h - 5);
+            ctx.save();
+            ctx.translate(10, h/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('True Positive Rate', 0, 0);
+            ctx.restore();
+        }
+
+        function drawPeriodRadiusChart(candidates = []) {
+            const scatterCanvas = document.getElementById('periodRadiusChart');
+            if (!scatterCanvas) return;
+            
+            const ctx = scatterCanvas.getContext('2d');
+            scatterCanvas.width = scatterCanvas.offsetWidth;
+            scatterCanvas.height = scatterCanvas.offsetHeight;
+            
+            const w = scatterCanvas.width;
+            const h = scatterCanvas.height;
+            const margin = 40;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            ctx.strokeStyle = 'rgba(157, 178, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(w - margin, h - margin);
+            ctx.moveTo(margin, h - margin);
+            ctx.lineTo(margin, margin);
+            ctx.stroke();
+            
+            const dataset = document.getElementById('dataset-select').value;
+            const data = missionData[dataset];
+            
+            const dataPoints = candidates.length > 0 ? 
+                candidates.map(c => ({ period: parseFloat(c.period), radius: parseFloat(c.radius) })) :
+                Array.from({length: 50}, () => ({
+                    period: Math.random() * (data.periodRange[1] - data.periodRange[0]) + data.periodRange[0],
+                    radius: Math.random() * (data.radiusRange[1] - data.radiusRange[0]) + data.radiusRange[0]
+                }));
+            
+            ctx.fillStyle = '#6aa5ff';
+            dataPoints.forEach(point => {
+                const x = margin + (point.period / data.periodRange[1]) * (w - 2 * margin);
+                const y = h - margin - (point.radius / data.radiusRange[1]) * (h - 2 * margin);
+                
+                ctx.beginPath();
+                ctx.arc(Math.max(margin, Math.min(w - margin, x)), 
+                       Math.max(margin, Math.min(h - margin, y)), 3, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+            
+            ctx.fillStyle = '#9db2ff';
+            ctx.font = '12px Outfit';
+            ctx.textAlign = 'center';
+            ctx.fillText('Period (days)', w/2, h - 5);
+            
+            ctx.save();
+            ctx.translate(15, h/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('Radius (R⊕)', 0, 0);
+            ctx.restore();
+            
+            ctx.textAlign = 'center';
+            ctx.fillStyle = 'rgba(157, 178, 255, 0.6)';
+            ctx.font = '10px Outfit';
+            
+            for (let i = 0; i <= 4; i++) {
+                const x = margin + (i / 4) * (w - 2 * margin);
+                const value = (i / 4) * data.periodRange[1];
+                ctx.fillText(Math.round(value), x, h - margin + 15);
+            }
+            
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 4; i++) {
+                const y = h - margin - (i / 4) * (h - 2 * margin);
+                const value = (i / 4) * data.radiusRange[1];
+                ctx.fillText(value.toFixed(1), margin - 5, y + 3);
+            }
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you! Your message has been sent.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        class ExoVisionAIChatbot {
+            constructor() {
+                this.isOpen = false;
+                this.isTyping = false;
+                this.initializeElements();
+                this.setupEventListeners();
+            }
+
+            initializeElements() {
+                this.toggle = document.getElementById('chatbotToggle');
+                this.container = document.getElementById('chatbotContainer');
+                this.closeBtn = document.getElementById('chatbotClose');
+                this.messages = document.getElementById('chatbotMessages');
+                this.input = document.getElementById('chatbotInput');
+                this.sendBtn = document.getElementById('chatbotSend');
+            }
+
+            setupEventListeners() {
+                this.toggle.addEventListener('click', () => this.toggleChatbot());
+                this.closeBtn.addEventListener('click', () => this.closeChatbot());
+                this.sendBtn.addEventListener('click', () => this.sendMessage());
+                this.input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                this.input.addEventListener('input', () => this.updateSendButton());
+            }
+
+            toggleChatbot() {
+                if (this.isOpen) {
+                    this.closeChatbot();
+                } else {
+                    this.openChatbot();
+                }
+            }
+
+            openChatbot() {
+                this.container.classList.add('active');
+                this.isOpen = true;
+                setTimeout(() => this.input.focus(), 300);
+            }
+
+            closeChatbot() {
+                this.container.classList.remove('active');
+                this.isOpen = false;
+            }
+
+            updateSendButton() {
+                const hasText = this.input.value.trim().length > 0;
+                this.sendBtn.disabled = !hasText || this.isTyping;
+            }
+
+            async sendMessage() {
+                const message = this.input.value.trim();
+                if (!message || this.isTyping) return;
+
+                this.addMessage(message, 'user');
+                this.input.value = '';
+                this.updateSendButton();
+
+                this.showTypingIndicator();
+
+                setTimeout(() => {
+                    const response = this.generateResponse(message);
+                    this.hideTypingIndicator();
+                    this.addMessage(response, 'bot');
+                }, 1000 + Math.random() * 1500);
+            }
+
+            addMessage(content, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = `message-avatar ${type}`;
+                
+                if (type === 'bot') {
+                    avatarDiv.innerHTML = '<img src="logo.png" alt="ExoAI Bot">';
+                } else {
+                    avatarDiv.textContent = 'U';
+                }
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.textContent = content;
+                
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(contentDiv);
+                
+                this.messages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            showTypingIndicator() {
+                this.isTyping = true;
+                this.updateSendButton();
+                
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message bot typing-indicator';
+                typingDiv.id = 'typingIndicator';
+                
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'message-avatar bot';
+                avatarDiv.innerHTML = '<img src="logo.png" alt="ExoAI Bot">';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.innerHTML = `
+                    <span>ExoAI is thinking</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                `;
+                
+                typingDiv.appendChild(avatarDiv);
+                typingDiv.appendChild(contentDiv);
+                
+                this.messages.appendChild(typingDiv);
+                this.scrollToBottom();
+            }
+
+            hideTypingIndicator() {
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+                this.isTyping = false;
+                this.updateSendButton();
+            }
+
+            generateResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                
+                if (this.containsAny(lowerMessage, ['team', 'who are you', 'about you', 'exovision', 'your team', 'members'])) {
+                    return "ExoVision AI is a talented three-member student research team focused on using AI to hunt for exoplanets! Our team consists of Agam Sahni (Data & Research Lead), Nidhin R (AI/ML Engineer, UI/UX Designer & Web Developer), and Anmol Katiyar (ML Engineer & CNN Specialist). Together, we're working to accelerate exoplanet discovery using cutting-edge AI techniques! 🚀";
+                }
+                
+                if (this.containsAny(lowerMessage, ['agam', 'agam sahni', 'data lead', 'bls algorithm', 'research lead'])) {
+                    return "Agam Sahni leads our data & research and specializes in BLS search algorithms! He's skilled in Lightkurve and NumPy libraries. Agam handles the complex task of implementing Box-Least Squares (BLS) algorithms to identify periodic transit signals in stellar light curves, ensuring our data is clean and ready for AI analysis. 📊";
+                }
+                
+                if (this.containsAny(lowerMessage, ['nidhin', 'nidhin r', 'ai engineer', 'ml engineer', 'ui designer', 'web developer', 'ux designer'])) {
+                    return "Nidhin R is our AI/ML engineer, UI/UX designer and Web Developer! He handles UI/UX design and implements cutting-edge AI/ML solutions for our exoplanet detection system. Nidhin combines technical expertise in artificial intelligence with design skills to create intuitive and powerful tools for astronomical research. 🤖";
+                }
+                
+                if (this.containsAny(lowerMessage, ['anmol', 'anmol katiyar', 'cnn specialist', 'pytorch', 'model development', 'data preparation'])) {
+                    return "Anmol Katiyar serves as our ML Engineer, specializing in data preparation, CNN model development, and evaluation! He's proficient in Python and PyTorch frameworks. Anmol is responsible for training our deep learning models to accurately identify exoplanet transits from noisy astronomical data. 🧠";
+                }
+                
+                if (this.containsAny(lowerMessage, ['exoplanet', 'exoplanets', 'planet outside'])) {
+                    return "Exoplanets are planets that orbit stars outside our solar system! Over 5,000 confirmed exoplanets have been discovered so far. We detect them mainly through transit photometry (measuring tiny dips in star brightness), radial velocity (stellar wobble), and direct imaging. Some exoplanets might even be habitable! 🪐";
+                }
+                
+                if (this.containsAny(lowerMessage, ['nasa', 'national aeronautics'])) {
+                    return "NASA (National Aeronautics and Space Administration) is the United States space agency! They're famous for incredible missions like the Apollo moon landings, Hubble Space Telescope, Mars rovers, and the James Webb Space Telescope. NASA's Kepler and TESS missions provide the exoplanet data we use in our research! 🚀";
+                }
+                
+                if (this.containsAny(lowerMessage, ['isro', 'indian space'])) {
+                    return "ISRO (Indian Space Research Organisation) is India's space agency, known for incredibly cost-effective and innovative missions! They achieved Mars orbit on their first try with Mangalyaan, and their Chandrayaan missions have advanced lunar science. ISRO has also launched hundreds of satellites and is planning exciting future missions! 🇮🇳";
+                }
+                
+                if (this.containsAny(lowerMessage, ['hello', 'hi', 'hey', 'greetings'])) {
+                    return "Hello! 👋 I'm ExoAI Bot, your space and exoplanet expert! I can answer questions about exoplanets, space missions, galaxies, satellites, the Moon, Sun, ISRO, NASA, and our ExoVision AI team. What cosmic topic interests you today? 🌌";
+                }
+                
+                if (this.containsAny(lowerMessage, ['help', 'what can you do', 'topics'])) {
+                    return "I can help you learn about: 🚀 Exoplanets & planet detection methods 🌌 Space & the universe 🌙 Moon & Sun facts 🛰️ Space missions & satellites 🏢 NASA & ISRO 🤖 Our ExoVision AI team & AI methods ⭐ Galaxies & astronomy. Just ask me anything about these topics!";
+                }
+                
+                const unknownResponses = [
+                    "I am not sure about that. I specialize in topics related to space, exoplanets, galaxies, satellites, the Moon, Sun, NASA, ISRO, and our ExoVision AI team. Could you ask me something about these areas? 🤔",
+                    "I'm not sure about that specific topic. Try asking me about exoplanets, space missions, our solar system, or how our ExoVision AI team uses AI to discover planets! 🌟"
                 ];
                 
-            tbody.innerHTML = candidates.map(row => 
-                `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td></tr>`
-            ).join('');
-        }
-
-        function renderPeriodRadiusPlot() {
-            const svg = document.getElementById('period-radius-plot');
-            svg.innerHTML = `
-                <rect width="100%" height="100%" fill="#0c1130"/>
-                <g transform="translate(40,20)">
-                    <circle cx="50" cy="100" r="4" fill="#6aa5ff"/>
-                    <circle cx="100" cy="80" r="6" fill="#8f7aff"/>
-                    <circle cx="150" cy="60" r="5" fill="#66e8a6"/>
-                    <circle cx="200" cy="40" r="7" fill="#ffd36a"/>
-                    <path d="M0,140 L220,140 M0,140 L0,20" stroke="#333" stroke-width="1"/>
-                    <text x="110" y="160" text-anchor="middle" fill="#9db2ff" font-size="12">Period (days)</text>
-                    <text x="15" y="80" text-anchor="middle" fill="#9db2ff" font-size="12" transform="rotate(-90,15,80)">Radius (R⊕)</text>
-                </g>
-            `;
-        }
-
-        function populateGallery() {
-            const gallery = document.getElementById('gallery');
-            gallery.innerHTML = Array.from({length: 6}, (_, i) => `
-                <div class="card">
-                    <h4>Candidate ${i + 1}</h4>
-                    <div class="tile">
-                        <svg viewBox="0 0 200 120">
-                            <rect width="100%" height="100%" fill="#0c1130"/>
-                            <path d="M10,60 Q50,60 90,${40 + i * 5} Q130,${80 - i * 3} 190,60" stroke="#6aa5ff" stroke-width="2" fill="none"/>
-                            <text x="100" y="110" text-anchor="middle" fill="#9db2ff" font-size="10">P = ${(0.9 - i * 0.1).toFixed(2)}</text>
-                        </svg>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Fast CSV download
-        function downloadCSV(dataset) {
-            const data = dataset === 'kepler' ? 
-                'time,flux,flux_err,quality\n0.0,1.000,0.001,0\n0.1,0.999,0.001,0\n0.2,0.998,0.001,0' :
-                'time,flux,flux_err,sector\n0.0,1.000,0.001,1\n0.1,0.999,0.001,1\n0.2,0.998,0.001,1';
-                
-            const blob = new Blob([data], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = dataset + '_sample.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function showMessage(msg, type) {
-            const status = document.getElementById('status-message');
-            status.textContent = msg;
-            status.status.style.color = type === 'success' ? 'var(--ok)' : 'var(--warn)';
-        }
-
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
+                return unknownResponses[Math.floor(Math.random() * unknownResponses.length)];
             }
+
+            containsAny(text, keywords) {
+                return keywords.some(keyword => text.includes(keyword));
+            }
+
+            scrollToBottom() {
+                this.messages.scrollTop = this.messages.scrollHeight;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new ExoVisionAIChatbot();
+            
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    initializeCharts();
+                }, 250);
+            });
         });
     </script>
 </body>
