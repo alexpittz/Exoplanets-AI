@@ -234,61 +234,188 @@
             box-shadow: 0 8px 25px rgba(106, 165, 255, 0.1);
         }
 
+        .bot-welcome-message {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            max-width: 280px;
+            background: linear-gradient(135deg, 
+                rgba(11, 15, 37, 0.95) 0%, 
+                rgba(10, 14, 32, 0.95) 100%);
+            border: 1px solid rgba(106, 165, 255, 0.4);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(106, 165, 255, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            animation: welcomeSlideIn 1s ease-out forwards;
+            animation-delay: 4s;
+        }
+
+        @keyframes welcomeSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .bot-welcome-message::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 25px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(11, 15, 37, 0.95);
+        }
+
+        .bot-welcome-message .bot-avatar-mini {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .bot-welcome-message .bot-avatar-mini img {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .bot-welcome-message .message-text {
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        .bot-welcome-message .close-welcome {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .bot-welcome-message .close-welcome:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .exo-chatbot {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
             z-index: 1000;
             font-family: "Outfit", system-ui, -apple-system, sans-serif;
         }
 
         .chatbot-toggle {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent), var(--accent-2));
             border: none;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(106, 165, 255, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(106, 165, 255, 0.4);
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: chatbotPulse 2s infinite;
+            animation: chatbotJump 0.8s infinite ease-in-out, chatbotPulse 2s infinite;
+            position: relative;
+            overflow: hidden;
         }
 
         .chatbot-toggle:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(106, 165, 255, 0.6);
+            box-shadow: 0 6px 20px rgba(106, 165, 255, 0.6);
         }
 
         .chatbot-toggle img {
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
+            z-index: 2;
+        }
+
+        .green-spot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            top: 6px;
+            right: 6px;
+            animation: greenSpotPulse 1.2s infinite;
+            box-shadow: 0 0 8px #00ff00;
+            z-index: 3;
+        }
+
+        @keyframes chatbotJump {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-8px) rotate(3deg) scale(1.05); 
+            }
+            50% { 
+                transform: translateY(0px) rotate(-3deg) scale(1); 
+            }
+            75% { 
+                transform: translateY(-5px) rotate(2deg) scale(1.02); 
+            }
         }
 
         @keyframes chatbotPulse {
             0%, 100% {
-                box-shadow: 0 6px 20px rgba(106, 165, 255, 0.4);
+                box-shadow: 0 4px 15px rgba(106, 165, 255, 0.4);
             }
             50% {
-                box-shadow: 0 6px 30px rgba(106, 165, 255, 0.7);
+                box-shadow: 0 6px 25px rgba(106, 165, 255, 0.7);
+            }
+        }
+
+        @keyframes greenSpotPulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.4);
+                opacity: 0.6;
             }
         }
 
         .chatbot-container {
             position: absolute;
-            bottom: 80px;
+            bottom: 65px;
             right: 0;
-            width: 400px;
-            height: 600px;
+            width: 350px;
+            height: 500px;
             background: linear-gradient(135deg, 
                 rgba(11, 15, 37, 0.95) 0%, 
                 rgba(10, 14, 32, 0.95) 100%);
             border: 1px solid rgba(157, 178, 255, 0.2);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             transform: scale(0) translateY(20px);
             opacity: 0;
@@ -302,7 +429,7 @@
         }
 
         .chatbot-header {
-            padding: 20px;
+            padding: 15px;
             border-bottom: 1px solid rgba(157, 178, 255, 0.15);
             background: linear-gradient(135deg, 
                 rgba(106, 165, 255, 0.1) 0%, 
@@ -312,36 +439,36 @@
         .chatbot-header-content {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .chatbot-avatar {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent), var(--accent-2));
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px rgba(106, 165, 255, 0.3);
+            box-shadow: 0 0 12px rgba(106, 165, 255, 0.3);
         }
 
         .chatbot-avatar img {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
         }
 
         .chatbot-info h3 {
             margin: 0;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text);
             font-weight: 600;
         }
 
         .chatbot-info p {
             margin: 2px 0 0 0;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--muted);
         }
 
@@ -350,14 +477,15 @@
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: var(--text);
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
+            font-size: 14px;
         }
 
         .chatbot-close:hover {
@@ -365,16 +493,16 @@
         }
 
         .chatbot-messages {
-            height: 420px;
+            height: 340px;
             overflow-y: auto;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .chatbot-messages::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
 
         .chatbot-messages::-webkit-scrollbar-track {
@@ -388,7 +516,7 @@
 
         .message {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             animation: messageSlide 0.3s ease-out;
         }
 
@@ -397,8 +525,8 @@
         }
 
         .message-avatar {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             flex-shrink: 0;
         }
@@ -411,8 +539,8 @@
         }
 
         .message-avatar.bot img {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
         }
 
@@ -422,15 +550,15 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
         }
 
         .message-content {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 14px;
+            max-width: 75%;
+            padding: 10px 12px;
+            border-radius: 15px;
+            font-size: 13px;
             line-height: 1.4;
         }
 
@@ -449,7 +577,7 @@
         @keyframes messageSlide {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -458,14 +586,14 @@
         }
 
         .chatbot-input-area {
-            padding: 20px;
+            padding: 15px;
             border-top: 1px solid rgba(157, 178, 255, 0.15);
             background: rgba(0, 0, 0, 0.2);
         }
 
         .chatbot-input-container {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
 
@@ -473,10 +601,10 @@
             flex: 1;
             background: rgba(11, 15, 37, 0.8);
             border: 1px solid rgba(157, 178, 255, 0.25);
-            border-radius: 20px;
-            padding: 12px 16px;
+            border-radius: 18px;
+            padding: 10px 14px;
             color: var(--text);
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
             transition: border-color 0.2s ease;
         }
@@ -491,8 +619,8 @@
         }
 
         .chatbot-send {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent), var(--accent-2));
             border: none;
@@ -505,7 +633,7 @@
 
         .chatbot-send:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(106, 165, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(106, 165, 255, 0.4);
         }
 
         .chatbot-send:disabled {
@@ -528,8 +656,8 @@
         }
 
         .typing-dot {
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             border-radius: 50%;
             background: var(--accent);
             animation: typingBounce 1.4s infinite;
@@ -548,34 +676,51 @@
                 transform: translateY(0);
             }
             40% {
-                transform: translateY(-8px);
+                transform: translateY(-6px);
             }
         }
 
         @media (max-width: 768px) {
             .exo-chatbot {
-                bottom: 20px;
-                right: 20px;
+                bottom: 15px;
+                right: 15px;
             }
 
             .chatbot-container {
-                width: calc(100vw - 40px);
-                height: calc(100vh - 140px);
-                bottom: 80px;
-                right: -10px;
+                width: calc(100vw - 30px);
+                height: calc(100vh - 120px);
+                bottom: 60px;
+                right: -8px;
             }
 
             .chatbot-toggle {
-                width: 50px;
-                height: 50px;
+                width: 45px;
+                height: 45px;
             }
 
             .chatbot-toggle img {
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                height: 24px;
+            }
+
+            .green-spot {
+                width: 8px;
+                height: 8px;
+                top: 5px;
+                right: 5px;
+            }
+
+            .bot-welcome-message {
+                right: 15px;
+                bottom: 75px;
+                max-width: 250px;
+            }
+
+            .bot-welcome-message .message-text {
+                font-size: 12px;
             }
         }
-        
+
         .video-section {
             position: relative;
             max-width: 1100px;
@@ -787,6 +932,13 @@
             color: var(--muted);
         }
         
+        .candidate-graphs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 30px;
+        }
+        
         .team-photo {
             width: 100%;
             max-width: 800px;
@@ -884,130 +1036,6 @@
         }
         .center {
             text-align: center;
-        }
-
-        @media (max-width: 1024px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-                padding: 48px 20px;
-            }
-            .hero h1 {
-                font-size: clamp(28px, 6vw, 48px);
-            }
-            .hero-inner > div:first-child {
-                padding-bottom: 24px;
-            }
-            .hero .actions {
-                justify-content: center;
-            }
-            .nav-inner {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .spacer {
-                display: none;
-            }
-            .nav .cta {
-                margin-left: auto;
-            }
-            section {
-                padding: 40px 20px;
-            }
-            .grid.cols-3,
-            .grid.cols-2 {
-                grid-template-columns: 1fr;
-            }
-            .kpi {
-                flex-grow: 1;
-                justify-content: center;
-            }
-            .footer-inner {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-            }
-            .video-controls {
-                padding: 10px 15px;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
-            .splash-logo {
-                width: 150px;
-                height: 150px;
-            }
-            .loading-text {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .nav-inner {
-                flex-direction: column;
-                padding: 12px 10px;
-                gap: 12px;
-            }
-            .brand {
-                align-self: flex-start;
-            }
-            .nav .cta {
-                margin-left: 0;
-            }
-            .nav a, .nav .cta {
-                width: 100%;
-                text-align: center;
-            }
-            .nav .spacer {
-                display: none;
-            }
-            .hero-inner {
-                padding: 32px 10px;
-            }
-            section {
-                padding: 30px 10px;
-            }
-            .kpi {
-                padding: 12px 10px;
-            }
-            table {
-                font-size: 14px;
-            }
-            thead th, tbody tr td {
-                padding: 8px 10px;
-            }
-            .timeline:before, .step:before {
-                left: 10px;
-            }
-            .step {
-                margin-left: 28px;
-            }
-            .gallery {
-                grid-template-columns: 1fr;
-            }
-            .video-section {
-                padding: 30px 10px;
-            }
-            .video-card {
-                padding: 15px;
-            }
-            .splash-logo {
-                width: 120px;
-                height: 120px;
-            }
-            .loading-text {
-                font-size: 18px;
-            }
-        }
-
-        * {
-            will-change: auto;
-        }
-        
-        .neon-orb, .planet {
-            will-change: transform;
-        }
-        
-        .btn, .card {
-            will-change: transform;
         }
     </style>
 </head>
@@ -1309,6 +1337,10 @@
                     </div>
                 </div>
             </div>
+
+            <div class="candidate-graphs" id="candidateGraphs">
+                <!-- Candidate line graphs will be dynamically added here -->
+            </div>
         </section>
 
         <section id="team">
@@ -1317,40 +1349,37 @@
             <img src="team.jpg" alt="ExoVision AI Team" class="team-photo">
             
             <div class="grid cols-3" style="margin-top:20px">
-    <div class="card team-member">
-        <h3>Agam Sahni</h3>
-        <div class="role">Data & Research Lead</div>
-        <div class="description">Pipeline, feature engineering, BLS search algorithms. Skilled in Lightkurve and NumPy libraries.</div>
-        <div class="email">alexpitt009@gmail.com</div>
-        <div class="skills">
-            <span class="chip">Lightkurve</span>
-            <span class="chip">NumPy</span>
-        </div>
-    </div>
-
-    <!-- Nidhin moved to second -->
-    <div class="card team-member">
-        <h3>Nidhin R</h3>
-        <div class="role">AI/ML Engineer, UI/UX Designer, Web Developer</div>
-        <div class="description">Skilled AI/ML engineer and Web Developer who handles Development , UI/UX design and implements cutting-edge AI/ML solutions.</div>
-        <div class="email">r.nidhinofficial@gmail.com</div>
-        <div class="skills">
-            <span class="chip">UI/UX</span>
-            <span class="chip">AI/ML</span>
-        </div>
-    </div>
-
-    <div class="card team-member">
-        <h3>Anmol Katiyar</h3>
-        <div class="role">ML Engineer</div>
-        <div class="description">Data prep, CNN models, evaluation. Proficient in Python and PyTorch frameworks, specializing in data preparation and model development.</div>
-        <div class="email">anmolkatiyar084@gmail.com</div>
-        <div class="skills">
-            <span class="chip">Python</span>
-            <span class="chip">PyTorch</span>
-        </div>
-    </div>
-</div>
+                <div class="card team-member">
+                    <h3>Agam Sahni</h3>
+                    <div class="role">Data & Research Lead</div>
+                    <div class="description">Pipeline, feature engineering, BLS search algorithms. He's skilled in Lightkurve and NumPy libraries.</div>
+                    <div class="email">alexpitt009@gmail.com</div>
+                    <div class="skills">
+                        <span class="chip">Lightkurve</span>
+                        <span class="chip">NumPy</span>
+                    </div>
+                </div>
+                <div class="card team-member">
+                    <h3>Anmol Katiyar</h3>
+                    <div class="role">ML Engineer</div>
+                    <div class="description">Data prep, CNN models, evaluation. He's proficient in Python and PyTorch frameworks, specializing in data preparation and model development.</div>
+                    <div class="email">anmolkatiyar084@gmail.com</div>
+                    <div class="skills">
+                        <span class="chip">Python</span>
+                        <span class="chip">PyTorch</span>
+                    </div>
+                </div>
+                <div class="card team-member">
+                    <h3>Nidhin R</h3>
+                    <div class="role">AI/ML Engineer, UI/UX Designer, Web Developer</div>
+                    <div class="description">Web developer, AI and ML engineer who handles UI/UX design and implements cutting-edge AI/ML solutions.</div>
+                    <div class="email">r.nidhinofficial@gmail.com</div>
+                    <div class="skills">
+                        <span class="chip">UI/UX</span>
+                        <span class="chip">AI/ML</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="contact">
@@ -1380,9 +1409,19 @@
             </div>
         </section>
 
+        <!-- Bot Welcome Message -->
+        <div class="bot-welcome-message" id="botWelcomeMessage">
+            <button class="close-welcome" id="closeWelcome">×</button>
+            <div class="bot-avatar-mini">
+                <img src="logo.png" alt="ExoAI Bot">
+            </div>
+            <span class="message-text">Hi! I am ExoVision AI Bot 🌌 Ask me about exoplanets, space, planets, or our team!</span>
+        </div>
+
         <div class="exo-chatbot">
             <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open ExoAI Chatbot">
                 <img src="logo.png" alt="ExoAI Bot">
+                <div class="green-spot"></div>
             </button>
             
             <div class="chatbot-container" id="chatbotContainer">
@@ -1405,7 +1444,7 @@
                             <img src="logo.png" alt="ExoAI Bot">
                         </div>
                         <div class="message-content">
-                            Hello! I'm ExoAI Bot 🌌 I can answer questions about exoplanets, space missions, galaxies, satellites, ISRO, NASA, and our ExoVision AI team. What would you like to know?
+                            Hi! I am ExoVision AI Bot 🌌 I can answer questions about exoplanets, space missions, galaxies, satellites, the Moon, Sun, planets, comets, ISRO, NASA, and our ExoVision AI team. What cosmic topic interests you today?
                         </div>
                     </div>
                 </div>
@@ -1414,7 +1453,7 @@
                     <div class="chatbot-input-container">
                         <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask about space, exoplanets, or our team..." maxlength="500">
                         <button class="chatbot-send" id="chatbotSend" aria-label="Send message">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -1473,6 +1512,27 @@
             drawROCCurve();
             drawPeriodRadiusChart();
         }
+
+        // Bot welcome message handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            const welcomeMessage = document.getElementById('botWelcomeMessage');
+            const closeWelcome = document.getElementById('closeWelcome');
+            
+            closeWelcome.addEventListener('click', () => {
+                welcomeMessage.style.opacity = '0';
+                welcomeMessage.style.transform = 'translateY(20px) scale(0.8)';
+                setTimeout(() => {
+                    welcomeMessage.style.display = 'none';
+                }, 300);
+            });
+
+            // Auto hide welcome message after 8 seconds
+            setTimeout(() => {
+                if (welcomeMessage.style.display !== 'none') {
+                    closeWelcome.click();
+                }
+            }, 8000);
+        });
 
         const video = document.getElementById('mainVideo');
         const playPauseBtn = document.getElementById('playPauseBtn');
@@ -1546,29 +1606,47 @@
             window.URL.revokeObjectURL(url);
         }
 
+        // Enhanced animated transit detector
         const canvas = document.getElementById('curve');
         if (canvas) {
             const ctx = canvas.getContext('2d');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
+            
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
             
             let animationFrame = 0;
             
             function drawCurve() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Main light curve
                 ctx.strokeStyle = '#6aa5ff';
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 2.5;
                 ctx.beginPath();
                 
+                const baseY = canvas.height * 0.45;
+                const amplitude = canvas.height * 0.2;
+                
                 for (let x = 0; x < canvas.width; x++) {
-                    const t = (x / canvas.width) * 4 * Math.PI + animationFrame * 0.02;
-                    let y = canvas.height / 2;
+                    const t = (x / canvas.width) * 8 * Math.PI + animationFrame * 0.08;
+                    let y = baseY;
                     
-                    if (Math.sin(t) > 0.8) {
-                        y += 20;
+                    // Stellar variability
+                    y += Math.sin(t * 0.6) * 12;
+                    y += Math.sin(t * 1.8) * 6;
+                    y += Math.random() * 8 - 4;
+                    
+                    // Transit events
+                    const transitPhase = (t % (2.5 * Math.PI)) / (2.5 * Math.PI);
+                    if (transitPhase > 0.42 && transitPhase < 0.58) {
+                        const transitShape = Math.sin((transitPhase - 0.42) * Math.PI / 0.16);
+                        y += amplitude * transitShape * 0.8;
                     }
-                    
-                    y += Math.sin(t * 3) * 5 + Math.random() * 4 - 2;
                     
                     if (x === 0) {
                         ctx.moveTo(x, y);
@@ -1578,6 +1656,33 @@
                 }
                 
                 ctx.stroke();
+                
+                // Detection indicator line
+                ctx.strokeStyle = '#00ff88';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                
+                const transitX = ((animationFrame * 0.08) % (2.5 * Math.PI)) / (2.5 * Math.PI) * canvas.width;
+                ctx.beginPath();
+                ctx.moveTo(transitX, 0);
+                ctx.lineTo(transitX, canvas.height);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // AI detection label
+                ctx.fillStyle = '#00ff88';
+                ctx.font = 'bold 14px Outfit';
+                ctx.shadowColor = '#00ff88';
+                ctx.shadowBlur = 8;
+                ctx.fillText('🤖 AI Detection', transitX + 8, 25);
+                ctx.shadowBlur = 0;
+                
+                // Confidence score
+                const confidence = 85 + Math.sin(animationFrame * 0.1) * 10;
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '12px Outfit';
+                ctx.fillText(`${confidence.toFixed(1)}% confidence`, transitX + 8, 45);
+                
                 animationFrame++;
                 requestAnimationFrame(drawCurve);
             }
@@ -1646,10 +1751,145 @@
             }
             
             drawPeriodRadiusChart(candidates);
+            generateCandidateLineGraphs(candidates);
             
             return candidateCount;
         }
 
+        // Enhanced line graphs for candidates
+        function generateCandidateLineGraphs(candidates) {
+            const graphsContainer = document.getElementById('candidateGraphs');
+            graphsContainer.innerHTML = '';
+            
+            candidates.forEach((candidate, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card';
+                cardDiv.innerHTML = `
+                    <h4>${candidate.id}</h4>
+                    <p class="muted">Period: ${candidate.period}d | Radius: ${candidate.radius} R⊕ | Confidence: ${candidate.confidence}%</p>
+                    <div class="tile">
+                        <canvas id="candidate-${index}" width="300" height="180"></canvas>
+                    </div>
+                `;
+                graphsContainer.appendChild(cardDiv);
+                
+                setTimeout(() => {
+                    drawCandidateLineGraph(`candidate-${index}`, candidate);
+                }, 100);
+            });
+        }
+
+        function drawCandidateLineGraph(canvasId, candidate) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            // Graph background
+            ctx.fillStyle = 'rgba(12, 17, 48, 0.3)';
+            ctx.fillRect(0, 0, w, h);
+            
+            // Grid lines
+            ctx.strokeStyle = 'rgba(157, 178, 255, 0.1)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = (i / 10) * w;
+                const y = (i / 10) * h;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
+            }
+            
+            const period = parseFloat(candidate.period);
+            const confidence = parseFloat(candidate.confidence);
+            const transitDepth = Math.max(0.01, (100 - confidence) / 800);
+            
+            // Generate realistic light curve data
+            const points = 150;
+            const phaseData = [];
+            
+            // Main light curve line
+            ctx.strokeStyle = '#6aa5ff';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            
+            for (let i = 0; i < points; i++) {
+                const phase = (i / points) * 2 - 1; // -1 to 1
+                const x = ((i / points) * 0.8 + 0.1) * w; // 10% margin on each side
+                let y = h * 0.5;
+                
+                // Transit shape (more realistic)
+                if (Math.abs(phase) < 0.15) {
+                    const transitIntensity = Math.exp(-25 * phase * phase);
+                    const transitShape = 1 - transitDepth * transitIntensity;
+                    y = h * (0.5 + (transitShape - 1) * 0.35);
+                }
+                
+                // Add stellar noise
+                y += (Math.random() - 0.5) * 12;
+                y += Math.sin(phase * 8) * 3; // Stellar variability
+                
+                phaseData.push({x, y});
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.stroke();
+            
+            // Highlight transit region
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.1)';
+            ctx.fillRect(w * 0.425, 0, w * 0.15, h);
+            
+            // Data points overlay
+            ctx.fillStyle = 'rgba(106, 165, 255, 0.8)';
+            phaseData.forEach(point => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+            
+            // Labels
+            ctx.fillStyle = '#9db2ff';
+            ctx.font = '11px Outfit';
+            ctx.textAlign = 'center';
+            ctx.fillText('Phase-folded Light Curve', w/2, 20);
+            ctx.fillText('Phase', w/2, h - 8);
+            
+            ctx.save();
+            ctx.translate(12, h/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('Relative Flux', 0, 0);
+            ctx.restore();
+            
+            // Transit depth indicator
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = 'bold 10px Outfit';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Depth: ${(transitDepth * 100).toFixed(2)}%`, 15, h - 25);
+            
+            // Phase markers
+            ctx.fillStyle = '#66e8a6';
+            ctx.font = '9px Outfit';
+            ctx.textAlign = 'center';
+            ctx.fillText('-0.5', w * 0.1, h - 8);
+            ctx.fillText('0.0', w * 0.55, h - 8);
+            ctx.fillText('0.5', w * 0.9, h - 8);
+        }
+
+        // Rest of functions remain the same...
         function drawConfusionMatrix() {
             const confusionCanvas = document.getElementById('confusionMatrix');
             if (!confusionCanvas) return;
@@ -1915,6 +2155,7 @@
             }, 2000);
         });
 
+        // Enhanced Chatbot with comprehensive knowledge
         class ExoVisionAIChatbot {
             constructor() {
                 this.isOpen = false;
@@ -2025,7 +2266,7 @@
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'message-content';
                 contentDiv.innerHTML = `
-                    <span>ExoAI is thinking</span>
+                    <span>ExoVision AI is thinking</span>
                     <div class="typing-dots">
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
@@ -2052,8 +2293,9 @@
             generateResponse(message) {
                 const lowerMessage = message.toLowerCase();
                 
+                // ExoVision AI Team questions
                 if (this.containsAny(lowerMessage, ['team', 'who are you', 'about you', 'exovision', 'your team', 'members'])) {
-                    return "ExoVision AI is a talented three-member student research team focused on using AI to hunt for exoplanets! Our team consists of Agam Sahni (Data & Research Lead), Nidhin R (AI/ML Engineer, UI/UX Designer & Web Developer), and Anmol Katiyar (ML Engineer & CNN Specialist). Together, we're working to accelerate exoplanet discovery using cutting-edge AI techniques! 🚀";
+                    return "Hi! I am ExoVision AI Bot 🌌 ExoVision AI is a talented three-member student research team focused on using AI to hunt for exoplanets! Our team consists of Agam Sahni (Data & Research Lead), Nidhin R (AI/ML Engineer, UI/UX Designer & Web Developer), and Anmol Katiyar (ML Engineer & CNN Specialist). Together, we're working to accelerate exoplanet discovery using cutting-edge AI techniques! 🚀";
                 }
                 
                 if (this.containsAny(lowerMessage, ['agam', 'agam sahni', 'data lead', 'bls algorithm', 'research lead'])) {
@@ -2068,29 +2310,131 @@
                     return "Anmol Katiyar serves as our ML Engineer, specializing in data preparation, CNN model development, and evaluation! He's proficient in Python and PyTorch frameworks. Anmol is responsible for training our deep learning models to accurately identify exoplanet transits from noisy astronomical data. 🧠";
                 }
                 
+                // Exoplanet questions
                 if (this.containsAny(lowerMessage, ['exoplanet', 'exoplanets', 'planet outside'])) {
                     return "Exoplanets are planets that orbit stars outside our solar system! Over 5,000 confirmed exoplanets have been discovered so far. We detect them mainly through transit photometry (measuring tiny dips in star brightness), radial velocity (stellar wobble), and direct imaging. Some exoplanets might even be habitable! 🪐";
                 }
                 
+                if (this.containsAny(lowerMessage, ['habitable', 'life', 'goldilocks', 'habitable zone'])) {
+                    return "The habitable zone, also called the 'Goldilocks zone,' is the region around a star where liquid water could exist on a planet's surface - not too hot, not too cold, but just right! Planets like Kepler-452b and Proxima Centauri b are in their star's habitable zones and could potentially support life. 🌍";
+                }
+                
+                if (this.containsAny(lowerMessage, ['transit', 'transit method', 'how detect', 'detection'])) {
+                    return "The transit method detects exoplanets by measuring tiny dips in a star's brightness when a planet passes in front of it! These dips are incredibly small - sometimes less than 0.01% - which is why we need AI to find them in noisy data. Our CNN models can identify these subtle patterns that might be missed by traditional methods. 📉";
+                }
+                
+                // Solar System - Sun
+                if (this.containsAny(lowerMessage, ['sun', 'solar', 'our star', 'fusion'])) {
+                    return "Our Sun is a G-type main-sequence star, about 4.6 billion years old and halfway through its life! It's 1.4 million km in diameter, contains 99.86% of our solar system's mass, and converts 4 million tons of matter into energy every second through nuclear fusion. The Sun's core temperature reaches 15 million°C! ☀️";
+                }
+                
+                // Moon
+                if (this.containsAny(lowerMessage, ['moon', 'lunar', 'earth moon', 'tides'])) {
+                    return "Earth's Moon is about 384,400 km away and plays a crucial role in stabilizing our planet's rotation and creating tides! It's gradually moving away from Earth at 3.8 cm per year. The Moon has no atmosphere and temperatures range from 127°C in sunlight to -173°C in shadow. Many space agencies are planning to return humans to the Moon! 🌙";
+                }
+                
+                // Planets
+                if (this.containsAny(lowerMessage, ['mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'planets', 'solar system planets'])) {
+                    return "Our solar system has 8 planets! Mercury (closest to Sun), Venus (hottest planet), Earth (our home), Mars (the red planet), Jupiter (largest planet), Saturn (beautiful rings), Uranus (tilted sideways), and Neptune (windiest planet). Each planet has unique characteristics - Jupiter has over 80 moons while Mercury has none! 🪐";
+                }
+                
+                if (this.containsAny(lowerMessage, ['mars', 'red planet', 'martian'])) {
+                    return "Mars, the red planet, is our neighboring world! It's red due to iron oxide (rust) on its surface. Mars has two small moons (Phobos and Deimos), polar ice caps, and the largest volcano in the solar system - Olympus Mons. NASA's rovers are currently exploring Mars, searching for signs of ancient life! 🔴";
+                }
+                
+                if (this.containsAny(lowerMessage, ['jupiter', 'largest planet', 'great red spot'])) {
+                    return "Jupiter is the largest planet in our solar system - so big that all other planets could fit inside it! It has over 80 moons, including the four largest: Io, Europa, Ganymede, and Callisto. Jupiter's Great Red Spot is a storm larger than Earth that has been raging for centuries! 🌪️";
+                }
+                
+                if (this.containsAny(lowerMessage, ['saturn', 'rings', 'ringed planet'])) {
+                    return "Saturn is famous for its spectacular ring system made of ice and rock particles! It has 146 known moons, including Titan which has lakes of liquid methane. Saturn is less dense than water - it would float if you could find a bathtub big enough! The rings are only about 10 meters thick. 💍";
+                }
+                
+                // Galaxies
+                if (this.containsAny(lowerMessage, ['galaxy', 'galaxies', 'milky way', 'andromeda'])) {
+                    return "Galaxies are massive collections of stars, gas, dust, and dark matter held together by gravity! Our Milky Way contains 100-400 billion stars and is about 100,000 light-years across. The nearest major galaxy is Andromeda, which will actually collide with the Milky Way in about 4.5 billion years! 🌌";
+                }
+                
+                if (this.containsAny(lowerMessage, ['black hole', 'black holes', 'event horizon'])) {
+                    return "Black holes are regions of spacetime where gravity is so strong that nothing - not even light - can escape! They form when massive stars collapse. Our galaxy's center has a supermassive black hole called Sagittarius A*. The 'point of no return' around a black hole is called the event horizon. 🕳️";
+                }
+                
+                // Comets and Asteroids
+                if (this.containsAny(lowerMessage, ['comet', 'comets', 'halley', 'tail'])) {
+                    return "Comets are 'dirty snowballs' made of ice, dust, and rock that orbit the Sun! When they get close to the Sun, they develop beautiful tails that can stretch millions of kilometers. Halley's Comet is the most famous - it returns every 76 years and was last seen in 1986. Next visit: 2061! ☄️";
+                }
+                
+                if (this.containsAny(lowerMessage, ['asteroid', 'asteroids', 'asteroid belt', 'meteorite'])) {
+                    return "Asteroids are rocky objects that orbit the Sun, mostly found in the asteroid belt between Mars and Jupiter! They range from tiny pebbles to objects hundreds of kilometers across. When an asteroid enters Earth's atmosphere, it becomes a meteor (shooting star). If it survives and hits the ground, it's called a meteorite! 🪨";
+                }
+                
+                // Space organizations
                 if (this.containsAny(lowerMessage, ['nasa', 'national aeronautics'])) {
-                    return "NASA (National Aeronautics and Space Administration) is the United States space agency! They're famous for incredible missions like the Apollo moon landings, Hubble Space Telescope, Mars rovers, and the James Webb Space Telescope. NASA's Kepler and TESS missions provide the exoplanet data we use in our research! 🚀";
+                    return "NASA (National Aeronautics and Space Administration) is the United States space agency! They're famous for incredible missions like the Apollo moon landings, Hubble Space Telescope, Mars rovers, James Webb Space Telescope, and the International Space Station. NASA's Kepler and TESS missions provide the exoplanet data we use in our research! 🚀";
                 }
                 
                 if (this.containsAny(lowerMessage, ['isro', 'indian space'])) {
-                    return "ISRO (Indian Space Research Organisation) is India's space agency, known for incredibly cost-effective and innovative missions! They achieved Mars orbit on their first try with Mangalyaan, and their Chandrayaan missions have advanced lunar science. ISRO has also launched hundreds of satellites and is planning exciting future missions! 🇮🇳";
+                    return "ISRO (Indian Space Research Organisation) is India's space agency, known for incredibly cost-effective and innovative missions! They achieved Mars orbit on their first try with Mangalyaan, and their Chandrayaan missions have advanced lunar science. ISRO has also launched hundreds of satellites and is planning exciting future missions to Venus and the Moon! 🇮🇳";
                 }
                 
+                // Universe and cosmic phenomena
+                if (this.containsAny(lowerMessage, ['universe', 'cosmos', 'big bang'])) {
+                    return "The observable universe is about 93 billion light-years in diameter and contains over 2 trillion galaxies! It began with the Big Bang about 13.8 billion years ago and has been expanding ever since. The universe is mostly made of dark matter (27%) and dark energy (68%), with ordinary matter making up only 5%! 🌌";
+                }
+                
+                if (this.containsAny(lowerMessage, ['star', 'stars', 'stellar', 'constellation'])) {
+                    return "Stars are massive balls of hot, glowing gas powered by nuclear fusion! They come in different sizes and colors - from tiny red dwarfs that can live for trillions of years to massive blue giants that burn out in just millions of years. Stars are grouped into patterns called constellations that have guided humans for thousands of years! ⭐";
+                }
+                
+                if (this.containsAny(lowerMessage, ['nebula', 'nebulae', 'stellar nursery'])) {
+                    return "Nebulae are vast clouds of gas and dust in space where new stars are born! The most famous is the Orion Nebula, visible to the naked eye. These 'stellar nurseries' can be hundreds of light-years across and contain enough material to form thousands of stars. Some nebulae glow with beautiful colors! 🌟";
+                }
+                
+                // Satellites and space technology
+                if (this.containsAny(lowerMessage, ['satellite', 'satellites', 'artificial', 'space station'])) {
+                    return "Artificial satellites orbit Earth for communication, navigation (like GPS), weather monitoring, and scientific research! There are over 4,000 active satellites currently orbiting Earth. The International Space Station is the largest artificial satellite and has been continuously occupied since 2000! 🛰️";
+                }
+                
+                if (this.containsAny(lowerMessage, ['kepler', 'kepler mission', 'kepler telescope'])) {
+                    return "The Kepler Space Telescope was a NASA mission that revolutionized exoplanet discovery! Operating from 2009-2018, it discovered over 2,600 confirmed exoplanets by staring at 150,000 stars and measuring tiny brightness variations. Kepler's high-precision data is perfect for training AI models like ours to find planetary transits! 🔭";
+                }
+                
+                if (this.containsAny(lowerMessage, ['tess', 'tess mission', 'transiting exoplanet'])) {
+                    return "TESS (Transiting Exoplanet Survey Satellite) is NASA's current exoplanet-hunting mission, launched in 2018! Unlike Kepler, TESS surveys the entire sky, monitoring 200,000 of the brightest nearby stars. TESS data is great for finding planets around bright stars that can be studied in detail with other telescopes! 🌟";
+                }
+                
+                if (this.containsAny(lowerMessage, ['hubble', 'hubble telescope', 'space telescope'])) {
+                    return "The Hubble Space Telescope has been our window to the universe since 1990! It orbits Earth above the atmosphere, giving us crystal-clear images of distant galaxies, nebulae, and planets. Hubble has made over 1.5 million observations and helped determine the age of the universe! 🔭";
+                }
+                
+                if (this.containsAny(lowerMessage, ['james webb', 'jwst', 'webb telescope'])) {
+                    return "The James Webb Space Telescope is the most powerful space telescope ever built! Launched in 2021, it observes in infrared light and can see the most distant galaxies in the universe. Webb is located 1.5 million km from Earth and has a mirror 6.5 meters across - much larger than Hubble's! 🌌";
+                }
+                
+                // AI and machine learning
+                if (this.containsAny(lowerMessage, ['ai', 'artificial intelligence', 'machine learning', 'cnn', 'neural network'])) {
+                    return "We use Convolutional Neural Networks (CNNs) to automatically identify exoplanet transits in stellar light curves! Our AI models learn to recognize the characteristic 'U' or 'V' shape of planetary transits while filtering out false positives from stellar variability and instrument noise. AI can process millions of light curves much faster than humans! 🤖";
+                }
+                
+                // General space topics
+                if (this.containsAny(lowerMessage, ['space', 'astronomy', 'astrophysics', 'cosmos'])) {
+                    return "Space is absolutely fascinating! From the smallest asteroids to the largest galaxy clusters, there's so much to explore. Astronomy helps us understand our place in the universe, while astrophysics explains the physical processes that power stars, create planets, and drive cosmic evolution. What specific aspect of space interests you most? ⭐";
+                }
+                
+                // Greetings
                 if (this.containsAny(lowerMessage, ['hello', 'hi', 'hey', 'greetings'])) {
-                    return "Hello! 👋 I'm ExoAI Bot, your space and exoplanet expert! I can answer questions about exoplanets, space missions, galaxies, satellites, the Moon, Sun, ISRO, NASA, and our ExoVision AI team. What cosmic topic interests you today? 🌌";
+                    return "Hi! I am ExoVision AI Bot 🌌 I can answer questions about exoplanets, space missions, galaxies, satellites, the Moon, Sun, planets, comets, asteroids, ISRO, NASA, and our ExoVision AI team. What cosmic topic interests you today?";
                 }
                 
                 if (this.containsAny(lowerMessage, ['help', 'what can you do', 'topics'])) {
-                    return "I can help you learn about: 🚀 Exoplanets & planet detection methods 🌌 Space & the universe 🌙 Moon & Sun facts 🛰️ Space missions & satellites 🏢 NASA & ISRO 🤖 Our ExoVision AI team & AI methods ⭐ Galaxies & astronomy. Just ask me anything about these topics!";
+                    return "I can help you learn about: 🚀 Exoplanets & planet detection methods 🌌 Space & the universe 🌙 Moon & Sun facts 🪐 Planets (Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune) 🌟 Stars, galaxies & nebulae ☄️ Comets & asteroids 🛰️ Space missions & satellites 🏢 NASA & ISRO 🤖 Our ExoVision AI team & AI methods. Just ask me anything about these topics!";
                 }
                 
+                // Default responses for unknown queries
                 const unknownResponses = [
-                    "I am not sure about that. I specialize in topics related to space, exoplanets, galaxies, satellites, the Moon, Sun, NASA, ISRO, and our ExoVision AI team. Could you ask me something about these areas? 🤔",
-                    "I'm not sure about that specific topic. Try asking me about exoplanets, space missions, our solar system, or how our ExoVision AI team uses AI to discover planets! 🌟"
+                    "I am not sure about that. I specialize in topics related to space, exoplanets, galaxies, satellites, planets, comets, the Moon, Sun, NASA, ISRO, and our ExoVision AI team. Could you ask me something about these areas? 🤔",
+                    "I'm not sure about that specific topic. Try asking me about exoplanets, space missions, our solar system, planets, comets, or how our ExoVision AI team uses AI to discover planets! 🌟",
+                    "That's outside my expertise area. I'm here to help with questions about space, astronomy, exoplanets, planets, comets, space agencies like NASA and ISRO, or our ExoVision AI project. What would you like to know? 🚀"
                 ];
                 
                 return unknownResponses[Math.floor(Math.random() * unknownResponses.length)];
