@@ -1572,7 +1572,7 @@
                 </div>
                 <div class="card">
                     <h3>Open & Reproducible</h3>
-                    <p class="muted">Code, data splits, and model checkpoints are organized for easy replication. Replace with your GitHub repo when ready.</p>
+                    <p class="muted">Code, data splits, and model checkpoints are organized for easy replication.</p>
                     <a class="btn" href="#" aria-label="Repository link">🔗 GitHub (soon)</a>
                 </div>
             </div>
@@ -1799,7 +1799,7 @@
         </div>
     </div>
 
-    <!-- Nidhin moved to second -->
+    
     <div class="card team-member">
         <h3>Nidhin R</h3>
         <div class="role">AI/ML Engineer, UI/UX Designer, Web Developer</div>
@@ -2745,7 +2745,7 @@
                 }
                 
                 if (this.containsAny(lowerMessage, ['nidhin', 'nidhin r', 'ai engineer', 'ml engineer', 'ui designer', 'web developer', 'ux designer'])) {
-                    return "Nidhin R is our AI/ML engineer, UI/UX designer and Web Developer! He handles UI/UX design and implements cutting-edge AI/ML solutions for our exoplanet detection system. Nidhin combines technical expertise in artificial intelligence with design skills to create intuitive and powerful tools for astronomical research. 🤖";
+                    return "Nidhin R is our AI/ML engineer, UI/UX designer and Web Developer! He is an all rounder and handles Web Development , UI/UX design and implements cutting-edge AI/ML solutions for our exoplanet detection system. Nidhin combines technical expertise in artificial intelligence with development skills to create intuitive and powerful tools for astronomical research. 🤖";
                 }
                 
                 if (this.containsAny(lowerMessage, ['anmol', 'anmol katiyar', 'cnn specialist', 'pytorch', 'model development', 'data preparation'])) {
@@ -2903,5 +2903,371 @@
             });
         });
     </script>
+    <style>
+.star-field {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    animation: colorfulTwinkle 2s infinite alternate;
+}
+
+.star.small {
+    width: 2px;
+    height: 2px;
+    animation-duration: 3s;
+    box-shadow: 0 0 6px currentColor;
+}
+
+.star.medium {
+    width: 3px;
+    height: 3px;
+    animation-duration: 2.5s;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.star.large {
+    width: 4px;
+    height: 4px;
+    animation-duration: 2s;
+    box-shadow: 0 0 15px currentColor;
+}
+
+.star.color-1 { background: #ff6b6b; color: #ff6b6b; }
+.star.color-2 { background: #4ecdc4; color: #4ecdc4; }
+.star.color-3 { background: #45b7d1; color: #45b7d1; }
+.star.color-4 { background: #f9ca24; color: #f9ca24; }
+.star.color-5 { background: #f0932b; color: #f0932b; }
+.star.color-6 { background: #eb4d4b; color: #eb4d4b; }
+.star.color-7 { background: #6c5ce7; color: #6c5ce7; }
+.star.color-8 { background: #a29bfe; color: #a29bfe; }
+.star.color-9 { background: #fd79a8; color: #fd79a8; }
+.star.color-10 { background: #00b894; color: #00b894; }
+
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: rainbowSparkle 1.8s infinite ease-in-out;
+}
+
+.sparkle::before,
+.sparkle::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 12px;
+    background: currentColor;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px currentColor;
+}
+
+.sparkle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.glow-star {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.rainbow-star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #f0932b, #eb4d4b, #6c5ce7);
+    background-size: 200% 200%;
+    animation: rainbowRotate 4s linear infinite, twinkleGlow 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+.color-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    animation: floatUp 8s linear infinite, colorShift 3s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+@keyframes colorfulTwinkle {
+    0% { 
+        opacity: 0.4; 
+        transform: scale(0.8) rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3) rotate(180deg);
+        filter: hue-rotate(90deg);
+    }
+    100% { 
+        opacity: 0.7; 
+        transform: scale(1.1) rotate(360deg);
+        filter: hue-rotate(180deg);
+    }
+}
+
+@keyframes rainbowSparkle {
+    0%, 100% { 
+        opacity: 0; 
+        transform: scale(0) rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    25% {
+        opacity: 0.8;
+        transform: scale(0.8) rotate(90deg);
+        filter: hue-rotate(90deg);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2) rotate(180deg);
+        filter: hue-rotate(180deg);
+    }
+    75% {
+        opacity: 0.9;
+        transform: scale(1) rotate(270deg);
+        filter: hue-rotate(270deg);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+        box-shadow: 0 0 20px currentColor;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+        box-shadow: 0 0 30px currentColor, 0 0 40px currentColor;
+        filter: brightness(1.5);
+    }
+}
+
+@keyframes rainbowRotate {
+    0% {
+        background-position: 0% 50%;
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        background-position: 100% 50%;
+        filter: hue-rotate(180deg);
+    }
+    100% {
+        background-position: 0% 50%;
+        filter: hue-rotate(360deg);
+    }
+}
+
+@keyframes twinkleGlow {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes floatUp {
+    from { 
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    to { 
+        transform: translateY(-20vh) translateX(-50px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes colorShift {
+    0% { filter: hue-rotate(0deg) saturate(1); }
+    33% { filter: hue-rotate(120deg) saturate(1.5); }
+    66% { filter: hue-rotate(240deg) saturate(1.2); }
+    100% { filter: hue-rotate(360deg) saturate(1); }
+}
+
+@keyframes moveStars {
+    from { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    to { transform: translateY(-100vh) translateX(-100px) rotate(360deg); }
+}
+
+.moving-star {
+    animation: moveStars linear infinite, colorfulTwinkle 2s ease-in-out infinite alternate;
+}
+</style>
+
+<script>
+function createEnhancedStarField() {
+    const starField = document.createElement('div');
+    starField.className = 'star-field';
+    document.body.insertBefore(starField, document.body.firstChild);
+
+    for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        const sizes = ['small', 'medium', 'large'];
+        const colors = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5', 'color-6', 'color-7', 'color-8', 'color-9', 'color-10'];
+        
+        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        star.classList.add(randomSize, randomColor);
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 4 + 's';
+        
+        starField.appendChild(star);
+    }
+
+    for (let i = 0; i < 20; i++) {
+        const rainbowStar = document.createElement('div');
+        rainbowStar.className = 'rainbow-star';
+        rainbowStar.style.left = Math.random() * 100 + '%';
+        rainbowStar.style.top = Math.random() * 100 + '%';
+        rainbowStar.style.animationDelay = Math.random() * 3 + 's';
+        starField.appendChild(rainbowStar);
+    }
+
+    for (let i = 0; i < 15; i++) {
+        const glowStar = document.createElement('div');
+        glowStar.className = 'glow-star';
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        glowStar.style.background = randomColor;
+        glowStar.style.color = randomColor;
+        glowStar.style.left = Math.random() * 100 + '%';
+        glowStar.style.top = Math.random() * 100 + '%';
+        glowStar.style.animationDelay = Math.random() * 3 + 's';
+        starField.appendChild(glowStar);
+    }
+
+    for (let i = 0; i < 12; i++) {
+        const movingStar = document.createElement('div');
+        movingStar.className = 'star medium moving-star';
+        const colors = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5', 'color-6', 'color-7', 'color-8', 'color-9', 'color-10'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        movingStar.classList.add(randomColor);
+        movingStar.style.left = Math.random() * 100 + '%';
+        movingStar.style.top = '100%';
+        movingStar.style.animationDuration = (Math.random() * 6 + 8) + 's';
+        movingStar.style.animationDelay = Math.random() * 4 + 's';
+        starField.appendChild(movingStar);
+    }
+
+    for (let i = 0; i < 25; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#6c5ce7', '#fd79a8', '#00b894'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        sparkle.style.background = randomColor;
+        sparkle.style.color = randomColor;
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 2 + 's';
+        starField.appendChild(sparkle);
+    }
+
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'color-particle';
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#fd79a8'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.background = randomColor;
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = '100%';
+        particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        particle.style.animationDelay = Math.random() * 3 + 's';
+        starField.appendChild(particle);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createEnhancedStarField);
+} else {
+    createEnhancedStarField();
+}
+
+setTimeout(() => {
+    setInterval(() => {
+        const shootingStar = document.createElement('div');
+        shootingStar.style.position = 'fixed';
+        shootingStar.style.width = '3px';
+        shootingStar.style.height = '3px';
+        shootingStar.style.borderRadius = '50%';
+        
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#6c5ce7', '#fd79a8'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        shootingStar.style.background = randomColor;
+        shootingStar.style.boxShadow = `0 0 15px ${randomColor}, 0 0 25px ${randomColor}, 0 0 35px ${randomColor}`;
+        shootingStar.style.left = Math.random() * 100 + '%';
+        shootingStar.style.top = '-15px';
+        shootingStar.style.zIndex = '-1';
+        shootingStar.style.animation = 'moveStars 2s linear, colorShift 2s ease-in-out';
+        shootingStar.style.pointerEvents = 'none';
+        
+        document.body.appendChild(shootingStar);
+        
+        setTimeout(() => {
+            if (shootingStar.parentNode) {
+                shootingStar.parentNode.removeChild(shootingStar);
+            }
+        }, 2000);
+    }, 3000);
+}, 2000);
+
+setInterval(() => {
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            const burst = document.createElement('div');
+            burst.style.position = 'fixed';
+            burst.style.width = '4px';
+            burst.style.height = '4px';
+            burst.style.borderRadius = '50%';
+            burst.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #f9ca24, #6c5ce7)';
+            burst.style.left = Math.random() * 100 + '%';
+            burst.style.top = Math.random() * 100 + '%';
+            burst.style.zIndex = '-1';
+            burst.style.animation = 'pulseGlow 1.5s ease-out';
+            burst.style.pointerEvents = 'none';
+            
+            document.body.appendChild(burst);
+            
+            setTimeout(() => {
+                if (burst.parentNode) {
+                    burst.parentNode.removeChild(burst);
+                }
+            }, 1500);
+        }, i * 100);
+    }
+}, 8000);
+</script>
 </body>
 </html>
