@@ -1822,6 +1822,17 @@
         </div>
     </div>
 </div>
+<div class="card team-member">
+  <h3>Om Rathore</h3>
+  <div class="role">PPT & Graphic Designer</div>
+  <div class="description">Creative designer specializing in presentations and visual graphics. Creates compelling visual content and professional presentations for the project.</div>
+  <div class="email">omrathore906@gmail.com</div>
+  <div class="skills">
+    <span class="chip">PowerPoint</span>
+    <span class="chip">Graphic Design</span>
+  </div>
+</div>
+
         </section>
 
         <section id="contact">
@@ -2737,7 +2748,7 @@
                 
                 // ExoVision AI Team questions
                 if (this.containsAny(lowerMessage, ['team', 'who are you', 'about you', 'exovision', 'your team', 'members'])) {
-                    return "Hi! I am ExoVision AI Bot 🌌 ExoVision AI is a talented three-member student research team focused on using AI to hunt for exoplanets! Our team consists of Agam Sahni (Data & Research Lead), Nidhin R (AI/ML Engineer, UI/UX Designer & Web Developer), and Anmol Katiyar (ML Engineer & CNN Specialist). Together, we're working to accelerate exoplanet discovery using cutting-edge AI techniques! 🚀";
+                    return "Hi! I am ExoVision AI Bot 🌌 ExoVision AI is a talented four-member student research team focused on using AI to hunt for exoplanets! Our team consists of Agam Sahni (Data & Research Lead), Nidhin R (AI/ML Engineer, UI/UX Designer & Web Developer),Anmol Katiyar (ML Engineer & CNN Specialist) and Om Rathore (PPT & Graphic Designer). Together, we're working to accelerate exoplanet discovery using cutting-edge AI techniques! 🚀";
                 }
                 
                 if (this.containsAny(lowerMessage, ['agam', 'agam sahni', 'data lead', 'bls algorithm', 'research lead'])) {
@@ -2751,6 +2762,10 @@
                 if (this.containsAny(lowerMessage, ['anmol', 'anmol katiyar', 'cnn specialist', 'pytorch', 'model development', 'data preparation'])) {
                     return "Anmol Katiyar serves as our ML Engineer, specializing in data preparation, CNN model development, and evaluation! He's proficient in Python and PyTorch frameworks. Anmol is responsible for training our deep learning models to accurately identify exoplanet transits from noisy astronomical data. 🧠";
                 }
+                if (this.containsAny(lowerMessage, ["om", "om rathore", "ppt", "graphic design", "presentation", "designer"])) {
+  return "Om Rathore is our PPT & Graphic Designer! He specializes in creating compelling visual content and professional presentations. Om handles the design of all presentation materials, infographics, and visual graphics that help communicate our complex exoplanet research in an accessible and visually appealing way.";
+}
+
                 
                 // Exoplanet questions
                 if (this.containsAny(lowerMessage, ['exoplanet', 'exoplanets', 'planet outside'])) {
@@ -3271,3 +3286,4 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
